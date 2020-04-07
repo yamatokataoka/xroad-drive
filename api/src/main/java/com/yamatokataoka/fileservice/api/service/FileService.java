@@ -21,22 +21,23 @@ public class FileService {
   }
 
   public void store(MultipartFile multipartFile) {
-    String id = UUID.randomUUID().toString();
+    String fileId = UUID.randomUUID().toString();
 		String originalFilename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		String url = ServletUriComponentsBuilder.fromCurrentContextPath()
 			.path("/download/")
-			.path(id)
+			.path(fileId)
 			.toUriString();
+    Long size = multipartFile.getSize();
 
     try(InputStream inputStream = multipartFile.getInputStream()) {
       File file = new File();
-      file.setId(id);
       file.setName(originalFilename);
-      file.setSize(multipartFile.getSize());
+      file.setUrl(url);
+      file.setSize(size);
   
-      storageService.store(inputStream, id);
+      storageService.store(inputStream, fileId);
     } catch (IOException e) {
-			throw new StorageException("Failed to store file " + id, e);
+			throw new StorageException("Failed to store file " + fileId, e);
 		}
   }
 }
