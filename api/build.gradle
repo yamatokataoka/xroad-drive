@@ -4,7 +4,7 @@ plugins {
 	id 'java'
 }
 
-group = 'com.yamatokataoka'
+group = 'com.yamatokataoka.fileservice.api'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
@@ -14,11 +14,10 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-  compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+  runtimeOnly 'com.h2database:h2'
 	
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

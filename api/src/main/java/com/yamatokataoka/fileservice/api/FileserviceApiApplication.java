@@ -1,4 +1,4 @@
-package com.yamatokataoka.fileserviceapi;
+package com.yamatokataoka.fileservice.api;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import com.yamatokataoka.fileserviceapi.storage.StorageProperties;
-import com.yamatokataoka.fileserviceapi.storage.StorageService;
+import com.yamatokataoka.fileservice.api.service.StorageService;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)

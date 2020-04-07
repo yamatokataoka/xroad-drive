@@ -1,4 +1,4 @@
-package com.yamatokataoka.fileserviceapi.storage;
+package com.yamatokataoka.fileservice.api;
 
 public class StorageException extends RuntimeException {
 
