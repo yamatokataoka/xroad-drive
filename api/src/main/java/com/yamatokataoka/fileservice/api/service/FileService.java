@@ -22,7 +22,7 @@ public class FileService {
     this.storageService = storageService;
   }
 
-  public void store(MultipartFile multipartFile) {
+  public File store(MultipartFile multipartFile) {
     String fileId = UUID.randomUUID().toString();
 		String originalFilename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		String url = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -31,15 +31,16 @@ public class FileService {
 			.toUriString();
     Long size = multipartFile.getSize();
 
+    File file = new File();
+    file.setName(originalFilename);
+    file.setUrl(url);
+    file.setSize(size);
+
     try (InputStream inputStream = multipartFile.getInputStream()) {
-      File file = new File();
-      file.setName(originalFilename);
-      file.setUrl(url);
-      file.setSize(size);
-  
       storageService.store(inputStream, fileId);
     } catch (IOException e) {
       log.error("Failed to read file", e);
 		}
+    return file;
   }
 }
