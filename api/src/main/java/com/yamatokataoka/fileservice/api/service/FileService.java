@@ -1,7 +1,8 @@
 package com.yamatokataoka.fileservice.api.service;
 
 import com.yamatokataoka.fileservice.api.domain.File;
-import com.yamatokataoka.fileservice.api.StorageException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Service
 public class FileService {
 
+  private static final Logger log = LoggerFactory.getLogger(FileService.class);
   private final StorageService storageService;
 
   public FileService(StorageService storageService) {
@@ -29,7 +31,7 @@ public class FileService {
 			.toUriString();
     Long size = multipartFile.getSize();
 
-    try(InputStream inputStream = multipartFile.getInputStream()) {
+    try (InputStream inputStream = multipartFile.getInputStream()) {
       File file = new File();
       file.setName(originalFilename);
       file.setUrl(url);
@@ -37,7 +39,7 @@ public class FileService {
   
       storageService.store(inputStream, fileId);
     } catch (IOException e) {
-			throw new StorageException("Failed to store file " + fileId, e);
+      log.error("Failed to read file", e);
 		}
   }
 }

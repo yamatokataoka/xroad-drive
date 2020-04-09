@@ -2,7 +2,6 @@ package com.yamatokataoka.fileservice.api.controller;
 
 import com.yamatokataoka.fileservice.api.service.FileService;
 import com.yamatokataoka.fileservice.api.service.StorageService;
-import com.yamatokataoka.fileservice.api.StorageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api")
 public class LocalFileController {
@@ -29,12 +30,9 @@ public class LocalFileController {
 
   @PostMapping("/upload")
   public ResponseEntity<?> upload(@RequestParam("file") MultipartFile[] files) {
-    try {
-      for (MultipartFile file : files) {
-        fileService.store(file);
-      }
-    } catch (StorageException se) {
-      return new ResponseEntity<>(se.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    
+    for (MultipartFile file : files) {
+      fileService.store(file);
     }
     return new ResponseEntity<>(HttpStatus.OK);
   }

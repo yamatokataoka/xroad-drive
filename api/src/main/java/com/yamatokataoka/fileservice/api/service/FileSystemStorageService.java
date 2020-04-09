@@ -1,8 +1,8 @@
 package com.yamatokataoka.fileservice.api.service;
 
-import com.yamatokataoka.fileservice.api.StorageException;
-import com.yamatokataoka.fileservice.api.StorageFileNotFoundException;
 import com.yamatokataoka.fileservice.api.StorageProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,7 @@ import java.util.UUID;
 @Service
 public class FileSystemStorageService implements StorageService {
 
+  private static final Logger log = LoggerFactory.getLogger(FileSystemStorageService.class);
 	private final Path location;
 
 	public FileSystemStorageService(StorageProperties properties) {
@@ -30,30 +31,34 @@ public class FileSystemStorageService implements StorageService {
 	@Override
 	public void init() {
 		try {
+      log.info("Initialize file location");
 			Files.createDirectories(location);
 		} catch (IOException e) {
-			throw new StorageException("Failed to initialize file location", e);
+      log.error("Failed to initialize file location", e);
 		}
 	}
 
 	@Override
 	public void store(InputStream inputStream, String id) {
     try {
+      log.info("Store file: " + id);
 			Files.copy(inputStream, this.location.resolve(id), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
-			throw new StorageException("Failed to store file " + id, e);
+      log.error("Failed to store file", e);
 		}
 	}
 
 	@Override
 	public Stream<Path> loadAll() {
+    Stream<Path> streams = null;
 		try {
-			return Files.walk(this.location, 1)
+			streams = Files.walk(this.location, 1)
 				.filter(path -> !path.equals(this.location))
 				.map(this.location::relativize);
 		} catch (IOException e) {
-			throw new StorageException("Failed to read files", e);
+      log.error("Failed to read files", e);
 		}
+    return streams;
 	}
 
 	@Override
@@ -63,17 +68,17 @@ public class FileSystemStorageService implements StorageService {
 
 	@Override
 	public Resource loadAsResource(String id) {
+    Resource resource = null;
 		try {
 			Path file = load(id);
-			Resource resource = new UrlResource(file.toUri());
-			if (resource.exists() || resource.isReadable()) {
-				return resource;
-			} else {
-				throw new StorageFileNotFoundException("Failed to read file: " + id);
+			resource = new UrlResource(file.toUri());
+			if (!resource.exists() || !resource.isReadable()) {
+        log.error("Failed to read file or does not exist");
 			}
 		} catch (MalformedURLException e) {
-			throw new StorageFileNotFoundException("Could not read file: " + id, e);
+      log.error("Could not read file", e);
 		}
+    return resource;
 	}
 
 	@Override
