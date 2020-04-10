@@ -1,6 +1,7 @@
 package com.yamatokataoka.fileservice.api.service;
 
 import com.yamatokataoka.fileservice.api.domain.File;
+import com.yamatokataoka.fileservice.api.repository.FileRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,11 @@ public class FileService {
 
   private static final Logger log = LoggerFactory.getLogger(FileService.class);
   private final StorageService storageService;
+  private final FileRepository fileRepository;
 
-  public FileService(StorageService storageService) {
+  public FileService(StorageService storageService, FileRepository fileRepository) {
     this.storageService = storageService;
+    this.fileRepository = fileRepository;
   }
 
   public File store(MultipartFile multipartFile) {
@@ -38,8 +41,9 @@ public class FileService {
 
     try (InputStream inputStream = multipartFile.getInputStream()) {
       storageService.store(inputStream, fileId);
+      fileRepository.save(file);
     } catch (IOException e) {
-      log.error("Failed to read file", e);
+      log.error("Failed to store file", e);
 		}
     return file;
   }
