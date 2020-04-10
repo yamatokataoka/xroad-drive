@@ -28,15 +28,10 @@ public class FileService {
   public File store(MultipartFile multipartFile) {
     String fileId = UUID.randomUUID().toString();
 		String originalFilename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		String url = ServletUriComponentsBuilder.fromCurrentContextPath()
-			.path("/download/")
-			.path(fileId)
-			.toUriString();
     Long size = multipartFile.getSize();
 
     File file = new File();
     file.setName(originalFilename);
-    file.setUrl(url);
     file.setSize(size);
 
     try (InputStream inputStream = multipartFile.getInputStream()) {

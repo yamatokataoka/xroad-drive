@@ -12,7 +12,6 @@ public class File {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
   private String name;
-  private String url;
   private Long size;
 
   public File() {}
@@ -31,14 +30,6 @@ public class File {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public String getUrl() {
-    return url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
   }
 
   public Long getSize() {
