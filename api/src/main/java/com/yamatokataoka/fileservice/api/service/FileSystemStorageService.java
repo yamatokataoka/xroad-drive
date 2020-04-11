@@ -17,7 +17,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
-import java.util.UUID;
 
 @Service
 public class FileSystemStorageService implements StorageService {
