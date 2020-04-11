@@ -66,7 +66,7 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public Path load(String id) {
+	public Path resolve(String id) {
 		return location.resolve(id);
 	}
 
@@ -74,7 +74,7 @@ public class FileSystemStorageService implements StorageService {
 	public Resource loadAsResource(String id) {
     try {
       log.info("Read file: {}", id);
-			Path file = load(id);
+			Path file = resolve(id);
 			Resource resource = new UrlResource(file.toUri());
 			if (!resource.exists() || !resource.isReadable()) {
         log.error("Failed to read file or does not exist");
