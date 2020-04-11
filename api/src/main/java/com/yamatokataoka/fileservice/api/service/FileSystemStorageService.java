@@ -1,6 +1,7 @@
 package com.yamatokataoka.fileservice.api.service;
 
 import com.yamatokataoka.fileservice.api.StorageProperties;
+import com.yamatokataoka.fileservice.api.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -41,10 +42,12 @@ public class FileSystemStorageService implements StorageService {
 	@Override
 	public void store(InputStream inputStream, String id) {
     try {
-      log.info("Store file: " + id);
+      log.info("Store file: {}", id);
 			Files.copy(inputStream, this.location.resolve(id), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
       log.error("Failed to store file", e);
+
+      throw new StorageException(e);
 		}
 	}
 
@@ -52,13 +55,14 @@ public class FileSystemStorageService implements StorageService {
 	public Stream<Path> loadAll() {
     Stream<Path> streams = null;
 		try {
-			streams = Files.walk(this.location, 1)
+			return Files.walk(this.location, 1)
 				.filter(path -> !path.equals(this.location))
 				.map(this.location::relativize);
 		} catch (IOException e) {
-      log.error("Failed to read files", e);
+      log.error("Failed to read stored files", e);
+
+      throw new StorageException("Failed to read stored files", e);
 		}
-    return streams;
 	}
 
 	@Override
@@ -68,17 +72,19 @@ public class FileSystemStorageService implements StorageService {
 
 	@Override
 	public Resource loadAsResource(String id) {
-    Resource resource = null;
-		try {
+    try {
+      log.info("Read file: {}", id);
 			Path file = load(id);
-			resource = new UrlResource(file.toUri());
+			Resource resource = new UrlResource(file.toUri());
 			if (!resource.exists() || !resource.isReadable()) {
         log.error("Failed to read file or does not exist");
 			}
+      return resource;
 		} catch (MalformedURLException e) {
-      log.error("Could not read file", e);
+      log.error("Failed to read file", e);
+
+      throw new StorageException("Failed to read file", e);
 		}
-    return resource;
 	}
 
 	@Override

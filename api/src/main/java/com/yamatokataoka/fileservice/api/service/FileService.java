@@ -2,12 +2,12 @@ package com.yamatokataoka.fileservice.api.service;
 
 import com.yamatokataoka.fileservice.api.domain.File;
 import com.yamatokataoka.fileservice.api.repository.FileRepository;
+import com.yamatokataoka.fileservice.api.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,9 +37,9 @@ public class FileService {
     try (InputStream inputStream = multipartFile.getInputStream()) {
       storageService.store(inputStream, fileId);
       fileRepository.save(file);
-    } catch (IOException e) {
-      log.error("Failed to store file", e);
+      return file;
+    } catch (Exception e) {
+      throw new StorageException("Failed to store file", e);
 		}
-    return file;
   }
 }
