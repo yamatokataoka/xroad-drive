@@ -1,7 +1,7 @@
 package com.yamatokataoka.fileservice.api.service;
 
 import com.yamatokataoka.fileservice.api.StorageProperties;
-import com.yamatokataoka.fileservice.api.StorageException;
+import com.yamatokataoka.fileservice.api.FileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -46,7 +46,7 @@ public class FileSystemStorageService implements StorageService {
 		} catch (IOException e) {
       log.error("Failed to store file", e);
 
-      throw new StorageException(e);
+      throw new FileException(e);
 		}
 	}
 
@@ -60,7 +60,7 @@ public class FileSystemStorageService implements StorageService {
 		} catch (IOException e) {
       log.error("Failed to read stored files", e);
 
-      throw new StorageException("Failed to read stored files", e);
+      throw new FileException("Failed to read stored files", e);
 		}
 	}
 
@@ -82,7 +82,7 @@ public class FileSystemStorageService implements StorageService {
 		} catch (MalformedURLException e) {
       log.error("Failed to read file", e);
 
-      throw new StorageException("Failed to read file", e);
+      throw new FileException("Failed to read file", e);
 		}
 	}
 

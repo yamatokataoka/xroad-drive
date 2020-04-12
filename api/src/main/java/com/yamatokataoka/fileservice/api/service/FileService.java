@@ -2,7 +2,7 @@ package com.yamatokataoka.fileservice.api.service;
 
 import com.yamatokataoka.fileservice.api.domain.File;
 import com.yamatokataoka.fileservice.api.repository.FileRepository;
-import com.yamatokataoka.fileservice.api.StorageException;
+import com.yamatokataoka.fileservice.api.FileException;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class FileService {
       fileRepository.save(file);
       return file;
     } catch (Exception e) {
-      throw new StorageException("Failed to store file", e);
+      throw new FileException("Failed to store file", e);
 		}
   }
 }
