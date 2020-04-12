@@ -2,6 +2,7 @@ package com.yamatokataoka.fileservice.api.controller;
 
 import com.yamatokataoka.fileservice.api.service.FileService;
 import com.yamatokataoka.fileservice.api.service.StorageService;
+import com.yamatokataoka.fileservice.api.FileException;
 import com.yamatokataoka.fileservice.api.domain.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,14 +31,13 @@ public class LocalFileController {
   @Autowired
   private StorageService storageService;
 
-  @PostMapping
-  public List<File> upload(@RequestParam("files") MultipartFile[] files) {
-    List<File> fileList = new ArrayList<File>();
-    for (MultipartFile multipartFile : files) {
-      File file = fileService.store(multipartFile);
-      fileList.add(file);
+  @PostMapping(consumes = "multipart/form-data")
+  public File upload(@RequestParam("file") List<MultipartFile> files) {
+    if (files.size() != 1) {
+      throw new FileException("Exact one file is required.");
     }
-    return fileList;
+    File file = fileService.store(files.get(0));
+    return file;
   }
 
   @GetMapping("/{id}")
