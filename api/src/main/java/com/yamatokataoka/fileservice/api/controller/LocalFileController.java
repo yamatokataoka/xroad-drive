@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/files")
 public class LocalFileController {
 
   @Autowired
@@ -31,8 +31,8 @@ public class LocalFileController {
   @Autowired
   private StorageService storageService;
 
-  @PostMapping("/upload")
-  public List<File> upload(@RequestParam("file") MultipartFile[] files) {
+  @PostMapping
+  public List<File> upload(@RequestParam("files") MultipartFile[] files) {
     List<File> fileList = new ArrayList<File>();
     for (MultipartFile multipartFile : files) {
       File file = fileService.store(multipartFile);
@@ -41,7 +41,7 @@ public class LocalFileController {
     return fileList;
   }
 
-  @GetMapping("/download/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<Resource> download(@PathVariable String id) {
     Resource file = storageService.loadAsResource(id);
 
