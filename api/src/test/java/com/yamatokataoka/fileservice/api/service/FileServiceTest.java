@@ -26,12 +26,12 @@ class FileServiceTest {
   private FileService fileservice;
 
   @BeforeEach
-  void setup() {
+  public void setup() {
     fileservice = new FileService(storageService, fileRepository);
   }
 
   @Test
-  void testStoreSuccess() {
+  public void testStoreSuccess() {
     MockMultipartFile mockMultipartFile = new MockMultipartFile("name", "originalFilename.txt", "text/plain", "some text".getBytes());
     fileservice.store(mockMultipartFile);
 
