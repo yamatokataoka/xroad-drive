@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/files")
+@RequestMapping("/api")
 public class LocalFileController {
 
   @Autowired
@@ -31,7 +31,9 @@ public class LocalFileController {
   @Autowired
   private StorageService storageService;
 
-  @PostMapping(consumes = "multipart/form-data")
+  @PostMapping(
+    path = "/upload",
+    consumes = "multipart/form-data")
   public File upload(@RequestParam("file") List<MultipartFile> files) {
     if (files.size() != 1) {
       throw new FileException("Exact one file is required.");
@@ -40,7 +42,7 @@ public class LocalFileController {
     return file;
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/download/{id}")
   public ResponseEntity<Resource> download(@PathVariable String id) {
     Resource file = storageService.loadAsResource(id);
 
