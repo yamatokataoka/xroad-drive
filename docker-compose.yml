@@ -4,7 +4,7 @@ services:
     container_name: fileservice-api
     build: ./api
     ports:
-      - 8080:8080
+      - 8082:8082
   mongodb:
     image: mongo:latest
     ports:

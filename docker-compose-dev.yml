@@ -6,7 +6,7 @@ services:
       context: ./api
       dockerfile: Dockerfile-dev
     ports:
-      - 8080:8080
+      - 8082:8082
     volumes:
       - ./api:/fileservice-api
   mongodb:
@@ -15,3 +15,12 @@ services:
       - 27017:27017
     volumes:
       - ./db:/data/db
+  fileservice-ui:
+    container_name: fileservice-ui
+    build: 
+      context: ./fileservice-ui
+      dockerfile: Dockerfile-dev
+    ports:
+      - 8080:8080
+    volumes:
+      - ./fileservice-ui:/fileservice-ui

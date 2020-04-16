@@ -1,0 +1,5 @@
+FROM node:12.16.2-alpine AS builder
+COPY . /fileservice-ui
+ENV YARN_CACHE_FOLDER /fileservice-ui/.yarn
+WORKDIR /fileservice-ui
+CMD ["yarn", "run", "serve"]
