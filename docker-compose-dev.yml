@@ -2,14 +2,16 @@ version: '3.7'
 services:
   fileservice-api:
     container_name: fileservice-api
-    build: ./api
+    build: 
+      context: ./api
+      dockerfile: Dockerfile-dev
     ports:
       - 8080:8080
+    volumes:
+      - ./api:/fileservice-api
   mongodb:
     image: mongo:latest
     ports:
       - 27017:27017
     volumes:
-      - db:/data/db
-volumes:
-  db:
+      - ./db:/data/db

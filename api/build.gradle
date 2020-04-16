@@ -6,10 +6,17 @@ plugins {
 
 group = 'com.yamatokataoka.fileservice.api'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+}
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+            extendsFrom developmentOnly
+    }
 }
 
 dependencies {
@@ -19,8 +26,14 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+
+  developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+bootJar {
+  version = ''
 }
