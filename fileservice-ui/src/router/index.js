@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
+import MyFiles from '../views/MyFiles.vue'
+import SharedWithUs from '../views/SharedWithUs.vue'
+import SharedWithCompanies from '../views/SharedWithCompanies.vue'
 
 Vue.use(VueRouter)
 
@@ -8,15 +11,19 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    redirect: '/my-files'
+  }, {
+    path: '/my-files',
+    name: 'MyFiles',
+    component: MyFiles
+  }, {
+    path: '/shared-with-us',
+    name: 'SharedWithUs',
+    component: SharedWithUs
+  }, {
+    path: '/shared-with-companies',
+    name: 'SharedWithCompanies',
+    component: SharedWithCompanies
   }
 ]
 
