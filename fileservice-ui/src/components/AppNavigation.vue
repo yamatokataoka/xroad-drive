@@ -34,6 +34,14 @@
       <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer" />
       <v-toolbar-title>{{ appTitle }}</v-toolbar-title>
       <v-spacer />
+      <v-text-field
+        flat
+        solo-inverted
+        hide-details
+        prepend-inner-icon="mdi-magnify"
+        label="Search"
+      />
+      <v-spacer />
       <v-btn outlined class="hidden-sm-and-down">SIGN IN</v-btn>
     </v-app-bar>
   </nav>
