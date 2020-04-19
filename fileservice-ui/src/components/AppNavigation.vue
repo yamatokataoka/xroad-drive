@@ -8,20 +8,16 @@
       mobile-break-point="960"
     >
       <v-treeview
-        :items="nav_lists"
+        :items="nav_items"
         activatable
         shaped
         dense
         item-key="name"
         hoverable
+        @update:active="OnUpdateActive"
       >
         <template v-slot:prepend="{ item }">
-          <v-icon
-            v-if="item.icon"
-            dense
-          >
-            {{ item.icon }}
-          </v-icon>
+          <v-icon v-if="item.icon" dense>{{ item.icon }}</v-icon>
         </template>
       </v-treeview>
     </v-navigation-drawer>
@@ -53,33 +49,48 @@ export default {
   data: () => ({
     drawer: null,
     appTitle: 'File Service',
-    nav_lists: [
+    nav_items: [
       {
         name: 'My Files',
-        icon: 'mdi-file-multiple-outline'
+        icon: 'mdi-file-multiple-outline',
+        to: '/my-files'
       }, {
         name: 'Shared with us',
         icon: 'mdi-account-multiple-outline',
-        children: [{
-          name: 'Company A'
-        }, {
-          name: 'Company B' 
-        }, {
-          name: 'Something'
-        }]
+        to: '/shared-with-us',
+        children: [
+          {
+            name: 'Company A'
+          }, {
+            name: 'Company B'
+          }, {
+            name: 'Something'
+          }
+        ]
       }, {
         name: 'Shared with companies',
         icon: 'mdi-office-building',
-        children: [{
-          name: 'Company C'
-        }, {
-          name: 'Company D' 
-        }, {
-          name: 'Something'
-        }]
+        to: '/shared-with-companies',
+        children: [
+          {
+            name: 'Company C'
+          }, {
+            name: 'Company D'
+          }, {
+            name: 'Something'
+          }
+        ]
       }
     ],
   }),
+  methods: {
+    OnUpdateActive(event) {
+      let item = this.nav_items.find((item) => {
+        return (item.name === event[0]);
+      });
+      this.$router.push(item.to);
+    }
+  }
 };
 </script>
 
