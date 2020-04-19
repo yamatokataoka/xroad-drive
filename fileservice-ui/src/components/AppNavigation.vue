@@ -3,6 +3,9 @@
     <v-navigation-drawer
       app
       clipped
+      fixed
+      v-model="drawer"
+      mobile-break-point="960"
     >
       <v-treeview
         :items="nav_lists"
@@ -28,9 +31,10 @@
       dense
       flat
     >
+      <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer" />
       <v-toolbar-title>{{ appTitle }}</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn outlined>SIGN IN</v-btn>
+      <v-spacer />
+      <v-btn outlined class="hidden-sm-and-down">SIGN IN</v-btn>
     </v-app-bar>
   </nav>
 </template>
@@ -38,10 +42,11 @@
 <script>
 export default {
   name: 'AppNavigation',
-  data() {
-    return {
-      appTitle: 'File Service',
-      nav_lists: [{
+  data: () => ({
+    drawer: null,
+    appTitle: 'File Service',
+    nav_lists: [
+      {
         name: 'My Files',
         icon: 'mdi-file-multiple-outline'
       }, {
@@ -64,9 +69,9 @@ export default {
         }, {
           name: 'Something'
         }]
-      }]
-    };
-  }
+      }
+    ],
+  }),
 };
 </script>
 
