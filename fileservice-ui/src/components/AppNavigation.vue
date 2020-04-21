@@ -15,6 +15,7 @@
         item-key="name"
         hoverable
         @update:active="OnUpdateActive"
+        class="body-2"
       >
         <template v-slot:prepend="{ item }">
           <v-icon v-if="item.icon" dense>{{ item.icon }}</v-icon>
