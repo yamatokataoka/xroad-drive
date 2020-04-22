@@ -1,14 +1,13 @@
 <template>
   <v-toolbar
-    app
     dense
   >
     <v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
     <v-spacer />
-    <v-btn icon>
+    <v-btn v-if="selectedFile" icon>
       <v-icon>mdi-trash-can-outline</v-icon>
     </v-btn>
-    <v-btn icon>
+    <v-btn v-if="selectedFile" icon>
       <v-icon>mdi-download-outline</v-icon>
     </v-btn>
     <v-divider
@@ -24,9 +23,16 @@
 <script>
 export default {
   name: 'ToolBar',
-  data: () => ({
-    pageTitle: 'MyFiles',
-  }),
+  data() {
+    return {
+      pageTitle: 'MyFiles',
+    }
+  },
+  computed: {
+    selectedFile() {
+      return this.$store.state.selectedFile;
+    }
+  },
 };
 </script>
 
