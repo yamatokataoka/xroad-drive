@@ -46,9 +46,14 @@ export default {
     ],
   }),
   methods: {
-    rowClick: function (item, row) {      
-      row.select(true);
-      this.selectedId=item.name
+    rowClick: function (item, row) {
+      if (item.name == this.selectedId) {
+        row.select(false);
+        this.selectedId='';
+      } else {
+        row.select(true);
+        this.selectedId=item.name;
+      }
     }
   },
 };
