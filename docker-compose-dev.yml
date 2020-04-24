@@ -9,6 +9,7 @@ services:
       - 8082:8082
     volumes:
       - ./api:/fileservice-api
+      - files:/fileservice-api/files # exclude ./api/files
   mongodb:
     image: mongo:latest
     ports:
@@ -24,3 +25,6 @@ services:
       - 8080:8080
     volumes:
       - ./fileservice-ui:/fileservice-ui
+
+volumes:
+  files:
