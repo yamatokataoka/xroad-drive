@@ -15,20 +15,20 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Service
-public class FileService {
+public class MediaService {
 
-  private static final Logger log = LoggerFactory.getLogger(FileService.class);
+  private static final Logger log = LoggerFactory.getLogger(MediaService.class);
   private final StorageService storageService;
   private final FileRepository fileRepository;
 
-  public FileService(StorageService storageService, FileRepository fileRepository) {
+  public MediaService(StorageService storageService, FileRepository fileRepository) {
     this.storageService = storageService;
     this.fileRepository = fileRepository;
   }
 
   @Transactional
   public File store(MultipartFile multipartFile) {
-    String id = new ObjectId().toString() ;
+    String id = new ObjectId().toString();
 		String originalFilename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
     Long size = multipartFile.getSize();
 

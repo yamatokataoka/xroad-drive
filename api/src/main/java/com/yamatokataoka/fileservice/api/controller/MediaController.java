@@ -1,6 +1,6 @@
 package com.yamatokataoka.fileservice.api.controller;
 
-import com.yamatokataoka.fileservice.api.service.FileService;
+import com.yamatokataoka.fileservice.api.service.MediaService;
 import com.yamatokataoka.fileservice.api.service.StorageService;
 import com.yamatokataoka.fileservice.api.FileException;
 import com.yamatokataoka.fileservice.api.domain.File;
@@ -23,10 +23,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class LocalFileController {
+public class MediaController {
 
   @Autowired
-  private FileService fileService;
+  private MediaService mediaService;
 
   @Autowired
   private StorageService storageService;
@@ -38,7 +38,7 @@ public class LocalFileController {
     if (files.size() != 1) {
       throw new FileException("Exact one file is required.");
     }
-    File file = fileService.store(files.get(0));
+    File file = mediaService.store(files.get(0));
     return file;
   }
 
