@@ -3,7 +3,7 @@ package com.yamatokataoka.fileservice.api.controller;
 import com.yamatokataoka.fileservice.api.service.MediaService;
 import com.yamatokataoka.fileservice.api.service.StorageService;
 import com.yamatokataoka.fileservice.api.FileException;
-import com.yamatokataoka.fileservice.api.domain.File;
+import com.yamatokataoka.fileservice.api.domain.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -34,20 +34,20 @@ public class MediaController {
   @PostMapping(
     path = "/upload",
     consumes = "multipart/form-data")
-  public File upload(@RequestParam("file") List<MultipartFile> files) {
+  public Metadata upload(@RequestParam("file") List<MultipartFile> files) {
     if (files.size() != 1) {
       throw new FileException("Exact one file is required.");
     }
-    File file = mediaService.store(files.get(0));
-    return file;
+    Metadata metadata = mediaService.store(files.get(0));
+    return metadata;
   }
 
   @GetMapping("/download/{id}")
   public ResponseEntity<Resource> download(@PathVariable String id) {
-    Resource file = storageService.loadAsResource(id);
+    Resource fileResource = storageService.loadAsResource(id);
 
     return ResponseEntity.ok()
-      .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-      .body(file);
+      .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
+      .body(fileResource);
   }
 }
