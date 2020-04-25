@@ -60,7 +60,7 @@ class MetadataControllerTest {
   @Test
   void testGetMetadataById() throws Exception {
     
-    when(metadataService.getMetadataById(any())).thenReturn(metadata);
+    when(metadataService.getById(any())).thenReturn(metadata);
 
     MvcResult mvcResult = mockMvc.perform(get("/api/metadata/{id}", "507f1f77bcf86cd799439011"))
       .andExpect(status().isOk())

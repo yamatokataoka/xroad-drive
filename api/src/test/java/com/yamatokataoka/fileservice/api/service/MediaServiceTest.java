@@ -31,7 +31,7 @@ class MediaServiceTest {
   }
 
   @Test
-  public void storeSuccess() {
+  public void testStore() {
     MockMultipartFile mockMultipartFile = new MockMultipartFile("name", "originalFilename.txt", "text/plain", "some text".getBytes());
     mediaService.store(mockMultipartFile);
 
