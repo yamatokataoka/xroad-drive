@@ -2,15 +2,20 @@ package com.yamatokataoka.fileservice.api.service;
 
 import com.yamatokataoka.fileservice.api.service.MetadataService;
 import com.yamatokataoka.fileservice.api.repository.MetadataRepository;
+import com.yamatokataoka.fileservice.api.domain.Metadata;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
+import static com.yamatokataoka.fileservice.api.testBuilder.buildMetadata;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class MetadataServiceTest {
@@ -35,8 +40,10 @@ public class MetadataServiceTest {
 
   @Test
   public void testGetById() {
+    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L);
+    when(metadataRepository.findById(any())).thenReturn(Optional.of(metadata));
     
-    metadataService.getById("string of id");
+    metadataService.getById("507f1f77bcf86cd799439011");
 
     verify(metadataRepository, times(1)).findById(any());
   }
