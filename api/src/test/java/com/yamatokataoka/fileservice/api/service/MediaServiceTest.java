@@ -45,4 +45,13 @@ class MediaServiceTest {
 
     verify(storageService, times(1)).load(any());
   }
+
+  @Test
+  public void testDelete() {
+    mediaService.delete("string of id");
+
+    verify(storageService, times(1)).delete(any());
+    verify(metadataRepository, times(1)).findById(any());
+    verify(metadataRepository, times(1)).delete(any());
+  }
 }
