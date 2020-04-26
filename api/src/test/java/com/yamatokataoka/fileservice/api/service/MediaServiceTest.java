@@ -3,6 +3,7 @@ package com.yamatokataoka.fileservice.api.service;
 import com.yamatokataoka.fileservice.api.service.MediaService;
 import com.yamatokataoka.fileservice.api.service.StorageService;
 import com.yamatokataoka.fileservice.api.repository.MetadataRepository;
+import com.yamatokataoka.fileservice.api.domain.Metadata;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,9 +11,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 
+import java.util.Optional;
+
+import static com.yamatokataoka.fileservice.api.testBuilder.buildMetadata;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class MediaServiceTest {
@@ -48,6 +53,9 @@ class MediaServiceTest {
 
   @Test
   public void testDelete() {
+    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L);
+    when(metadataRepository.findById(any())).thenReturn(Optional.of(metadata));
+
     mediaService.delete("string of id");
 
     verify(storageService, times(1)).delete(any());
