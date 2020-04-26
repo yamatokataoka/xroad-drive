@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 
 import java.io.IOException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 @Service
 public class FileSystemStorageService implements StorageService {
@@ -39,9 +39,9 @@ public class FileSystemStorageService implements StorageService {
 
 	@Override
 	public void store(InputStream inputStream, String id) {
-    try {
+    try(FileOutputStream fileOutputStream = new FileOutputStream(this.location.resolve(id).toFile())) {
       log.info("Store file: {}", id);
-      Files.copy(inputStream, this.location.resolve(id), StandardCopyOption.REPLACE_EXISTING);
+      inputStream.transferTo(fileOutputStream);
 		} catch (IOException e) {
       log.error("Failed to store file", e);
 
