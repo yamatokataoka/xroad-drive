@@ -39,7 +39,7 @@ public class MediaControllerTest {
   private MediaService mediaService;
 
   @Test
-  void testUpload() throws Exception {
+  public void testUpload() throws Exception {
 
     Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L);
     MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "originalFilename.txt", "text/plain", "some text".getBytes());
@@ -62,7 +62,7 @@ public class MediaControllerTest {
   }
 
   @Test
-  void testDownload() throws Exception {
+  public void testDownload() throws Exception {
 
     byte[] mockMultipartFileContent = "some text".getBytes();
     MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "originalFilename.txt", "text/plain", mockMultipartFileContent);
@@ -79,7 +79,7 @@ public class MediaControllerTest {
   }
 
   @Test
-  void testDelete() throws Exception {
+  public void testDelete() throws Exception {
 
     doNothing().when(mediaService).delete(any());
 
