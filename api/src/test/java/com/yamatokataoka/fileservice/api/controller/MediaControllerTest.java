@@ -14,10 +14,14 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static com.yamatokataoka.fileservice.api.testBuilder.buildMetadata;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -72,5 +76,16 @@ public class MediaControllerTest {
     byte[] actualRsponseAsByte = mvcResult.getResponse().getContentAsByteArray();
 
     assertArrayEquals(mockMultipartFileContent, actualRsponseAsByte);
+  }
+
+  @Test
+  void testDelete() throws Exception {
+
+    doNothing().when(mediaService).delete(any());
+
+    mockMvc.perform(delete("/api/delete/{id}", "507f1f77bcf86cd799439011"))
+      .andExpect(status().isNoContent());
+
+    verify(mediaService, times(1)).delete(any());
   }
 }
