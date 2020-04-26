@@ -38,4 +38,11 @@ class MediaServiceTest {
     verify(storageService, times(1)).store(any(), any());
     verify(metadataRepository, times(1)).save(any());
   }
+
+  @Test
+  public void testLoad() {
+    mediaService.load("string of id");
+
+    verify(storageService, times(1)).load(any());
+  }
 }
