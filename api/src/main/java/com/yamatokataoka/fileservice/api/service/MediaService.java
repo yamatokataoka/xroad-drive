@@ -49,11 +49,17 @@ public class MediaService {
 
   @Transactional
   public Resource load(String id) {
-
     try {
       return storageService.load(id);
     } catch (FileException e) {
       throw new FileException("Failed to load file", e);
 		}
+  }
+
+  @Transactional
+  public void delete(String id) {
+    Metadata metadata = metadataRepository.findById(id).orElseThrow();
+    storageService.delete(id);
+    metadataRepository.delete(metadata);
   }
 }
