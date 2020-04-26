@@ -74,7 +74,7 @@ public class FileSystemStorageService implements StorageService {
 
 	@Override
 	public void delete(String id) {
-    log.info("Load file: {}", id);
+    log.info("Delete file: {}", id);
 		
     try {
       Files.deleteIfExists(resolve(id));
