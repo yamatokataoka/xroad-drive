@@ -16,6 +16,6 @@ public interface StorageService {
 
 	Resource load(String id);
 
-	void deleteAll();
+	void delete(String id);
 
 }

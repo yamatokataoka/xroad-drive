@@ -56,8 +56,9 @@ public class FileSystemStorageService implements StorageService {
 
 	@Override
 	public Resource load(String id) {
+    log.info("Load file: {}", id);
+
     try {
-      log.info("Load file: {}", id);
 			Path file = resolve(id);
 			Resource resource = new UrlResource(file.toUri());
 			if (!resource.exists() || !resource.isReadable()) {
@@ -72,7 +73,15 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public void deleteAll() {
-		FileSystemUtils.deleteRecursively(location.toFile());
+	public void delete(String id) {
+    log.info("Load file: {}", id);
+		
+    try {
+      Files.deleteIfExists(resolve(id));
+    } catch (Exception e) {
+      log.error("Failed to delete file", e);
+
+      throw new FileException("Failed to delete file", e);
+    }
 	}
 }
