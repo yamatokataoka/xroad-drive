@@ -6,6 +6,7 @@ import com.yamatokataoka.fileservice.api.FileException;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -43,6 +44,16 @@ public class MediaService {
       return metadata;
     } catch (Exception e) {
       throw new FileException("Failed to store file", e);
+		}
+  }
+
+  @Transactional
+  public Resource load(String id) {
+
+    try {
+      return storageService.load(id);
+    } catch (FileException e) {
+      throw new FileException("Failed to load file", e);
 		}
   }
 }

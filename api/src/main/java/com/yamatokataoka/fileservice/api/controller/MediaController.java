@@ -1,7 +1,6 @@
 package com.yamatokataoka.fileservice.api.controller;
 
 import com.yamatokataoka.fileservice.api.service.MediaService;
-import com.yamatokataoka.fileservice.api.service.StorageService;
 import com.yamatokataoka.fileservice.api.FileException;
 import com.yamatokataoka.fileservice.api.domain.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,6 @@ public class MediaController {
   @Autowired
   private MediaService mediaService;
 
-  @Autowired
-  private StorageService storageService;
-
   @PostMapping(
     path = "/upload",
     consumes = "multipart/form-data")
@@ -44,7 +40,7 @@ public class MediaController {
 
   @GetMapping("/download/{id}")
   public ResponseEntity<Resource> download(@PathVariable String id) {
-    Resource fileResource = storageService.load(id);
+    Resource fileResource = mediaService.load(id);
 
     return ResponseEntity.ok()
       .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
