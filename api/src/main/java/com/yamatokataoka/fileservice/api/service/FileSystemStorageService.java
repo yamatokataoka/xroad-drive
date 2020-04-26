@@ -16,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.stream.Stream;
 
 @Service
 public class FileSystemStorageService implements StorageService {
@@ -42,25 +41,11 @@ public class FileSystemStorageService implements StorageService {
 	public void store(InputStream inputStream, String id) {
     try {
       log.info("Store file: {}", id);
-			Files.copy(inputStream, this.location.resolve(id), StandardCopyOption.REPLACE_EXISTING);
+      Files.copy(inputStream, this.location.resolve(id), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
       log.error("Failed to store file", e);
 
       throw new FileException(e);
-		}
-	}
-
-	@Override
-	public Stream<Path> loadAll() {
-    Stream<Path> streams = null;
-		try {
-			return Files.walk(this.location, 1)
-				.filter(path -> !path.equals(this.location))
-				.map(this.location::relativize);
-		} catch (IOException e) {
-      log.error("Failed to read stored files", e);
-
-      throw new FileException("Failed to read stored files", e);
 		}
 	}
 
@@ -70,19 +55,19 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public Resource loadAsResource(String id) {
+	public Resource load(String id) {
     try {
-      log.info("Read file: {}", id);
+      log.info("Load file: {}", id);
 			Path file = resolve(id);
 			Resource resource = new UrlResource(file.toUri());
 			if (!resource.exists() || !resource.isReadable()) {
-        log.error("Failed to read file or does not exist");
+        log.error("Failed to load file or does not exist");
 			}
       return resource;
 		} catch (MalformedURLException e) {
-      log.error("Failed to read file", e);
+      log.error("Failed to load file", e);
 
-      throw new FileException("Failed to read file", e);
+      throw new FileException("Failed to load file", e);
 		}
 	}
 

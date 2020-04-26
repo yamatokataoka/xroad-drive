@@ -44,7 +44,7 @@ public class MediaController {
 
   @GetMapping("/download/{id}")
   public ResponseEntity<Resource> download(@PathVariable String id) {
-    Resource fileResource = storageService.loadAsResource(id);
+    Resource fileResource = storageService.load(id);
 
     return ResponseEntity.ok()
       .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")

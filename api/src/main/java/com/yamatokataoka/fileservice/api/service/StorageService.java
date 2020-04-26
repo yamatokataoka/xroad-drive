@@ -5,7 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.stream.Stream;
 
 public interface StorageService {
 
@@ -13,11 +12,9 @@ public interface StorageService {
 
 	void store(InputStream inputStream, String id);
 
-	Stream<Path> loadAll();
-
 	Path resolve(String id);
 
-	Resource loadAsResource(String id);
+	Resource load(String id);
 
 	void deleteAll();
 
