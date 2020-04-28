@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import FileList from '@/components/FileList';
-import ToolBar from '@/components/ToolBar';
+  import FileList from '@/components/FileList';
+  import ToolBar from '@/components/ToolBar';
 
-export default {
-  name: 'MyFiles',
-  components: { FileList, ToolBar },
-}
+  export default {
+    name: 'MyFiles',
+    components: { FileList, ToolBar },
+  }
 </script>

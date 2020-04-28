@@ -21,19 +21,19 @@
 </template>
 
 <script>
-export default {
-  name: 'ToolBar',
-  data() {
-    return {
-      pageTitle: 'MyFiles',
-    }
-  },
-  computed: {
-    selectedFile() {
-      return this.$store.state.selectedFile;
-    }
-  },
-};
+  import mapState from "vuex";
+
+  export default {
+    name: 'ToolBar',
+    data() {
+      return {
+        pageTitle: 'MyFiles',
+      }
+    },
+    computed: {
+      ...mapState("file", ["selectedFile"]),
+    },
+  };
 </script>
 
 <style scoped>
