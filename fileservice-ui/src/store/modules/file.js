@@ -5,7 +5,7 @@ export default {
     selectedFile: null
   },
   mutations: {
-    setSelectedFile(state, payload) {
+    updateSelectedFile(state, payload) {
       state.selectedFile = payload;
     }
   },
