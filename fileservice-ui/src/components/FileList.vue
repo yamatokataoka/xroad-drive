@@ -5,7 +5,7 @@
     hide-default-footer
     fixed-header
     single-select
-    @click:row="selectRow"
+    @click:row="clickRow"
     class="elevation-1"
   >
     <template v-slot:no-data>No Files</template>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import mapState from "vuex";
+  import { mapState, mapMutations } from 'vuex';
 
   export default {
     name: 'FileList',
@@ -49,16 +49,17 @@
       }
     },
     computed: {
-      ...mapState("file", ["selectedFile"]),
+      ...mapState('file', ['selectedFile'])
     },
     methods: {
-      selectRow(item, row) {
+      ...mapMutations('file', ['updateSelectedFile']),
+      clickRow(item, row) {
         if (this.selectedFile && row.isSelected) {
           row.select(false);
-          this.$store.commit('setSelectedFile', null);
+          this.updateSelectedFile(null);
         } else {
           row.select(true);
-          this.$store.commit('setSelectedFile', item);
+          this.updateSelectedFile(item);
         }
       }
     },
