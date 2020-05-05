@@ -1,13 +1,13 @@
 # File Service
 
-File Service - a web service provides API interface and UI to share files over X-Road.
+File Service - a web strage service provides API interface and UI to share files over X-Road.
 
 # Getting Started Development using Docker
 
 On the project home directory, run
 
 ```
-docker-compose --file docker-compose-dev.yml up --build
+./dockerized_dev.sh up --build
 ```
 
 Access web UI via:
@@ -17,5 +17,5 @@ Access web UI via:
 Remove docker containers and volumes:
 
 ```
-docker-compose --file docker-compose-dev.yml down --volumes
+./dockerized_dev.sh down --volumes
 ```
