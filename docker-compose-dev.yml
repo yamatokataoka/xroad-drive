@@ -2,6 +2,7 @@ version: '3.7'
 services:
   fileservice-api:
     container_name: fileservice-api
+    user: ${uid}:${gid}
     build: 
       context: ./api
       dockerfile: Dockerfile-dev
@@ -10,6 +11,7 @@ services:
     volumes:
       - ./api:/fileservice-api
   mongodb:
+    container_name: mongodb
     image: mongo:latest
     ports:
       - 27017:27017
@@ -17,6 +19,7 @@ services:
       - ./db:/data/db
   fileservice-ui:
     container_name: fileservice-ui
+    user: ${uid}:${gid}
     build: 
       context: ./fileservice-ui
       dockerfile: Dockerfile-dev
