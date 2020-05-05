@@ -23,6 +23,9 @@
 
   export default {
     name: 'ToolBar',
+    components: {
+      UploadButton
+    }
     data() {
       return {
         pageTitle: 'MyFiles',
