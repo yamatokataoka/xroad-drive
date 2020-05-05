@@ -40,7 +40,7 @@
       }
     },
     methods: {
-      ...mapActions('inputFile', ['setUploading', 'deleteInputFiles']),
+      ...mapActions('myFiles', ['setUploading', 'deleteInputFiles']),
       clickClose() {
         this.setUploading(false);
         this.deleteInputFiles();

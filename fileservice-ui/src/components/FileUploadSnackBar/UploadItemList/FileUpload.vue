@@ -16,7 +16,7 @@
       }
     },
     methods: {
-      ...mapActions('inputFile', [
+      ...mapActions('myFiles', [
         'upload',
         'updateProgressById',
         'updateIsDoneById',
