@@ -49,10 +49,10 @@
       }
     },
     computed: {
-      ...mapState('file', ['selectedFile'])
+      ...mapState('myFiles', ['selectedFile'])
     },
     methods: {
-      ...mapMutations('file', ['updateSelectedFile']),
+      ...mapMutations('myFiles', ['updateSelectedFile']),
       clickRow(item, row) {
         if (this.selectedFile && row.isSelected) {
           row.select(false);
