@@ -2,9 +2,11 @@ import axios from 'axios';
 
 export default {
   namespaced: true,
-  state: {
-    uploading: false,
-    inputFiles: []
+  state() {
+    return {
+      uploading: false,
+      inputFiles: []
+    };
   },
   mutations: {
     updateInputFiles(state, inputFiles) {
