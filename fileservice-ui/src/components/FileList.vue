@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
 
   export default {
     name: 'FileList',
@@ -52,7 +52,7 @@
       ...mapState('myFiles', ['selectedFile'])
     },
     methods: {
-      ...mapMutations('myFiles', ['updateSelectedFile']),
+      ...mapActions('myFiles', ['updateSelectedFile']),
       clickRow(item, row) {
         if (this.selectedFile && row.isSelected) {
           row.select(false);

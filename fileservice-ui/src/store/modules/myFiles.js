@@ -4,10 +4,13 @@ export default {
     selectedFile: null
   },
   mutations: {
-    updateSelectedFile(state, payload) {
-      state.selectedFile = payload;
+    updateSelectedFile(state, selectedFile) {
+      state.selectedFile = selectedFile;
     }
   },
   actions: {
+    updateSelectedFile({ commit }, selectedFile) {
+      commit('updateSelectedFile', selectedFile);
+    }
   }
 };
