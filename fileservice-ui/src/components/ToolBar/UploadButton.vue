@@ -18,7 +18,7 @@
     name: 'UploadButton',
     methods: {
       clickInput() {
-        return this.$refs.input.click();
+        this.$refs.input.click();
       },
       emitInputFiles() {
         this.$emit('change', this.$refs.input);

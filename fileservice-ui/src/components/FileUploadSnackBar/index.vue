@@ -6,7 +6,6 @@
     :value="uploading"
   >
     <upload-tool-bar
-      @clickClose="uploading = false"
       @clickChevronUp="listOpen = false"
       @clickChevronDown="listOpen = true"
       :listOpen="listOpen"
@@ -32,12 +31,11 @@
     data() {
       return {
         timeout: 0,
-        listOpen: true,
-        uploading: true
+        listOpen: true
       }
     },
     computed: {
-      ...mapState('inputFile', ['inputFiles'])
+      ...mapState('inputFile', ['inputFiles', 'uploading'])
     },
   };
 </script>

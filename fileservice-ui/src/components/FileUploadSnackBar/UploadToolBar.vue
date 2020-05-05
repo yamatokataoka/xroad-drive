@@ -2,7 +2,7 @@
   <v-toolbar>
     <v-btn
       icon
-      @click="emitClickClose"
+      @click="clickClose"
     >
       <v-icon>mdi-close</v-icon>
     </v-btn>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+  import { mapActions } from "vuex";
+
   export default {
     name: 'UploadToolBar',
     props: {
@@ -38,8 +40,10 @@
       }
     },
     methods: {
-      emitClickClose() {
-        this.$emit('clickClose');
+      ...mapActions('inputFile', ['setUploading', 'deleteInputFiles']),
+      clickClose() {
+        this.setUploading(false);
+        this.deleteInputFiles();
       },
       emitClickChevronUp() {
         this.$emit('clickChevronUp');

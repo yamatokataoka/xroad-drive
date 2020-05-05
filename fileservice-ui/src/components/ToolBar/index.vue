@@ -38,9 +38,10 @@
       ...mapState('myFiles', ['selectedFile'])
     },
     methods: {
-      ...mapActions('inputFile', ['updateInputFiles']),
+      ...mapActions('inputFile', ['updateInputFiles', 'setUploading']),
       changeInputFiles(refInput) {
         this.updateInputFiles(refInput.files);
+        this.setUploading(true);
         refInput.value = '';
       }
     }

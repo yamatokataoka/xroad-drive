@@ -3,6 +3,7 @@ import axios from 'axios';
 export default {
   namespaced: true,
   state: {
+    uploading: false,
     inputFiles: []
   },
   mutations: {
@@ -28,6 +29,12 @@ export default {
         isDone,
         indeterminate
       });
+    },
+    setUploading(state, uploading) {
+      state.uploading = uploading;
+    },
+    deleteInputFiles(state) {
+      state.inputFiles = [];
     }
   },
   actions: {
@@ -87,6 +94,12 @@ export default {
     updateIndeterminateById({ state, commit }, { id, indeterminate }) {
       const currentFile = state.inputFiles.find(item => item.id === id);
       commit('updateInputFileById', { inputFile: currentFile, indeterminate });
-    }
+    },
+    setUploading({ commit }, uploading) {
+      commit('setUploading', uploading);
+    },
+    deleteInputFiles({ commit }) {
+      commit('deleteInputFiles');
+    },
   }
 };
