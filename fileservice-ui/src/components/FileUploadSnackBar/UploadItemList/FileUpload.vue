@@ -25,7 +25,6 @@
     },
     async mounted() {
       const { file } = this;
-      console.log('this.file', file);
       if (!file) return;
       try {
         await this.upload(file);
