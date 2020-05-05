@@ -32,7 +32,7 @@
       }
     },
     computed: {
-      ...mapState("file", ["selectedFile"]),
+      ...mapState("myFiles", ["selectedFile"]),
     },
   };
 </script>
