@@ -14,27 +14,38 @@
       class="mx-4"
       vertical
     ></v-divider>
-    <upload-button></upload-button>
+    <upload-button
+      @change="changeInputFiles"
+    ></upload-button>
   </v-toolbar>
 </template>
+
 <script>
-  import mapState from "vuex";
+  import { mapState, mapActions } from 'vuex';
   import UploadButton from '@/components/ToolBar/UploadButton';
 
   export default {
     name: 'ToolBar',
     components: {
       UploadButton
-    }
+    },
     data() {
       return {
-        pageTitle: 'MyFiles',
+        pageTitle: 'MyFiles'
       }
     },
     computed: {
-      ...mapState("myFiles", ["selectedFile"]),
+      ...mapState('myFiles', ['selectedFile'])
     },
+    methods: {
+      ...mapActions('inputFile', ['updateInputFiles']),
+      changeInputFiles(refInput) {
+        this.updateInputFiles(refInput.files);
+        refInput.value = '';
+      }
+    }
   };
 </script>
+
 <style scoped>
 </style>
