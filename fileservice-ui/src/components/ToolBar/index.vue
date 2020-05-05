@@ -14,15 +14,11 @@
       class="mx-4"
       vertical
     ></v-divider>
-    <v-btn icon>
-      <v-icon>mdi-file-upload-outline</v-icon>
-    </v-btn>
+    <upload-button></upload-button>
   </v-toolbar>
 </template>
-
 <script>
   import mapState from "vuex";
-
   export default {
     name: 'ToolBar',
     data() {
@@ -35,6 +31,5 @@
     },
   };
 </script>
-
 <style scoped>
 </style>
