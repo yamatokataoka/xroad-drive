@@ -19,6 +19,8 @@
 </template>
 <script>
   import mapState from "vuex";
+  import UploadButton from '@/components/ToolBar/UploadButton';
+
   export default {
     name: 'ToolBar',
     data() {
