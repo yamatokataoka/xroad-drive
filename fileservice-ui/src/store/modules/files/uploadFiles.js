@@ -78,7 +78,7 @@ export default {
             uploadFile.indeterminate = false;
             let progress = Math.round( (progressEvent.loaded * 100) / totalLength );
             // To determine v-progress-linear's color correctly
-            progress = progress === 100 ? 95 : progress;
+            progress = progress === 100 ? 90 : progress;
             dispatch('updateProgressById', { id: uploadFile.id, progress });
           }
         }
