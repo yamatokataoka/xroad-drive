@@ -27,7 +27,7 @@
   import { mapActions } from "vuex";
 
   export default {
-    name: 'UploadToolbar',
+    name: 'FileListbar',
     props: {
       listOpen: {
         required: true
