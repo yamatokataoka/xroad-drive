@@ -34,8 +34,11 @@
       }
     },
     computed: {
-      ...mapState('myFiles', ['inputFiles', 'uploading'])
-    },
+      ...mapState({
+        inputFiles: state => state.myFiles.inputFiles.inputFiles,
+        uploading: state => state.myFiles.inputFiles.uploading
+      })
+    }
   };
 </script>
 

@@ -11,10 +11,6 @@
         required: true
       }
     },
-    data() {
-      return {
-      }
-    },
     methods: {
       ...mapActions('myFiles', [
         'upload',

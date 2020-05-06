@@ -1,5 +1,5 @@
-import fileList from './fileList';
-import inputFiles from './inputFiles';
+import fileList from './fileList.js';
+import inputFiles from './inputFiles.js';
 
 export default {
   namespaced: true,
