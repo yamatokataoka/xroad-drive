@@ -31,18 +31,18 @@
     components: {
       UploadButton
     },
-    data() {
-      return {
-        pageTitle: 'MyFiles'
+    props: {
+      pageTitle: {
+        required: true
       }
     },
     computed: {
       ...mapState({
-        selectedFile: state => state.myFiles.fileList.selectedFile
+        selectedFile: state => state.files.fileList.selectedFile
       })
     },
     methods: {
-      ...mapActions('myFiles', ['updateUploadFiles', 'setUploading']),
+      ...mapActions('files', ['updateUploadFiles', 'setUploading']),
       changeUploadFiles(refInput) {
         this.updateUploadFiles(refInput.files);
         this.setUploading(true);

@@ -1,6 +1,3 @@
-<template>
-</template>
-
 <script>
   import { mapActions } from "vuex";
 
@@ -12,7 +9,7 @@
       }
     },
     methods: {
-      ...mapActions('myFiles', [
+      ...mapActions('files', [
         'upload',
         'updateProgressById',
         'updateIsDoneById',

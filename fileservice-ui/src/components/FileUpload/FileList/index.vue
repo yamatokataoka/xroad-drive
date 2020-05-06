@@ -1,6 +1,6 @@
 <template>
   <v-list
-    style="max-height: 250px"
+    style="max-height: 260px"
     class="overflow-y-auto "
   >
     <v-list-group
