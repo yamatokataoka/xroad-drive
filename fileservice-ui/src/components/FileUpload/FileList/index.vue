@@ -32,10 +32,10 @@
 </template>
 
 <script>
-  import FileUpload from '@/components/FileUpload/UploadFileList/FileUpload';
+  import FileUpload from '@/components/FileUpload/FileList/FileUpload';
 
   export default {
-    name: 'UploadFileList',
+    name: 'FileList',
     components: {
       FileUpload
     },

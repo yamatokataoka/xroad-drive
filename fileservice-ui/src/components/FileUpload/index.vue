@@ -9,23 +9,23 @@
       @clickChevron="listOpen = !listOpen"
       :listOpen="listOpen"
     ></file-listbar>
-    <upload-file-list
+    <file-list
       :files="uploadFiles"
       :listOpen="listOpen"
-    ></upload-file-list>
+    ></file-list>
   </v-snackbar>
 </template>
 
 <script>
   import { mapState } from "vuex";
   import FileListbar from '@/components/FileUpload/FileListbar';
-  import UploadFileList from '@/components/FileUpload/UploadFileList';
+  import FileList from '@/components/FileUpload/FileList';
 
   export default {
     name: 'FileUpload',
     components: {
       FileListbar,
-      UploadFileList
+      FileList
     },
     data() {
       return {
