@@ -22,10 +22,10 @@
 
 <script>
   import { mapState, mapActions } from 'vuex';
-  import UploadButton from '@/components/ToolBar/UploadButton';
+  import UploadButton from '@/components/Toolbar/UploadButton';
 
   export default {
-    name: 'ToolBar',
+    name: 'Toolbar',
     components: {
       UploadButton
     },

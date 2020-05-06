@@ -5,11 +5,10 @@
     v-if="inputFiles.length"
     :value="uploading"
   >
-    <upload-tool-bar
-      @clickChevronUp="listOpen = false"
-      @clickChevronDown="listOpen = true"
+    <upload-toolbar
+      @clickChevron="listOpen = !listOpen"
       :listOpen="listOpen"
-    ></upload-tool-bar>
+    ></upload-toolbar>
     <upload-item-list
       :files="inputFiles"
       :listOpen="listOpen"
@@ -19,13 +18,13 @@
 
 <script>
   import { mapState } from "vuex";
-  import UploadToolBar from '@/components/FileUploadSnackBar/UploadToolBar';
-  import UploadItemList from '@/components/FileUploadSnackBar/UploadItemList';
+  import UploadToolbar from '@/components/FileUploadSnackbar/UploadToolbar';
+  import UploadItemList from '@/components/FileUploadSnackbar/UploadItemList';
 
   export default {
-    name: 'FileUploadSnackBar',
+    name: 'FileUploadSnackbar',
     components: {
-      UploadToolBar,
+      UploadToolbar,
       UploadItemList
     },
     data() {

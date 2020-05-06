@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import FileUpload from '@/components/FileUploadSnackBar/UploadItemList/FileUpload';
+  import FileUpload from '@/components/FileUploadSnackbar/UploadItemList/FileUpload';
 
   export default {
     name: 'UploadItemList',

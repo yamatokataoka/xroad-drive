@@ -1,22 +1,22 @@
 <template>
   <div>
-    <tool-bar />
+    <toolbar />
     <file-list />
-    <file-upload-snack-bar />
+    <file-upload-snackbar />
   </div>
 </template>
 
 <script>
   import FileList from '@/components/FileList';
-  import ToolBar from '@/components/ToolBar';
-  import FileUploadSnackBar from '@/components/FileUploadSnackBar';
+  import Toolbar from '@/components/Toolbar';
+  import FileUploadSnackbar from '@/components/FileUploadSnackbar';
 
   export default {
     name: 'MyFiles',
     components: {
       FileList,
-      ToolBar,
-      FileUploadSnackBar
+      Toolbar,
+      FileUploadSnackbar
     },
   };
 </script>

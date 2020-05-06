@@ -11,13 +11,13 @@
     <v-btn
       icon
       v-if="listOpen"
-      @click="emitClickChevronUp"
+      @click="emitClickChevron"
     ><v-icon>mdi-chevron-up</v-icon>
     </v-btn>
     <v-btn
       icon
       v-else
-      @click="emitClickChevronDown"
+      @click="emitClickChevron"
     ><v-icon>mdi-chevron-down</v-icon>
     </v-btn>
   </v-toolbar>
@@ -27,7 +27,7 @@
   import { mapActions } from "vuex";
 
   export default {
-    name: 'UploadToolBar',
+    name: 'UploadToolbar',
     props: {
       listOpen: {
         required: true
@@ -45,11 +45,8 @@
         this.setUploading(false);
         this.deleteInputFiles();
       },
-      emitClickChevronUp() {
-        this.$emit('clickChevronUp');
-      },
-      emitClickChevronDown() {
-        this.$emit('clickChevronDown');
+      emitClickChevron() {
+        this.$emit('clickChevron');
       }
     }
   };
