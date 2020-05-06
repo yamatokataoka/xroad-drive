@@ -1,6 +1,8 @@
 export default {
-  state: {
-    selectedFile: null
+  state() {
+    return {
+      selectedFile: null
+    };
   },
   mutations: {
     updateSelectedFile(state, selectedFile) {

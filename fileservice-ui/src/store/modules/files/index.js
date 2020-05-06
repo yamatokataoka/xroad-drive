@@ -3,6 +3,8 @@ import inputFiles from './inputFiles';
 
 export default {
   namespaced: true,
-  fileList,
-  inputFiles
+  modules: {
+    fileList,
+    inputFiles
+  }
 };
