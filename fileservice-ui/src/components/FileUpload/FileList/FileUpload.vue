@@ -12,7 +12,7 @@
       }
     },
     methods: {
-      ...mapActions('myFiles', [
+      ...mapActions('files', [
         'upload',
         'updateProgressById',
         'updateIsDoneById',

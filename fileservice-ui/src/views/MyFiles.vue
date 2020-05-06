@@ -10,6 +10,7 @@
   import FileList from '@/components/FileList';
   import Toolbar from '@/components/Toolbar';
   import FileUpload from '@/components/FileUpload';
+  import files from '@/store/modules/files';
 
   export default {
     name: 'MyFiles',
@@ -17,6 +18,15 @@
       FileList,
       Toolbar,
       FileUpload
+    },
+    created () {
+      const store = this.$store;
+      store.registerModule('files', files);
+    },
+    beforeRouteLeave (to, from, next) {
+      const store = this.$store;
+      store.unregisterModule('files');
+      next();
     },
   };
 </script>

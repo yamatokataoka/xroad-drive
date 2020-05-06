@@ -35,8 +35,8 @@
     },
     computed: {
       ...mapState({
-        uploadFiles: state => state.myFiles.uploadFiles.uploadFiles,
-        uploading: state => state.myFiles.uploadFiles.uploading
+        uploadFiles: state => state.files.uploadFiles.uploadFiles,
+        uploading: state => state.files.uploadFiles.uploading
       })
     }
   };
