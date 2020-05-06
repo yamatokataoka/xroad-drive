@@ -31,9 +31,9 @@
     components: {
       UploadButton
     },
-    data() {
-      return {
-        pageTitle: 'MyFiles'
+    props: {
+      pageTitle: {
+        required: true
       }
     },
     computed: {

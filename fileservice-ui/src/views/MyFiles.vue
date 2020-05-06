@@ -1,6 +1,6 @@
 <template>
   <div>
-    <toolbar />
+    <toolbar :pageTitle="pageTitle"></toolbar>
     <file-list />
     <file-upload />
   </div>
@@ -18,6 +18,11 @@
       FileList,
       Toolbar,
       FileUpload
+    },
+    data() {
+      return {
+        pageTitle: 'My Files'
+      }
     },
     created () {
       const store = this.$store;
