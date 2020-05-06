@@ -2,7 +2,7 @@
   <v-snackbar
     :timeout="timeout"
     right
-    v-if="inputFiles.length"
+    v-if="uploadFiles.length"
     :value="uploading"
   >
     <upload-toolbar
@@ -10,7 +10,7 @@
       :listOpen="listOpen"
     ></upload-toolbar>
     <upload-item-list
-      :files="inputFiles"
+      :files="uploadFiles"
       :listOpen="listOpen"
     ></upload-item-list>
   </v-snackbar>
@@ -35,8 +35,8 @@
     },
     computed: {
       ...mapState({
-        inputFiles: state => state.myFiles.inputFiles.inputFiles,
-        uploading: state => state.myFiles.inputFiles.uploading
+        uploadFiles: state => state.myFiles.uploadFiles.uploadFiles,
+        uploading: state => state.myFiles.uploadFiles.uploading
       })
     }
   };

@@ -15,7 +15,7 @@
       vertical
     ></v-divider>
     <upload-button
-      @change="changeInputFiles"
+      @change="changeUploadFiles"
     ></upload-button>
   </v-toolbar>
 </template>
@@ -40,9 +40,9 @@
       })
     },
     methods: {
-      ...mapActions('myFiles', ['updateInputFiles', 'setUploading']),
-      changeInputFiles(refInput) {
-        this.updateInputFiles(refInput.files);
+      ...mapActions('myFiles', ['updateUploadFiles', 'setUploading']),
+      changeUploadFiles(refInput) {
+        this.updateUploadFiles(refInput.files);
         this.setUploading(true);
         refInput.value = '';
       }

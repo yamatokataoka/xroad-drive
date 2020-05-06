@@ -1,10 +1,10 @@
 import fileList from './fileList.js';
-import inputFiles from './inputFiles.js';
+import uploadFiles from './uploadFiles.js';
 
 export default {
   namespaced: true,
   modules: {
     fileList,
-    inputFiles
+    uploadFiles
   }
 };

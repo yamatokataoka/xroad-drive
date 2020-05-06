@@ -40,10 +40,10 @@
       }
     },
     methods: {
-      ...mapActions('myFiles', ['setUploading', 'deleteInputFiles']),
+      ...mapActions('myFiles', ['setUploading', 'deleteUploadFiles']),
       clickClose() {
         this.setUploading(false);
-        this.deleteInputFiles();
+        this.deleteUploadFiles();
       },
       emitClickChevron() {
         this.$emit('clickChevron');
