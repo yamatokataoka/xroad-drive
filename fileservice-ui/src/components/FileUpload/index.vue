@@ -18,11 +18,11 @@
 
 <script>
   import { mapState } from "vuex";
-  import UploadToolbar from '@/components/FileUploadSnackbar/UploadToolbar';
-  import UploadFileList from '@/components/FileUploadSnackbar/UploadFileList';
+  import UploadToolbar from '@/components/FileUpload/UploadToolbar';
+  import UploadFileList from '@/components/FileUpload/UploadFileList';
 
   export default {
-    name: 'FileUploadSnackbar',
+    name: 'FileUpload',
     components: {
       UploadToolbar,
       UploadFileList
