@@ -1,7 +1,7 @@
 <template>
   <v-list
     style="max-height: 260px"
-    class="overflow-y-auto "
+    class="overflow-y-auto"
   >
     <v-list-group
       :value="listOpen"

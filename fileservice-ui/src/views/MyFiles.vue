@@ -24,11 +24,11 @@
         pageTitle: 'My Files'
       }
     },
-    created () {
+    created() {
       const store = this.$store;
       store.registerModule('files', files);
     },
-    beforeRouteLeave (to, from, next) {
+    beforeRouteLeave(to, from, next) {
       const store = this.$store;
       store.unregisterModule('files');
       next();
