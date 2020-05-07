@@ -37,12 +37,10 @@
       }
     },
     computed: {
-      ...mapState({
-        selectedFile: state => state.files.fileList.selectedFile
-      })
+      ...mapState('myFiles', ['selectedFile'])
     },
     methods: {
-      ...mapActions('files', ['updateUploadFiles', 'setUploading']),
+      ...mapActions('uploadFiles', ['updateUploadFiles', 'setUploading']),
       changeUploadFiles(refInput) {
         this.updateUploadFiles(refInput.files);
         this.setUploading(true);

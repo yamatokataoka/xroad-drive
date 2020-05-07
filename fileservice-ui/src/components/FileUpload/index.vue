@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import { mapState } from "vuex";
+  import { mapState, mapActions } from "vuex";
   import FileListbar from '@/components/FileUpload/FileListbar';
   import FileList from '@/components/FileUpload/FileList';
 
@@ -34,10 +34,13 @@
       }
     },
     computed: {
-      ...mapState({
-        uploadFiles: state => state.files.uploadFiles.uploadFiles,
-        uploading: state => state.files.uploadFiles.uploading
-      })
+      ...mapState('uploadFiles', ['uploading', 'uploadFiles'])
+    },
+    methods: {
+      ...mapActions('uploadFiles', ['deleteUploadFiles'])
+    },
+    beforeDestroy() {
+      this.deleteUploadFiles();
     }
   };
 </script>
