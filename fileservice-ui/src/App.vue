@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <app-navigation />
+    <app-bar />
     <v-content>
       <router-view />
     </v-content>
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import AppNavigation from '@/components/AppNavigation';
+import AppBar from '@/components/layout/AppBar';
 
 export default {
   name: 'App',
-  components: { AppNavigation },
+  components: { AppBar },
 };
 </script>
 

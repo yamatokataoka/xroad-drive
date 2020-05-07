@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <div>
     <v-navigation-drawer
       app
       clipped
@@ -41,12 +41,12 @@
       <v-spacer />
       <v-btn outlined class="hidden-sm-and-down">SIGN IN</v-btn>
     </v-app-bar>
-  </nav>
+  </div>
 </template>
 
 <script>
   export default {
-    name: 'AppNavigation',
+    name: 'AppBar',
     data() {
       return {
         drawer: null,
