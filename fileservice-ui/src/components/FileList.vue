@@ -13,10 +13,15 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex';
+  import { mapActions } from 'vuex';
 
   export default {
     name: 'FileList',
+    props: {
+      selectedFile: {
+        required: true
+      }
+    },
     data() {
       return {
         fileList: [
@@ -47,9 +52,6 @@
           { text: 'Size', value: 'size' }
         ]
       }
-    },
-    computed: {
-      ...mapState('myFiles', ['selectedFile'])
     },
     methods: {
       ...mapActions('myFiles', ['updateSelectedFile']),

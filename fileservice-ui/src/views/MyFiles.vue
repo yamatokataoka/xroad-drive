@@ -4,7 +4,9 @@
       :pageTitle="pageTitle"
       :selectedFile="selectedFile"
     ></toolbar>
-    <file-list />
+    <file-list
+      :selectedFile="selectedFile"
+    ></file-list>
     <file-upload />
   </div>
 </template>
