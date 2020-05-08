@@ -5,6 +5,7 @@
     name: 'FileUpload',
     props: {
       file: {
+        type: Object,
         required: true
       }
     },

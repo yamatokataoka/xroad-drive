@@ -1,6 +1,6 @@
 <template>
   <v-list
-    style="max-height: 260px"
+    style="max-height: 260px; padding: 0"
     class="overflow-y-auto"
   >
     <v-list-group
@@ -41,9 +41,11 @@
     },
     props: {
       files: {
+        type: Array,
         required: true
       },
       listOpen: {
+        type: Boolean,
         required: true
       }
     }

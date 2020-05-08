@@ -12,13 +12,13 @@
       icon
       v-if="listOpen"
       @click="emitClickChevron"
-    ><v-icon>mdi-chevron-up</v-icon>
+    ><v-icon>mdi-chevron-down</v-icon>
     </v-btn>
     <v-btn
       icon
       v-else
       @click="emitClickChevron"
-    ><v-icon>mdi-chevron-down</v-icon>
+    ><v-icon>mdi-chevron-up</v-icon>
     </v-btn>
   </v-toolbar>
 </template>
@@ -30,6 +30,7 @@
     name: 'FileListbar',
     props: {
       listOpen: {
+        type: Boolean,
         required: true
       }
     },
