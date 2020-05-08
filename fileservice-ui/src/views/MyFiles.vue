@@ -12,7 +12,7 @@
 <script>
   import { mapState, mapActions } from 'vuex';
   import FileList from '@/components/FileList';
-  import Toolbar from '@/components/Toolbar';
+  import Toolbar from '@/components/fileView/Toolbar';
   import FileUpload from '@/components/FileUpload';
 
   export default {

@@ -24,7 +24,7 @@
 
 <script>
   import { mapActions } from 'vuex';
-  import UploadButton from '@/components/Toolbar/UploadButton';
+  import UploadButton from '@/components/fileView/Toolbar/UploadButton';
 
   export default {
     name: 'Toolbar',
