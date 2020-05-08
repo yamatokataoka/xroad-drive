@@ -30,6 +30,7 @@
         this.updateIndeterminateById({ id: file.id, indeterminate: false });
         console.log("Failed to upload");
       }
-    }
+    },
+    render: () => null,
   };
 </script>
