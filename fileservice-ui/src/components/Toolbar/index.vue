@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex';
+  import { mapActions } from 'vuex';
   import UploadButton from '@/components/Toolbar/UploadButton';
 
   export default {
@@ -33,11 +33,12 @@
     },
     props: {
       pageTitle: {
+        type: String,
+        required: true
+      },
+      selectedFile: {
         required: true
       }
-    },
-    computed: {
-      ...mapState('myFiles', ['selectedFile'])
     },
     methods: {
       ...mapActions('uploadFiles', ['updateUploadFiles', 'setUploading']),

@@ -1,12 +1,16 @@
 <template>
   <div>
-    <toolbar :pageTitle="pageTitle"></toolbar>
+    <toolbar
+      :pageTitle="pageTitle"
+      :selectedFile="selectedFile"
+    ></toolbar>
     <file-list />
     <file-upload />
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import FileList from '@/components/FileList';
   import Toolbar from '@/components/Toolbar';
   import FileUpload from '@/components/FileUpload';
@@ -22,6 +26,9 @@
       return {
         pageTitle: 'My Files'
       }
+    },
+    computed: {
+      ...mapState('myFiles', ['selectedFile'])
     }
   };
 </script>
