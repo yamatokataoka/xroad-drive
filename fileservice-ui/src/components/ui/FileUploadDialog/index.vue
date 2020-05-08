@@ -19,11 +19,11 @@
 
 <script>
   import { mapState, mapActions } from "vuex";
-  import FileListbar from '@/components/FileUpload/FileListbar';
-  import FileList from '@/components/FileUpload/FileList';
+  import FileListbar from '@/components/ui/FileUploadDialog/FileListbar';
+  import FileList from '@/components/ui/FileUploadDialog/FileList';
 
   export default {
-    name: 'FileUpload',
+    name: 'FileUploadDialog',
     components: {
       FileListbar,
       FileList

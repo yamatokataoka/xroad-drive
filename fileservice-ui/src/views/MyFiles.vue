@@ -7,7 +7,7 @@
     <file-list
       :selectedFile="selectedFile"
     ></file-list>
-    <file-upload />
+    <file-upload-dialog />
   </div>
 </template>
 
@@ -15,14 +15,14 @@
   import { mapState, mapActions } from 'vuex';
   import FileList from '@/components/fileView/FileList';
   import Toolbar from '@/components/fileView/Toolbar';
-  import FileUpload from '@/components/FileUpload';
+  import FileUploadDialog from '@/components/ui/FileUploadDialog';
 
   export default {
     name: 'MyFiles',
     components: {
       FileList,
       Toolbar,
-      FileUpload
+      FileUploadDialog
     },
     data() {
       return {
