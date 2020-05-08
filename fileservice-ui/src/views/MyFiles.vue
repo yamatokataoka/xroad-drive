@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
   import FileList from '@/components/FileList';
   import Toolbar from '@/components/Toolbar';
   import FileUpload from '@/components/FileUpload';
@@ -29,6 +29,13 @@
     },
     computed: {
       ...mapState('myFiles', ['selectedFile'])
+    },
+    methods: {
+      ...mapActions('myFiles', ['deleteSelectedFile'])
+    },
+    beforeRouteLeave(to, from, next) {
+      this.deleteSelectedFile();
+      next();
     }
   };
 </script>
