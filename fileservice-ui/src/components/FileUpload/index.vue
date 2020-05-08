@@ -1,8 +1,9 @@
 <template>
-  <v-snackbar
-    :timeout="timeout"
-    right
-    v-if="uploadFiles.length"
+  <v-dialog
+    persistent
+    no-click-animation
+    hide-overlay
+    max-width="324"
     :value="uploading"
   >
     <file-listbar
@@ -13,7 +14,7 @@
       :files="uploadFiles"
       :listOpen="listOpen"
     ></file-list>
-  </v-snackbar>
+  </v-dialog>
 </template>
 
 <script>
@@ -46,9 +47,10 @@
 </script>
 
 <style scoped>
-  >>>.v-snack__content {
-    padding: 0;
-    display: block;
+  >>>.v-dialog {
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
   >>>.v-list-group__header {
     display: none;
