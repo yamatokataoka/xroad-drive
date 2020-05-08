@@ -12,7 +12,7 @@ export default {
     updateUploadFiles(state, uploadFiles) {
       state.uploadFiles = [...state.uploadFiles, ...uploadFiles];
     },
-    updateUploadFileById(state, {
+    updateUploadFile(state, {
       uploadFile,
       id = uploadFile.id,
       file = uploadFile.file,
@@ -22,7 +22,6 @@ export default {
       indeterminate = uploadFile.indeterminate
     }) {
       const index = state.uploadFiles.findIndex(item => item.id === id);
-      console.log('progress', progress)
       state.uploadFiles.splice(index, 1, {
         id,
         file,
@@ -40,13 +39,9 @@ export default {
     }
   },
   actions: {
-    updateUploadFiles({ commit, state }, files) {
-      console.log('called updateUploadFiles');
+    updateUploadFiles({ commit, getters }, files) {
       let uploadFiles = [];
-      const id = state.uploadFiles.length === 0 ? 0 : (() => {
-        const ids = state.uploadFiles.map((element) => element.id);
-        return Math.max(...ids) + 1;
-      })(id);
+      const id = getters.nextId;
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -58,13 +53,11 @@ export default {
           isDone: false,
           indeterminate: true
         };
-        console.log('id', uploadFile.id);
         uploadFiles.push(uploadFile);
       }
       commit('updateUploadFiles', uploadFiles);
     },
     async upload({ dispatch }, uploadFile) {
-      console.log('start to upload');
       const formData = new FormData();
       formData.append('file', uploadFile.file);
 
@@ -76,7 +69,7 @@ export default {
         onUploadProgress: (progressEvent) => {
           const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
           if (totalLength !== null) {
-            uploadFile.indeterminate = false;
+            dispatch('updateIndeterminateById', { id: uploadFile.id, indeterminate: false });
             let progress = Math.round( (progressEvent.loaded * 100) / totalLength );
             // To determine v-progress-linear's color correctly
             progress = progress === 100 ? 90 : progress;
@@ -85,17 +78,26 @@ export default {
         }
       });
     },
-    updateProgressById({ state, commit }, { id, progress }) {
-      const currentFile = state.uploadFiles.find(item => item.id === id);
-      commit('updateUploadFileById', { uploadFile: currentFile, progress });
+    updateProgressById({ commit, getters }, { id, progress }) {
+      const uploadFile = getters.getFileById(id);
+      commit('updateUploadFile', {
+        uploadFile,
+        progress
+      });
     },
-    updateIsDoneById({ state, commit }, { id, isDone }) {
-      const currentFile = state.uploadFiles.find(item => item.id === id);
-      commit('updateUploadFileById', { uploadFile: currentFile, isDone });
+    updateIsDoneById({ commit, getters }, { id, isDone }) {
+      const uploadFile = getters.getFileById(id);
+      commit('updateUploadFile', {
+        uploadFile,
+        isDone
+      });
     },
-    updateIndeterminateById({ state, commit }, { id, indeterminate }) {
-      const currentFile = state.uploadFiles.find(item => item.id === id);
-      commit('updateUploadFileById', { uploadFile: currentFile, indeterminate });
+    updateIndeterminateById({ commit, getters }, { id, indeterminate }) {
+      const uploadFile = getters.getFileById(id);
+      commit('updateUploadFile', {
+        uploadFile,
+        indeterminate
+      });
     },
     setUploading({ commit }, uploading) {
       commit('setUploading', uploading);
@@ -103,5 +105,20 @@ export default {
     deleteUploadFiles({ commit }) {
       commit('deleteUploadFiles');
     },
+  },
+  getters: {
+    nextId(state) {
+      const { uploadFiles } = state;
+
+      if (uploadFiles.length === 0) {
+        return 0;
+      } else {
+        const ids = uploadFiles.map((element) => element.id);
+        return Math.max(...ids) + 1;
+      }
+    },
+    getFileById: (state) => (id) => {
+      return state.uploadFiles.find(uploadFile => uploadFile.id === id);
+    }
   }
 };
