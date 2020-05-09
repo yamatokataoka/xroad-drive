@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.yamatokataoka.fileservice.api.testBuilder.buildMetadata;
@@ -53,7 +54,7 @@ class MediaServiceTest {
 
   @Test
   public void testDelete() {
-    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L);
+    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, LocalDateTime.of(2020, 2, 25, 0, 0));
     when(metadataRepository.findById(any())).thenReturn(Optional.of(metadata));
 
     mediaService.delete("string of id");

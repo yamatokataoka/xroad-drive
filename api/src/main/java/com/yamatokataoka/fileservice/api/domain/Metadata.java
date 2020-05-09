@@ -1,6 +1,9 @@
 package com.yamatokataoka.fileservice.api.domain;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+
+import java.time.LocalDateTime;
 
 public class Metadata {
 
@@ -8,6 +11,9 @@ public class Metadata {
   private String id;
   private String filename;
   private Long filesize;
+
+  @CreatedDate
+  private LocalDateTime createdDateTime;
 
   public Metadata() {}
 
@@ -33,5 +39,13 @@ public class Metadata {
 
   public void setFilesize(Long filesize) {
     this.filesize = filesize;
+  }
+
+  public LocalDateTime getCreatedDateTime() {
+    return createdDateTime;
+  }
+
+  public void setCreatedDateTime(LocalDateTime createdDateTime) {
+    this.createdDateTime = createdDateTime;
   }
 }

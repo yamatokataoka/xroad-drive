@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.yamatokataoka.fileservice.api.testBuilder.buildMetadata;
@@ -40,7 +41,7 @@ public class MetadataServiceTest {
 
   @Test
   public void testGetById() {
-    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L);
+    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, LocalDateTime.of(2020, 2, 25, 0, 0));
     when(metadataRepository.findById(any())).thenReturn(Optional.of(metadata));
     
     metadataService.getById("507f1f77bcf86cd799439011");

@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class MetadataControllerTest {
   @MockBean
   private MetadataService metadataService;
 
-  private Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L);
+  private Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, LocalDateTime.of(2020, 2, 25, 0, 0));
 
   @Test
   void testGetMetadataList() throws Exception {
@@ -54,7 +55,8 @@ public class MetadataControllerTest {
     assertAll(
       () -> assertEquals(metadata.getId(), actualResponseMetadata.getId()),
       () -> assertEquals(metadata.getFilename(), actualResponseMetadata.getFilename()),
-      () -> assertEquals(metadata.getFilesize(), actualResponseMetadata.getFilesize())
+      () -> assertEquals(metadata.getFilesize(), actualResponseMetadata.getFilesize()),
+      () -> assertEquals(metadata.getCreatedDateTime(), actualResponseMetadata.getCreatedDateTime())
     );
   }
 
@@ -73,7 +75,8 @@ public class MetadataControllerTest {
     assertAll(
       () -> assertEquals(metadata.getId(), actualResponseBody.getId()),
       () -> assertEquals(metadata.getFilename(), actualResponseBody.getFilename()),
-      () -> assertEquals(metadata.getFilesize(), actualResponseBody.getFilesize())
+      () -> assertEquals(metadata.getFilesize(), actualResponseBody.getFilesize()),
+      () -> assertEquals(metadata.getCreatedDateTime(), actualResponseBody.getCreatedDateTime())
     );
   }
 }

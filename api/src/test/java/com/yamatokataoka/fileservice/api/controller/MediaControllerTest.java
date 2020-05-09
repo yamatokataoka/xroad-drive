@@ -12,6 +12,8 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.time.LocalDateTime;
+
 import static com.yamatokataoka.fileservice.api.testBuilder.buildMetadata;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -41,7 +43,7 @@ public class MediaControllerTest {
   @Test
   public void testUpload() throws Exception {
 
-    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L);
+    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, LocalDateTime.of(2020, 2, 25, 0, 0));
     MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "originalFilename.txt", "text/plain", "some text".getBytes());
 
     when(mediaService.store(any())).thenReturn(metadata);
@@ -57,7 +59,8 @@ public class MediaControllerTest {
     assertAll(
       () -> assertEquals(metadata.getId(), actualResponseBody.getId()),
       () -> assertEquals(metadata.getFilename(), actualResponseBody.getFilename()),
-      () -> assertEquals(metadata.getFilesize(), actualResponseBody.getFilesize())
+      () -> assertEquals(metadata.getFilesize(), actualResponseBody.getFilesize()),
+      () -> assertEquals(metadata.getCreatedDateTime(), actualResponseBody.getCreatedDateTime())
     );
   }
 
