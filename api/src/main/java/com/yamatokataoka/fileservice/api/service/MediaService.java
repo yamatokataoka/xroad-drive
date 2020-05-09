@@ -3,7 +3,6 @@ package com.yamatokataoka.fileservice.api.service;
 import com.yamatokataoka.fileservice.api.domain.Metadata;
 import com.yamatokataoka.fileservice.api.repository.MetadataRepository;
 import com.yamatokataoka.fileservice.api.FileException;
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -29,18 +28,16 @@ public class MediaService {
 
   @Transactional
   public Metadata store(MultipartFile multipartFile) {
-    String id = new ObjectId().toString();
 		String originalFilename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
     Long fileSize = multipartFile.getSize();
 
     Metadata metadata = new Metadata();
-    metadata.setId(id);
     metadata.setFilename(originalFilename);
     metadata.setFilesize(fileSize);
 
     try (InputStream inputStream = multipartFile.getInputStream()) {
-      storageService.store(inputStream, id);
       metadataRepository.save(metadata);
+      storageService.store(inputStream, metadata.getId());
       return metadata;
     } catch (Exception e) {
       throw new FileException("Failed to store file", e);
