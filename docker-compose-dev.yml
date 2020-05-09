@@ -16,7 +16,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./db:/data/db
+      - mongodb-dev:/data/db
   fileservice-ui:
     container_name: fileservice-ui
     user: ${uid}:${gid}
@@ -27,3 +27,6 @@ services:
       - 8080:8080
     volumes:
       - ./fileservice-ui:/fileservice-ui
+
+volumes:
+  mongodb-dev:
