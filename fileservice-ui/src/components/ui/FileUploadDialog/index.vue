@@ -41,6 +41,7 @@
       ...mapActions('uploadFiles', ['deleteUploadFiles', 'updateUploading'])
     },
     beforeDestroy() {
+      this.updateUploading(false);
       this.deleteUploadFiles();
     }
   };
