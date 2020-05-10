@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <app-bar />
-    <v-content>
+    <v-content
+      style="position: fixed; width: 100%"
+    >
       <router-view />
     </v-content>
   </v-app>

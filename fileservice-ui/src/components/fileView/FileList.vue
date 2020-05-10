@@ -1,4 +1,5 @@
 <template>
+  <!-- todo: hard-coded height -->
   <v-data-table
     :headers="headers"
     :items="fileList"
@@ -6,7 +7,7 @@
     fixed-header
     single-select
     @click:row="clickRow"
-    class="elevation-1"
+    height="calc(100vh - 96px)"
   >
     <template v-slot:no-data>No Files</template>
     <template v-slot:item.filename="{ item }">
