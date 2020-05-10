@@ -31,7 +31,7 @@ export default {
         indeterminate
       });
     },
-    setUploading(state, uploading) {
+    updateUploading(state, uploading) {
       state.uploading = uploading;
     },
     deleteUploadFiles(state) {
@@ -99,8 +99,8 @@ export default {
         indeterminate
       });
     },
-    setUploading({ commit }, uploading) {
-      commit('setUploading', uploading);
+    updateUploading({ commit }, uploading) {
+      commit('updateUploading', uploading);
     },
     deleteUploadFiles({ commit }) {
       commit('deleteUploadFiles');

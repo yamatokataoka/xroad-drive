@@ -41,10 +41,10 @@
       }
     },
     methods: {
-      ...mapActions('uploadFiles', ['updateUploadFiles', 'setUploading']),
+      ...mapActions('uploadFiles', ['updateUploadFiles', 'updateUploading']),
       changeUploadFiles(refInput) {
         this.updateUploadFiles(refInput.files);
-        this.setUploading(true);
+        this.updateUploading(true);
         refInput.value = '';
       }
     }

@@ -38,7 +38,7 @@
       ...mapState('uploadFiles', ['uploading', 'uploadFiles'])
     },
     methods: {
-      ...mapActions('uploadFiles', ['deleteUploadFiles'])
+      ...mapActions('uploadFiles', ['deleteUploadFiles', 'updateUploading'])
     },
     beforeDestroy() {
       this.deleteUploadFiles();

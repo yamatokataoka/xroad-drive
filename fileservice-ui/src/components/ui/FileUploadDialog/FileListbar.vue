@@ -41,9 +41,9 @@
       }
     },
     methods: {
-      ...mapActions('uploadFiles', ['setUploading', 'deleteUploadFiles']),
+      ...mapActions('uploadFiles', ['updateUploading', 'deleteUploadFiles']),
       clickClose() {
-        this.setUploading(false);
+        this.updateUploading(false);
         this.deleteUploadFiles();
       },
       emitClickChevron() {
