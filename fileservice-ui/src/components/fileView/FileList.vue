@@ -9,11 +9,22 @@
     class="elevation-1"
   >
     <template v-slot:no-data>No Files</template>
+    <template v-slot:item.filename="{ item }">
+      <v-icon class="me-4">mdi-file-outline</v-icon>
+      <span>{{ item.filename }}</span>
+    </template>
+    <template v-slot:item.createdDateTime="{ item }">
+      <span v-if="isToday(item.createdDateTime)">today {{ item.createdDateTime | formatHoursMins }}</span>
+      <span v-else>{{ item.createdDateTime | formatDate }}</span>
+    </template>
+    <template v-slot:item.filesize="{ item }">
+      <span>{{ item.filesize | formatBytes }}</span>
+    </template>
   </v-data-table>
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
 
   export default {
     name: 'FileList',
@@ -24,37 +35,19 @@
     },
     data() {
       return {
-        fileList: [
-          {
-            id: 1,
-            name: 'file_a.txt',
-            owner: 'test_user',
-            lastModifiedDate: '09.05.2020',
-            size: '100 MB'
-          }, {
-            id: 2,
-            name: 'file_b.txt',
-            owner: 'test_user',
-            lastModifiedDate: '09.06.2020',
-            size: '150 KB'
-          }, {
-            id: 3,
-            name: 'file_c.txt',
-            owner: 'test_user',
-            lastModifiedDate: '09.07.2020',
-            size: '250 KB'
-          }
-        ],
         headers: [
-          { text: 'Name', value: 'name' },
-          { text: 'Owner', value: 'owner' },
-          { text: 'Last modified', value: 'lastModifiedDate' },
-          { text: 'Size', value: 'size' }
+          { text: 'Name', value: 'filename' },
+          { text: 'Created At', value: 'createdDateTime' },
+          { text: 'Size', value: 'filesize' }
         ]
       }
     },
+    computed: {
+      ...mapState('fileList', ['fileList'])
+    },
     methods: {
       ...mapActions('myFiles', ['updateSelectedFile']),
+      ...mapActions('fileList', ['fetchFileList']),
       clickRow(item, row) {
         if (this.selectedFile && row.isSelected) {
           row.select(false);
@@ -63,8 +56,26 @@
           row.select(true);
           this.updateSelectedFile(item);
         }
+      },
+      pollFileList() {
+        this.fetchFileList();
+
+        this.polling = setInterval(() => {
+          this.fetchFileList();
+        }, 3000)
+      },
+      isToday(dateString) {
+        const inputDate = this.$options.filters.formatDate(dateString);
+        const today = new Date().toDateString();
+        return (today == inputDate);
       }
     },
+    created() {
+      this.pollFileList()
+    },
+    beforeRouteLeave() {
+      clearInterval(this.polling)
+    }
   };
 </script>
 

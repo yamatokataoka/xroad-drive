@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import myFiles from './modules/myFiles';
 import uploadFiles from './modules/uploadFiles';
+import fileList from './modules/fileList';
 
 axios.defaults.baseURL = 'https://8082-dot-11052537-dot-devshell.appspot.com';
 
@@ -11,6 +12,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     myFiles,
-    uploadFiles
+    uploadFiles,
+    fileList
   }
 });
