@@ -63,7 +63,7 @@ export default {
 
       await axios({
         url: '/api/upload',
-        method: 'POST',
+        method: 'post',
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (progressEvent) => {
