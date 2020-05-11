@@ -3,6 +3,7 @@ package com.yamatokataoka.fileservice.api.controller;
 import com.yamatokataoka.fileservice.api.controller.MediaController;
 import com.yamatokataoka.fileservice.api.domain.Metadata;
 import com.yamatokataoka.fileservice.api.service.MediaService;
+import com.yamatokataoka.fileservice.api.service.MetadataService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class MediaControllerTest {
   @MockBean
   private MediaService mediaService;
 
+  @MockBean
+  private MetadataService metadataService;
+
   @Test
   public void testUpload() throws Exception {
 
@@ -69,8 +73,10 @@ public class MediaControllerTest {
 
     byte[] mockMultipartFileContent = "some text".getBytes();
     MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "originalFilename.txt", "text/plain", mockMultipartFileContent);
+    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, LocalDateTime.of(2020, 2, 25, 0, 0));
 
     when(mediaService.load(any())).thenReturn(mockMultipartFile.getResource());
+    when(metadataService.getById(any())).thenReturn(metadata);
 
     MvcResult mvcResult = mockMvc.perform(get("/api/download/{id}", "507f1f77bcf86cd799439011"))
       .andExpect(status().isOk())
