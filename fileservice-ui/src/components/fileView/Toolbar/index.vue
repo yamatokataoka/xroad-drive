@@ -82,7 +82,7 @@
             window.URL.revokeObjectURL(url);
           }, 1000);
         } catch (error) {
-          console.log(`Failed to download file: ${selectedFile.filename}`);
+          console.log('Failed to download file');
           console.log(error);
         }
       }
