@@ -5,7 +5,10 @@
     <v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
     <v-spacer />
     <template v-if="selectedFile">
-      <v-btn icon>
+      <v-btn
+        icon
+        @click="clickDelete"
+      >
         <v-icon>mdi-trash-can-outline</v-icon>
       </v-btn>
       <v-btn
@@ -46,6 +49,7 @@
     },
     methods: {
       ...mapActions('uploadFiles', ['updateUploadFiles', 'updateUploading']),
+      ...mapActions('myFiles', ['updateSelectedFile']),
       changeUploadFiles(refInput) {
         this.updateUploadFiles(refInput.files);
         this.updateUploading(true);
@@ -83,6 +87,27 @@
           }, 1000);
         } catch (error) {
           console.log('Failed to download file');
+          console.log(error);
+        }
+      },
+      async clickDelete() {
+        if (selectedFile === null) {
+          console.log('File is not selected');
+          return;
+        }
+
+        const { selectedFile } = this;
+        const id = selectedFile.id;
+
+        try {
+          await axios({
+            url: `/api/delete/${encodeURIComponent(id)}`,
+            method: 'delete'
+          });
+          this.updateSelectedFile(null);
+          console.log('Succeeded to delete file');
+        } catch (error) {
+          console.log('Failed to delete file');
           console.log(error);
         }
       }
