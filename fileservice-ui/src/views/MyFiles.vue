@@ -33,10 +33,10 @@
       ...mapState('myFiles', ['selectedFile'])
     },
     methods: {
-      ...mapActions('myFiles', ['deleteSelectedFile'])
+      ...mapActions('myFiles', ['updateSelectedFile'])
     },
     beforeRouteLeave(to, from, next) {
-      this.deleteSelectedFile();
+      this.updateSelectedFile(null);
       next();
     }
   };

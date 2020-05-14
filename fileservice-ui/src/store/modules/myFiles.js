@@ -13,9 +13,6 @@ export default {
   actions: {
     updateSelectedFile({ commit }, selectedFile) {
       commit('updateSelectedFile', selectedFile);
-    },
-    deleteSelectedFile({ commit }) {
-      commit('updateSelectedFile', null);
     }
   }
 };
