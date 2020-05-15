@@ -4,12 +4,8 @@ plugins {
 	id 'java'
 }
 
-ext {
-  majorVersion = new File('../version.txt').text
-}
-
 group = 'com.yamatokataoka.fileservice.api'
-version = majorVersion
+version = fileserviceApiVersion
 sourceCompatibility = '11'
 
 repositories {
@@ -19,7 +15,7 @@ repositories {
 configurations {
     developmentOnly
     runtimeClasspath {
-            extendsFrom developmentOnly
+      extendsFrom developmentOnly
     }
 }
 
