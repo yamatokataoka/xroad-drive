@@ -4,8 +4,12 @@ plugins {
 	id 'java'
 }
 
+ext {
+  majorVersion = new File('../version.txt').text
+}
+
 group = 'com.yamatokataoka.fileservice.api'
-version = '0.0.1-SNAPSHOT'
+version = majorVersion
 sourceCompatibility = '11'
 
 repositories {
