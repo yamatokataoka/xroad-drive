@@ -1,6 +1,6 @@
 # File Service
 
-File Service - a web strage service provides API interface and UI to share files over X-Road.
+File Service - a web storage service provides API interface and UI to share files over X-Road.
 
 # Getting Started Development using Docker
 
