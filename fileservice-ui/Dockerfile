@@ -1,9 +1,9 @@
 FROM node:lts-alpine as builder
 ENV YARN_CACHE_FOLDER /fileservice-ui/.yarn
-COPY package.json yarn.lock /fileservice-ui/
-RUN yarn install
-COPY . /fileservice-ui
 WORKDIR /fileservice-ui
+COPY package.json yarn.lock ./
+RUN yarn install
+COPY . .
 RUN yarn run build
 
 FROM nginx:stable-alpine AS production
