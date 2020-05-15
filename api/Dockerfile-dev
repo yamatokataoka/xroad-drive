@@ -1,0 +1,6 @@
+FROM openjdk:11
+ENV GRADLE_USER_HOME /fileservice-api/.gradle
+COPY . /fileservice-api
+WORKDIR /fileservice-api
+EXPOSE 8082
+CMD ["./gradlew", "bootRun"]
