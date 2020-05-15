@@ -1,7 +1,7 @@
 FROM openjdk:11 AS builder
 ENV GRADLE_USER_HOME /fileservice-api/.gradle
+COPY . /fileservice-api
 WORKDIR /fileservice-api
-COPY . .
 RUN ./gradlew bootJar
 
 FROM openjdk:11-jre-slim
