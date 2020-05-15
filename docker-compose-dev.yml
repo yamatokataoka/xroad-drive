@@ -2,7 +2,7 @@ version: '3.7'
 services:
   fileservice-api:
     container_name: fileservice-api
-    user: ${uid}:${gid}
+    user: ${LOCAL_UID}:${LOCAL_GID}
     build: 
       context: ./api
       dockerfile: Dockerfile-dev
@@ -19,7 +19,7 @@ services:
       - mongodb-dev:/data/db
   fileservice-ui:
     container_name: fileservice-ui
-    user: ${uid}:${gid}
+    user: ${LOCAL_UID}:${LOCAL_GID}
     build: 
       context: ./fileservice-ui
       dockerfile: Dockerfile-dev
