@@ -1,8 +1,8 @@
 FROM node:lts-alpine as builder
 ENV YARN_CACHE_FOLDER /fileservice-ui/.yarn
 COPY package.json yarn.lock /fileservice-ui/
+WORKDIR /fileservice-ui
 RUN yarn install
 COPY . /fileservice-ui
-WORKDIR /fileservice-ui
 EXPOSE 8080
 CMD ["yarn", "run", "serve"]
