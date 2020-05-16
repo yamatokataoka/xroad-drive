@@ -5,7 +5,7 @@ services:
     user: ${LOCAL_UID}:${LOCAL_GID}
     build: 
       context: ./api
-      dockerfile: Dockerfile-dev
+      dockerfile: docker/Dockerfile-dev
     ports:
       - 8082:8082
     volumes:
@@ -22,7 +22,7 @@ services:
     user: ${LOCAL_UID}:${LOCAL_GID}
     build: 
       context: ./fileservice-ui
-      dockerfile: Dockerfile-dev
+      dockerfile: docker/Dockerfile-dev
     ports:
       - 8080:8080
     volumes:
