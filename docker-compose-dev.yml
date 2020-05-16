@@ -5,11 +5,13 @@ services:
     user: ${LOCAL_UID}:${LOCAL_GID}
     build: 
       context: ./api
-      dockerfile: docker/Dockerfile-dev
+      dockerfile: docker/Dockerfile
+      target: develop
     ports:
       - 8082:8082
     volumes:
       - ./api:/fileservice-api
+    command: ["./gradlew", "bootRun"]
   mongodb:
     container_name: mongodb
     image: mongo:latest
@@ -22,11 +24,13 @@ services:
     user: ${LOCAL_UID}:${LOCAL_GID}
     build: 
       context: ./fileservice-ui
-      dockerfile: docker/Dockerfile-dev
+      dockerfile: docker/Dockerfile
+      target: develop
     ports:
       - 8080:8080
     volumes:
       - ./fileservice-ui:/fileservice-ui
+    command: ["yarn", "run", "serve"]
 
 volumes:
   mongodb-dev:
