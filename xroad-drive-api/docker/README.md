@@ -10,6 +10,6 @@
 None
 
 # What is xroad-drive-api?
-Provides api endpoints for share files between organizations over X-Road.
+Provides api endpoints to manage and share files over X-Road.
 
 about [X-Road Data Exchange Layer](https://github.com/nordic-institute/X-Road)
