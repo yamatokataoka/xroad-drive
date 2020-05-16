@@ -7,6 +7,8 @@ services:
       context: ./xroad-drive-api
       dockerfile: docker/Dockerfile
       target: develop
+    depends_on:
+      - mongodb
     ports:
       - 8082:8082
     volumes:
