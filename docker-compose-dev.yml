@@ -1,15 +1,17 @@
 version: '3.7'
 services:
-  fileservice-api:
-    container_name: fileservice-api
+  xroad-drive-api:
+    container_name: xroad-drive-api
     user: ${LOCAL_UID}:${LOCAL_GID}
     build: 
-      context: ./api
-      dockerfile: Dockerfile-dev
+      context: ./xroad-drive-api
+      dockerfile: docker/Dockerfile
+      target: develop
     ports:
       - 8082:8082
     volumes:
-      - ./api:/fileservice-api
+      - ./xroad-drive-api:/xroad-drive-api
+    command: ["./gradlew", "bootRun"]
   mongodb:
     container_name: mongodb
     image: mongo:latest
@@ -17,16 +19,18 @@ services:
       - 27017:27017
     volumes:
       - mongodb-dev:/data/db
-  fileservice-ui:
-    container_name: fileservice-ui
+  xroad-drive-ui:
+    container_name: xroad-drive-ui
     user: ${LOCAL_UID}:${LOCAL_GID}
     build: 
-      context: ./fileservice-ui
-      dockerfile: Dockerfile-dev
+      context: ./xroad-drive-ui
+      dockerfile: docker/Dockerfile
+      target: develop
     ports:
       - 8080:8080
     volumes:
-      - ./fileservice-ui:/fileservice-ui
+      - ./xroad-drive-ui:/xroad-drive-ui
+    command: ["yarn", "run", "serve"]
 
 volumes:
   mongodb-dev:
