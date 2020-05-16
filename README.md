@@ -1,6 +1,6 @@
-# File Service
+# X-Road Drive
 
-File Service - a web strage service provides API interface and UI to share files over X-Road.
+X-Road Drive - a web strage service provides API interface and UI to share files over X-Road.
 
 # Getting Started Development using Docker
 
