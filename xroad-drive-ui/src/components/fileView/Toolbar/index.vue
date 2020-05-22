@@ -49,7 +49,7 @@
     },
     methods: {
       ...mapActions('uploadFiles', ['updateUploadFiles', 'updateUploading']),
-      ...mapActions('myFiles', ['updateSelectedFile']),
+      ...mapActions('selectedFile', ['updateSelectedFile']),
       changeUploadFiles(refInput) {
         this.updateUploadFiles(refInput.files);
         this.updateUploading(true);

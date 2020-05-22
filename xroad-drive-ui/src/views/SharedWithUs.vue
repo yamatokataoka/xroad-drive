@@ -30,10 +30,10 @@
       }
     },
     computed: {
-      ...mapState('myFiles', ['selectedFile'])
+      ...mapState('selectedFile', ['selectedFile'])
     },
     methods: {
-      ...mapActions('myFiles', ['updateSelectedFile'])
+      ...mapActions('selectedFile', ['updateSelectedFile'])
     },
     beforeRouteLeave(to, from, next) {
       this.updateSelectedFile(null);

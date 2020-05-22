@@ -47,7 +47,7 @@
       ...mapState('fileList', ['fileList'])
     },
     methods: {
-      ...mapActions('myFiles', ['updateSelectedFile']),
+      ...mapActions('selectedFile', ['updateSelectedFile']),
       ...mapActions('fileList', ['fetchFileList']),
       clickRow(item, row) {
         if (this.selectedFile && row.isSelected) {
