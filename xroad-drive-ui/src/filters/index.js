@@ -9,7 +9,7 @@ export function formatDate (value) {
   // Treat value as UTC
   const date = new Date(value + 'Z');
 
-  return date.toDateString();
+  return date.toDateString().split(' ').slice(1).join(' ');
 }
 
 // Format date time. Result HH:MM.
