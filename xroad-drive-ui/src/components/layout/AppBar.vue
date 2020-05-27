@@ -70,9 +70,9 @@
               }
             ]
           }, {
-            name: 'Shared with companies',
+            name: 'Shared with others',
             icon: 'mdi-office-building',
-            to: '/shared-with-companies',
+            to: '/shared-with-others',
             children: [
               {
                 name: 'Company C'

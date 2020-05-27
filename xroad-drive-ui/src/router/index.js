@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 import MyFiles from '../views/MyFiles.vue'
 import SharedWithUs from '../views/SharedWithUs.vue'
-import SharedWithCompanies from '../views/SharedWithCompanies.vue'
+import SharedWithOthers from '../views/SharedWithOthers.vue'
 
 Vue.use(VueRouter)
 
@@ -21,9 +21,9 @@ Vue.use(VueRouter)
     name: 'SharedWithUs',
     component: SharedWithUs
   }, {
-    path: '/shared-with-companies',
-    name: 'SharedWithCompanies',
-    component: SharedWithCompanies
+    path: '/shared-with-others',
+    name: 'SharedWithOthers',
+    component: SharedWithOthers
   }
 ]
 
