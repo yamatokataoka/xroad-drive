@@ -3,7 +3,7 @@
   <v-data-table
     :headers="headers"
     :items="fileList"
-    group-by="sharedAt"
+    group-by="sharedDate"
     hide-default-footer
     fixed-header
     single-select
@@ -16,9 +16,9 @@
       <v-icon class="me-4">mdi-file-outline</v-icon>
       <span>{{ item.filename }}</span>
     </template>
-    <template v-slot:item.sharedAt="{ item }">
-      <span v-if="isToday(item.sharedAt)">today {{ item.sharedAt | formatHoursMins }}</span>
-      <span v-else>{{ item.sharedAt | formatDate }}</span>
+    <template v-slot:item.sharedDateTime="{ item }">
+      <span v-if="isToday(item.sharedDateTime)">today {{ item.sharedDateTime | formatHoursMins }}</span>
+      <span v-else>{{ item.sharedDateTime | formatDate }}</span>
     </template>
     <template v-slot:item.filesize="{ item }">
       <span>{{ item.filesize | formatBytes }}</span>
@@ -46,7 +46,7 @@
         headers: [
           { text: 'Name', value: 'filename' },
           { text: 'Shared By', value: 'sharedBy' },
-          { text: 'Shared At', value: 'sharedAt' },
+          { text: 'Shared At', value: 'sharedDateTime' },
           { text: 'Size', value: 'filesize' }
         ],
         fileList: [
@@ -55,28 +55,32 @@
             filename: 'file.txt',
             filesize: 333333,
             sharedBy: 'Company A',
-            sharedAt: '2020-05-18T00:50:47.222'
+            sharedDateTime: '2020-05-18T00:50:47.222',
+            sharedDate: '2020-05-18'
           },
           {
             id: 2,
             filename: 'sample.txt',
             filesize: 3333330,
             sharedBy: 'Company B',
-            sharedAt: '2020-05-18T00:50:47.222'
+            sharedDateTime: '2020-05-18T00:50:48.222',
+            sharedDate: '2020-05-18'
           },
           {
             id: 3,
             filename: 'details.docx',
             filesize: 400000,
             sharedBy: 'Company B',
-            sharedAt: '2020-05-10T00:50:47.222'
+            sharedDateTime: '2020-05-10T00:50:47.222',
+            sharedDate: '2020-05-10'
           },
           {
             id: 4,
             filename: 'company-a-file.txt',
             filesize: 333333,
             sharedBy: 'Company A',
-            sharedAt: '2020-05-20T00:50:47.222'
+            sharedDateTime: '2020-05-20T00:50:47.222',
+            sharedDate: '2020-05-20'
           }
         ]
       }
