@@ -5,6 +5,7 @@
     hide-overlay
     max-width="324"
     :value="uploading"
+    :retain-focus="focus"
   >
     <file-listbar
       @clickChevron="listOpen = !listOpen"
@@ -31,7 +32,8 @@
     data() {
       return {
         timeout: 0,
-        listOpen: true
+        listOpen: true,
+        focus: false
       }
     },
     computed: {
