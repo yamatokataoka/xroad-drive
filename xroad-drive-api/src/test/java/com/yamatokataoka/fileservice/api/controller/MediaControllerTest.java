@@ -13,7 +13,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import static com.yamatokataoka.xroaddrive.api.testBuilder.buildMetadata;
 import static org.mockito.ArgumentMatchers.any;
@@ -47,7 +47,7 @@ public class MediaControllerTest {
   @Test
   public void testUpload() throws Exception {
 
-    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, LocalDateTime.of(2020, 2, 25, 0, 0));
+    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, Instant.parse("2019-10-01T08:25:24.00Z"));
     MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "originalFilename.txt", "text/plain", "some text".getBytes());
 
     when(mediaService.store(any())).thenReturn(metadata);
@@ -73,7 +73,7 @@ public class MediaControllerTest {
 
     byte[] mockMultipartFileContent = "some text".getBytes();
     MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "originalFilename.txt", "text/plain", mockMultipartFileContent);
-    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, LocalDateTime.of(2020, 2, 25, 0, 0));
+    Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, Instant.parse("2019-10-01T08:25:24.00Z"));
 
     when(mediaService.load(any())).thenReturn(mockMultipartFile.getResource());
     when(metadataService.getById(any())).thenReturn(metadata);

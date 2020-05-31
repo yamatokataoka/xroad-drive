@@ -2,10 +2,10 @@ package com.yamatokataoka.xroaddrive.api;
 
 import com.yamatokataoka.xroaddrive.api.domain.Metadata;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public class testBuilder {
-  public static Metadata buildMetadata(String id, String filename, Long filesize, LocalDateTime createdDateTime) {
+  public static Metadata buildMetadata(String id, String filename, Long filesize, Instant createdDateTime) {
     Metadata metadata = new Metadata();
     metadata.setId(id);
     metadata.setFilename(filename);

@@ -3,7 +3,7 @@ package com.yamatokataoka.xroaddrive.api.domain;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public class Metadata {
 
@@ -13,7 +13,7 @@ public class Metadata {
   private Long filesize;
 
   @CreatedDate
-  private LocalDateTime createdDateTime;
+  private Instant createdDateTime;
 
   public Metadata() {}
 
@@ -41,11 +41,11 @@ public class Metadata {
     this.filesize = filesize;
   }
 
-  public LocalDateTime getCreatedDateTime() {
+  public Instant getCreatedDateTime() {
     return createdDateTime;
   }
 
-  public void setCreatedDateTime(LocalDateTime createdDateTime) {
+  public void setCreatedDateTime(Instant createdDateTime) {
     this.createdDateTime = createdDateTime;
   }
 }
