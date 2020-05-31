@@ -31,7 +31,7 @@ export function formatBytes (bytes) {
     throw new TypeError('Expected a number');
   }
 
-  const UNITS = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const UNITS = ['bytes', 'KB', 'MB', 'GB', 'TB'];
 
   if (bytes < 0) {
     return 0 + ' ' + UNITS[0];
