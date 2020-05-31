@@ -35,7 +35,7 @@
   import { mapActions } from 'vuex';
 
   export default {
-    name: 'SharedFileList',
+    name: 'FileListSharedWithUs',
     props: {
       selectedFile: {
         required: true
