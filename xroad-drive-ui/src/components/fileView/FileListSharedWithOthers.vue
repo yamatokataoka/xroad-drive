@@ -2,8 +2,8 @@
   <!-- todo: hard-coded height -->
   <v-data-table
     :headers="headers"
-    :items="fileListWithCreatedDate"
-    group-by="createdDate"
+    :items="fileListWithDateGroupIndex"
+    group-by="DateGroupIndex"
     hide-default-footer
     fixed-header
     single-select
@@ -25,7 +25,7 @@
     </template>
     <template v-slot:group.header="{ group, headers }">
       <th :colspan="headers.length">
-        {{ group | formatDate }}
+        {{ group | getDateGroupByIndex }}
       </th>
     </template>
   </v-data-table>
@@ -52,9 +52,9 @@
     },
     computed: {
       ...mapState('fileList', ['fileList']),
-      fileListWithCreatedDate: function() {
+      fileListWithDateGroupIndex: function() {
         return this.fileList.map(item => ({
-          ...item, createdDate: this.$options.filters.formatDate(item.createdDateTime)
+          ...item, DateGroupIndex: this.$options.filters.getDateGroupIndex(item.createdDateTime)
         }));
       }
     },
