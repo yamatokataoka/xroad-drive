@@ -1,27 +1,25 @@
 // Format date time. Result YYYY-MM-DD
-export function formatDate (value) {
-  const timestamp = Date.parse(value);
+export function formatDate (dateString) {
+  const timestamp = Date.parse(dateString);
 
   if (isNaN(timestamp)) {
     return '-';
   }
 
-  // Treat value as UTC
-  const date = new Date(value + 'Z');
+  const date = new Date(dateString);
 
   return date.toDateString().split(' ').slice(1).join(' ');
 }
 
 // Format date time. Result HH:MM.
-export function formatHoursMins (value) {
-  const timestamp = Date.parse(value);
+export function formatHoursMins (dateString) {
+  const timestamp = Date.parse(dateString);
 
   if (isNaN(timestamp)) {
     return '-';
   }
 
-  // Treat value as UTC
-  const date = new Date(value + 'Z');
+  const date = new Date(dateString);
 
   return date.getHours().toString().padStart(2, '0') + ':'
     + date.getMinutes().toString().padStart(2, '0');
