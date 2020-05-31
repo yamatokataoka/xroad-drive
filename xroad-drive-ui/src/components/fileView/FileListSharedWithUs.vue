@@ -45,8 +45,8 @@
       return {
         headers: [
           { text: 'Name', value: 'filename' },
-          { text: 'Shared By', value: 'sharedBy' },
           { text: 'Shared At', value: 'sharedDateTime' },
+          { text: 'Owner', value: 'owner' },
           { text: 'Size', value: 'filesize' }
         ],
         fileList: [
@@ -54,28 +54,28 @@
             id: 1,
             filename: 'file.txt',
             filesize: 333333,
-            sharedBy: 'Company A',
+            owner: 'Company A',
             sharedDateTime: '2020-05-18T00:50:47.222Z'
           },
           {
             id: 2,
             filename: 'sample.txt',
             filesize: 3333330,
-            sharedBy: 'Company B',
+            owner: 'Company B',
             sharedDateTime: '2020-05-18T00:50:48.222Z'
           },
           {
             id: 3,
             filename: 'details.docx',
             filesize: 400000,
-            sharedBy: 'Company B',
+            owner: 'Company B',
             sharedDateTime: '2020-05-10T00:50:47.222Z'
           },
           {
             id: 4,
             filename: 'company-a-file.txt',
             filesize: 333333,
-            sharedBy: 'Company A',
+            owner: 'Company A',
             sharedDateTime: '2020-05-20T00:50:47.222Z'
           }
         ]
