@@ -1,4 +1,4 @@
-// Format date time. Result YYYY-MM-DD
+// Format date time. Result MM DD YYYY
 export function formatDate (dateString) {
   const timestamp = Date.parse(dateString);
 
