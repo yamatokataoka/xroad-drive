@@ -2,8 +2,8 @@
   <!-- todo: hard-coded height -->
   <v-data-table
     :headers="headers"
-    :items="fileList"
-    group-by="sharedDate"
+    :items="fileListWithDateGroupIndex"
+    group-by="DateGroupIndex"
     hide-default-footer
     fixed-header
     single-select
@@ -25,7 +25,7 @@
     </template>
     <template v-slot:group.header="{ group, headers }">
       <th :colspan="headers.length">
-        {{ group | formatDate }}
+        {{ group | getDateGroupByIndex }}
       </th>
     </template>
   </v-data-table>
@@ -55,38 +55,39 @@
             filename: 'file.txt',
             filesize: 333333,
             sharedBy: 'Company A',
-            sharedDateTime: '2020-05-18T00:50:47.222',
-            sharedDate: '2020-05-18'
+            sharedDateTime: '2020-05-18T00:50:47.222Z'
           },
           {
             id: 2,
             filename: 'sample.txt',
             filesize: 3333330,
             sharedBy: 'Company B',
-            sharedDateTime: '2020-05-18T00:50:48.222',
-            sharedDate: '2020-05-18'
+            sharedDateTime: '2020-05-18T00:50:48.222Z'
           },
           {
             id: 3,
             filename: 'details.docx',
             filesize: 400000,
             sharedBy: 'Company B',
-            sharedDateTime: '2020-05-10T00:50:47.222',
-            sharedDate: '2020-05-10'
+            sharedDateTime: '2020-05-10T00:50:47.222Z'
           },
           {
             id: 4,
             filename: 'company-a-file.txt',
             filesize: 333333,
             sharedBy: 'Company A',
-            sharedDateTime: '2020-05-20T00:50:47.222',
-            sharedDate: '2020-05-20'
+            sharedDateTime: '2020-05-20T00:50:47.222Z'
           }
         ]
       }
     },
     computed: {
-      // ...mapState('fileList', ['fileList'])
+      // ...mapState('fileList', ['fileList']),
+      fileListWithDateGroupIndex: function() {
+        return this.fileList.map(item => ({
+          ...item, DateGroupIndex: this.$options.filters.getDateGroupIndex(item.sharedDateTime)
+        }));
+      }
     },
     methods: {
       ...mapActions('selectedFile', ['updateSelectedFile']),
