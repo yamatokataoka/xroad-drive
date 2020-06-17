@@ -20,7 +20,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - mongodb-dev:/data/db
+      - ./mongodb-dev:/data/db
   xroad-drive-ui:
     container_name: xroad-drive-ui
     user: ${LOCAL_UID}:${LOCAL_GID}
@@ -33,6 +33,3 @@ services:
     volumes:
       - ./xroad-drive-ui:/xroad-drive-ui
     command: ["yarn", "run", "serve"]
-
-volumes:
-  mongodb-dev:
