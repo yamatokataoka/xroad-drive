@@ -32,4 +32,5 @@ services:
       - 8080:8080
     volumes:
       - ./xroad-drive-ui:/xroad-drive-ui
+      - /xroad-drive-ui/node_modules
     command: ["yarn", "run", "serve"]
