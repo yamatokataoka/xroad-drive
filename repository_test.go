@@ -31,21 +31,21 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestProvider_Get(t *testing.T) {
+func TestProvider_GetAll(t *testing.T) {
   mockClient, miniredis := NewRedisMock(t)
   defer miniredis.Close()
 
   for _, mapProvider := range mapProviders {
     err := mockClient.HMSet("providers:" + mapProvider["ID"].(string), mapProvider).Err()
     if err != nil {
-      t.Fatalf("Error while setting test data '%#v'", err)
+      t.Fatalf("Failed to set test data '%#v'", err)
     }
   }
 
   providerRepository := NewProviderRepository(mockClient)
   actualProviders, err := providerRepository.GetAll()
   if err != nil {
-    t.Errorf("Error while calling GetAll function '%#v'", err)
+    t.Errorf("Failed to call GetAll '%#v'", err)
   }
 
   assert.Equal(t, expectedProviders, actualProviders)
