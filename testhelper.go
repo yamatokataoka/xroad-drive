@@ -5,6 +5,7 @@ import (
 
   "github.com/alicebob/miniredis"
   "github.com/go-redis/redis"
+  "github.com/mitchellh/mapstructure"
 )
 
 func NewRedisMock(t *testing.T) (*redis.Client, *miniredis.Miniredis) {
@@ -22,4 +23,27 @@ func NewRedisMock(t *testing.T) (*redis.Client, *miniredis.Miniredis) {
   })
 
   return client, miniredis
+}
+
+func HMSetAll(t *testing.T, mapXRoadMembers []map[string]interface{}, client *redis.Client, key string) []*XRoadMember {
+  t.Helper()
+
+  var expectedXRoadMembers []*XRoadMember
+
+  for _, mapXRoadMember := range mapXRoadMembers {
+    var xRoadMember XRoadMember
+
+    err := client.HMSet(key + ":" + mapXRoadMember["ID"].(string), mapXRoadMember).Err()
+    if err != nil {
+      t.Fatalf("Failed to set test data '%#v'", err)
+    }
+
+    err = mapstructure.Decode(mapXRoadMember, &xRoadMember)
+    if err != nil {
+      t.Fatalf("Failed to decode '%#v'", err)
+    }
+    expectedXRoadMembers = append(expectedXRoadMembers, &xRoadMember)
+  }
+
+  return expectedXRoadMembers
 }
