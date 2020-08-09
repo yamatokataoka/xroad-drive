@@ -1,19 +1,21 @@
 package proxy
 
-import "errors"
-
 type ProviderService interface {
-	Get() ([]*XRoadMember, error)
+	GetAll() ([]*XRoadMember, error)
 }
 
 type providerService struct {
-	providerRepository ProviderRepository
+	pr ProviderRepository
 }
 
 func NewProviderService(pr ProviderRepository) ProviderService {
   return &providerService{pr}
 }
 
-func (ps *providerService) Get() ([]*XRoadMember, error) {
-  return nil, errors.New("Not implemented")
+func (ps *providerService) GetAll() ([]*XRoadMember, error) {
+  providers, err := ps.pr.GetAll()
+  if err != nil {
+    return nil, err
+  }
+  return providers, nil
 }
