@@ -46,3 +46,10 @@ services:
     volumes:
       - ./xroad-metadata-proxy:/xroad-metadata-proxy
     command: ["make", "serve"]
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis-dev:/data
