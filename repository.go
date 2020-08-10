@@ -9,17 +9,34 @@ import (
 )
 
 var providerKey = "providers"
+var clientKey = "clients"
+
+type XRoadMemberRepository interface {
+  GetAll() ([]*XRoadMember, error)
+}
 
 type ProviderRepository interface {
-  GetAll() ([]*XRoadMember, error)
+  XRoadMemberRepository
+}
+
+type ClientRepository interface {
+  XRoadMemberRepository
 }
 
 type providerRepository struct {
 	client *redis.Client
 }
 
+type clientRepository struct {
+	client *redis.Client
+}
+
 func NewProviderRepository(c *redis.Client) ProviderRepository {
   return &providerRepository{c}
+}
+
+func NewClientRepository(c *redis.Client) ClientRepository {
+  return &clientRepository{c}
 }
 
 func (pr *providerRepository) GetAll() ([]*XRoadMember, error) {
@@ -31,6 +48,10 @@ func (pr *providerRepository) GetAll() ([]*XRoadMember, error) {
   }
 
   return providers, nil
+}
+
+func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
+  return nil, errors.New("Not implemented")
 }
 
 func getXRoadMembers(client *redis.Client, match string) ([]*XRoadMember, error) {
