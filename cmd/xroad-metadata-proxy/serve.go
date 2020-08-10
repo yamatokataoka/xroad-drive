@@ -24,6 +24,7 @@ var serveCmd = &cobra.Command{
 func serve() {
   router := mux.NewRouter().StrictSlash(true)
   client := proxy.NewClient()
+  defer client.Close()
 
   providerRepository := proxy.NewProviderRepository(client)
   clientRepository := proxy.NewClientRepository(client)
