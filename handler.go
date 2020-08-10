@@ -30,6 +30,7 @@ func (ph *providerHandler) GetServiceProviders(w http.ResponseWriter, r *http.Re
   providers, err := ph.ps.GetAll()
   if err != nil {
     respondWithError(w, http.StatusInternalServerError, err.Error())
+    return
   }
 
  respondWithJSON(w, http.StatusOK, providers)
