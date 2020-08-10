@@ -49,7 +49,20 @@ func (ph *providerHandler) GetServiceProviders(w http.ResponseWriter, r *http.Re
 }
 
 func (ch *clientHandler) GetServiceClients(w http.ResponseWriter, r *http.Request) {
-  log.Error("Not implemented")
+  log.
+    WithFields(log.Fields{
+      "method":     r.Method,
+      "path":       r.URL,
+    }).
+    Info("Receive request")
+
+  clients, err := ch.cs.GetAll()
+  if err != nil {
+    respondWithError(w, http.StatusInternalServerError, err.Error())
+    return
+  }
+
+ respondWithJSON(w, http.StatusOK, clients)
 }
 
 func respondWithError(w http.ResponseWriter, code int, message string) {
