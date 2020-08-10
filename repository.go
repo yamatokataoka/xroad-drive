@@ -51,7 +51,14 @@ func (pr *providerRepository) GetAll() ([]*XRoadMember, error) {
 }
 
 func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
-  return nil, errors.New("Not implemented")
+  match := clientKey + ":*"
+
+  clients, err := getXRoadMembers(pr.client, match)
+  if err != nil {
+    return nil, errors.New("Failed to get X-Road member information")
+  }
+
+  return clients, nil
 }
 
 func getXRoadMembers(client *redis.Client, match string) ([]*XRoadMember, error) {
