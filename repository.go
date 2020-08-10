@@ -1,6 +1,8 @@
 package proxy
 
 import (
+  "errors"
+
   "github.com/go-redis/redis"
   log "github.com/sirupsen/logrus"
   "github.com/mitchellh/mapstructure"
@@ -21,50 +23,67 @@ func NewProviderRepository(c *redis.Client) ProviderRepository {
 }
 
 func (pr *providerRepository) GetAll() ([]*XRoadMember, error) {
-  var (
-    providers []*XRoadMember
-    allKeys []string
-    match = providerKey + ":*"
-    cursor uint64
-  )
+  match := providerKey + ":*"
 
+  providers, err := getXRoadMembers(pr.client, match)
+  if err != nil {
+    return nil, errors.New("Failed to get X-Road member information")
+  }
+
+  return providers, nil
+}
+
+func getXRoadMembers(client *redis.Client, match string) ([]*XRoadMember, error) {
+  var (
+    cursor uint64
+    xRoadMembers []*XRoadMember
+  )
   for {
     var keys []string
     var err error
-    keys, cursor, err = pr.client.Scan(cursor, match, 10).Result()
+    keys, cursor, err = client.Scan(cursor, match, 10).Result()
     if err != nil {
       log.
         WithField("match", match).
         Error("Failed to scan keys")
       return nil, err
     }
-    allKeys = append(allKeys, keys...)
+    for _, key := range keys {
+      keyType, err := client.Type(key).Result()
+      if err != nil {
+        log.
+          WithError(err).
+          WithField("key", key).
+          Error("Failed to check type")
+        return nil, err
+      }
+      if keyType == "hash" {
+        var xRoadMember XRoadMember
+
+        mapXRoadMember, err := client.HGetAll(key).Result()
+        if err != nil {
+          log.
+            WithError(err).
+            WithField("key", key).
+            Error("Failed to get all fields")
+          return nil, err
+        }
+
+        err = mapstructure.Decode(mapXRoadMember, &xRoadMember)
+        if err != nil {
+          log.
+            WithError(err).
+            WithField("input", mapXRoadMember).
+            WithField("output", xRoadMember).
+            Error("Failed to decode")
+          return nil, err
+        }
+        xRoadMembers = append(xRoadMembers, &xRoadMember)
+      }
+    }
     if cursor == 0 {
       break
     }
   }
-
-  for _, key := range allKeys {
-    var xRoadMember XRoadMember
-    mapProvider, err := pr.client.HGetAll(key).Result()
-    if err != nil {
-      log.
-        WithError(err).
-        WithField("key", key).
-        Error("Failed to get all fields")
-      continue
-    }
-    err = mapstructure.Decode(mapProvider, &xRoadMember)
-    if err != nil {
-      log.
-        WithError(err).
-        WithField("input", mapProvider).
-        WithField("output", xRoadMember).
-        Error("Failed to decode")
-      continue
-    }
-    providers = append(providers, &xRoadMember)
-  }
-
-  return providers, nil
+  return xRoadMembers, nil
 }
