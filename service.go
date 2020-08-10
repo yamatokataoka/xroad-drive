@@ -1,7 +1,5 @@
 package proxy
 
-import "errors"
-
 type XRoadMemberService interface {
   GetAll() ([]*XRoadMember, error)
 }
@@ -39,5 +37,9 @@ func (ps *providerService) GetAll() ([]*XRoadMember, error) {
 }
 
 func (cs *clientService) GetAll() ([]*XRoadMember, error) {
-  return nil, errors.New("Not implemented")
+  clients, err := cs.cr.GetAll()
+  if err != nil {
+    return nil, err
+  }
+  return clients, nil
 }
