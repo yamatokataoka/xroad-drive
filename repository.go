@@ -72,6 +72,7 @@ func getXRoadMembers(client *redis.Client, match string) ([]*XRoadMember, error)
     keys, cursor, err = client.Scan(cursor, match, 10).Result()
     if err != nil {
       log.
+        WithError(err).
         WithField("match", match).
         Error("Failed to scan keys")
       return nil, err
