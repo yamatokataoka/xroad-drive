@@ -26,10 +26,14 @@ func serve() {
   client := proxy.NewClient()
 
   providerRepository := proxy.NewProviderRepository(client)
+  clientRepository := proxy.NewClientRepository(client)
   providerService := proxy.NewProviderService(providerRepository)
+  clientService := proxy.NewClientService(clientRepository)
   providerHandler := proxy.NewProviderHandler(providerService)
+  clientHandler := proxy.NewClientHandler(clientService)
 
   router.HandleFunc("/service-providers", providerHandler.GetServiceProviders).Methods("GET")
+  router.HandleFunc("/service-clients", clientHandler.GetServiceClients).Methods("GET")
 
   server := &http.Server{
     Handler: router,
