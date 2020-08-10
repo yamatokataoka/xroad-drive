@@ -6,7 +6,7 @@ import (
   "github.com/stretchr/testify/assert"
 )
 
-func TestProvider_GetAll(t *testing.T) {
+func TestProviderRepository_GetAll(t *testing.T) {
   mockClient, miniredis := NewRedisMock(t)
   defer miniredis.Close()
 
@@ -27,7 +27,7 @@ func TestProvider_GetAll(t *testing.T) {
   assert.Equal(t, expectedProviders, actualProviders)
 }
 
-func TestClient_GetAll(t *testing.T) {
+func TestClientRepository_GetAll(t *testing.T) {
   mockClient, miniredis := NewRedisMock(t)
   defer miniredis.Close()
 

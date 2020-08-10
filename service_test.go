@@ -25,7 +25,7 @@ func (m *MockClientRepository) GetAll() ([]*XRoadMember, error) {
   return args.Get(0).([]*XRoadMember), args.Error(1)
 }
 
-func TestService_Provider_GetAll(t *testing.T) {
+func TestProviderService_GetAll(t *testing.T) {
   expectedProviders := []*XRoadMember{
     &XRoadMember{ID: "CS:ORG:1111:Company1Provider", Name: "Company 1"},
     &XRoadMember{ID: "CS:ORG:1112:Company2Provider", Name: "Company 2"},
@@ -44,7 +44,7 @@ func TestService_Provider_GetAll(t *testing.T) {
   assert.Equal(t, expectedProviders, actualProviders)
 }
 
-func TestService_Client_GetAll(t *testing.T) {
+func TestClientService_GetAll(t *testing.T) {
   expectedClients := []*XRoadMember{
     &XRoadMember{ID: "CS:ORG:1111:Company1Provider", Name: "Company 1"},
     &XRoadMember{ID: "CS:ORG:1112:Company2Provider", Name: "Company 2"},
