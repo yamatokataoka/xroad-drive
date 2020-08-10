@@ -11,12 +11,24 @@ type ProviderHandler interface {
   GetServiceProviders(w http.ResponseWriter, r *http.Request)
 }
 
+type ClientHandler interface {
+  GetServiceClients(w http.ResponseWriter, r *http.Request)
+}
+
 type providerHandler struct {
   ps ProviderService
 }
 
+type clientHandler struct {
+  cs ClientService
+}
+
 func NewProviderHandler(ps ProviderService) ProviderHandler {
   return &providerHandler{ps}
+}
+
+func NewClientHandler(cs ClientService) ClientHandler {
+  return &clientHandler{cs}
 }
 
 func (ph *providerHandler) GetServiceProviders(w http.ResponseWriter, r *http.Request) {
@@ -34,6 +46,10 @@ func (ph *providerHandler) GetServiceProviders(w http.ResponseWriter, r *http.Re
   }
 
  respondWithJSON(w, http.StatusOK, providers)
+}
+
+func (ch *clientHandler) GetServiceClients(w http.ResponseWriter, r *http.Request) {
+  log.Error("Not implemented")
 }
 
 func respondWithError(w http.ResponseWriter, code int, message string) {
