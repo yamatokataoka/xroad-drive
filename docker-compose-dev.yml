@@ -34,3 +34,15 @@ services:
       - ./xroad-drive-ui:/xroad-drive-ui
       - /xroad-drive-ui/node_modules
     command: ["yarn", "run", "serve"]
+  xroad-metadata-proxy:
+    container_name: xroad-metadata-proxy
+    user: ${LOCAL_UID}:${LOCAL_GID}
+    build: 
+      context: ./xroad-metadata-proxy
+      dockerfile: docker/Dockerfile
+      target: develop
+    ports:
+      - 8083:8083
+    volumes:
+      - ./xroad-metadata-proxy:/xroad-metadata-proxy
+    command: ["make", "serve"]
