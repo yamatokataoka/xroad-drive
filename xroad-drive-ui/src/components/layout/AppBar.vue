@@ -53,10 +53,10 @@
         appTitle: 'X-Road Drive',
         nav_items: [
           {
-            id: 'my-files',
-            name: 'My Files',
+            id: 'our-files',
+            name: 'Our Files',
             icon: 'mdi-file-multiple-outline',
-            to: '/my-files'
+            to: '/our-files'
           }, {
             id: 'providers',
             name: 'Shared with us',

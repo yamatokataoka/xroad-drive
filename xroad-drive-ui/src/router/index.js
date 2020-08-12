@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import MyFiles from '../views/MyFiles.vue'
+import OurFiles from '../views/OurFiles.vue'
 import SharedWithUs from '../views/SharedWithUs.vue'
 import SharedWithOthers from '../views/SharedWithOthers.vue'
 
@@ -11,11 +11,11 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    redirect: '/my-files'
+    redirect: '/our-files'
   }, {
-    path: '/my-files',
-    name: 'MyFiles',
-    component: MyFiles
+    path: '/our-files',
+    name: 'OurFiles',
+    component: OurFiles
   }, {
     path: '/providers',
     name: 'SharedWithUs',

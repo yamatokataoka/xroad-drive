@@ -18,7 +18,7 @@
   import FileUploadDialog from '@/components/ui/FileUploadDialog';
 
   export default {
-    name: 'MyFiles',
+    name: 'OurFiles',
     components: {
       FileList,
       Toolbar,
@@ -26,7 +26,7 @@
     },
     data() {
       return {
-        pageTitle: 'My Files'
+        pageTitle: 'Our Files'
       }
     },
     computed: {
