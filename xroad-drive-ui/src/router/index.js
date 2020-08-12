@@ -7,7 +7,7 @@ import SharedWithOthers from '../views/SharedWithOthers.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Home',
@@ -17,11 +17,11 @@ Vue.use(VueRouter)
     name: 'MyFiles',
     component: MyFiles
   }, {
-    path: '/shared-with-us',
+    path: '/providers',
     name: 'SharedWithUs',
     component: SharedWithUs
   }, {
-    path: '/shared-with-others',
+    path: '/clients',
     name: 'SharedWithOthers',
     component: SharedWithOthers
   }

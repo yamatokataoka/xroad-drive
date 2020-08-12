@@ -12,9 +12,9 @@
         activatable
         shaped
         dense
-        item-key="name"
+        item-key="id"
         hoverable
-        @update:active="OnUpdateActive"
+        @update:active="selected"
         class="body-2"
       >
         <template v-slot:prepend="{ item }">
@@ -53,33 +53,48 @@
         appTitle: 'X-Road Drive',
         nav_items: [
           {
+            id: 'my-files',
             name: 'My Files',
             icon: 'mdi-file-multiple-outline',
             to: '/my-files'
           }, {
+            id: 'providers',
             name: 'Shared with us',
             icon: 'mdi-account-multiple-outline',
-            to: '/shared-with-us',
+            to: '/providers',
             children: [
               {
-                name: 'Company A'
+                id: 'providers:CS:ORG:1111:Company1Provider',
+                name: 'Company 1',
+                to: '/providers/CS/ORG/1111/Company1Provider',
               }, {
-                name: 'Company B'
+                id: 'providers:CS:ORG:1112:Company2Provider',
+                name: 'Company 2',
+                to: '/providers/CS/ORG/1112/Company2Provider',
               }, {
-                name: 'Something'
+                id: 'providers:CS:ORG:1113:Company3Provider',
+                name: 'Company 3',
+                to: '/providers/CS/ORG/1113/Company3Provider',
               }
             ]
           }, {
+            id: 'clients',
             name: 'Shared with others',
             icon: 'mdi-office-building',
-            to: '/shared-with-others',
+            to: '/clients',
             children: [
               {
-                name: 'Company C'
+                id: 'clients:CS:ORG:1111:Company1Provider',
+                name: 'Company 1',
+                to: '/clients/CS/ORG/1111/Company1Provider',
               }, {
-                name: 'Company D'
+                id: 'clients:CS:ORG:1114:Company4Provider',
+                name: 'Company 4',
+                to: '/clients/CS/ORG/1114/Company4Provider',
               }, {
-                name: 'Something'
+                id: 'clients:CS:ORG:1115:Company5Provider',
+                name: 'Company 5',
+                to: '/clients/CS/ORG/1115/Company4Provider',
               }
             ]
           }
@@ -87,11 +102,22 @@
       }
     },
     methods: {
-      OnUpdateActive(event) {
-        let item = this.nav_items.find((item) => {
-          return (item.name === event[0]);
-        });
-        this.$router.push(item.to);
+      selected(event) {
+        let item = this.findObjectById(this.nav_items, event[0]);
+        if (item !== null) {
+          this.$router.push(item.to);
+        }
+      },
+      findObjectById(object, id) {
+        if (typeof object !== 'object' || object === null) { return null; }
+        if (object.id === id) { return object; }
+        for(let i in object) {
+          if (Object.prototype.hasOwnProperty.call(object, i)){
+            let foundObject = this.findObjectById(object[i], id);
+            if (foundObject) { return foundObject; }
+          }
+        }
+        return null;
       }
     }
   };
