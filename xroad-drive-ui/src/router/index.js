@@ -11,15 +11,12 @@ const routes = [
     redirect: '/our-files'
   }, {
     path: '/our-files',
-    name: 'OurFiles',
     component: createFileListView('OurFiles')
   }, {
     path: '/providers',
-    name: 'SharedWithUs',
     component: createFileListView('SharedWithUs')
   }, {
     path: '/clients',
-    name: 'SharedWithOthers',
     component: createFileListView('SharedWithOthers')
   }
 ]
