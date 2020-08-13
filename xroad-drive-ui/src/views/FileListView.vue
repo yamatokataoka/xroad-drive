@@ -1,7 +1,7 @@
 <template>
   <div>
     <toolbar
-      :pageTitle="typeToTile(type)"
+      :title="typeToTile(type)"
       :selectedFile="selectedFile"
     ></toolbar>
     <file-list

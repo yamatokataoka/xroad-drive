@@ -2,7 +2,7 @@
   <v-toolbar
     dense
   >
-    <v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
+    <v-toolbar-title>{{ title }}</v-toolbar-title>
     <v-spacer />
     <template v-if="selectedFile">
       <v-btn
@@ -39,7 +39,7 @@
       UploadButton
     },
     props: {
-      pageTitle: {
+      title: {
         type: String,
         required: true
       },
