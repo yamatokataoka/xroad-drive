@@ -5,6 +5,8 @@ import createFileListView from '@/views/CreateFileListView.js';
 
 Vue.use(VueRouter)
 
+const idRegex = '\\w+:\\w+:\\d+:.+'
+
 const routes = [
   {
     path: '/',
@@ -13,10 +15,10 @@ const routes = [
     path: '/our-files',
     component: createFileListView('OurFiles')
   }, {
-    path: '/providers',
+    path: `/providers/:id(${idRegex})?`,
     component: createFileListView('SharedWithUs')
   }, {
-    path: '/clients',
+    path: `/clients/:id(${idRegex})?`,
     component: createFileListView('SharedWithOthers')
   }
 ]
