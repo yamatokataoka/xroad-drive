@@ -66,15 +66,15 @@
               {
                 id: 'providers:CS:ORG:1111:Company1Provider',
                 name: 'Company 1',
-                to: '/providers/CS/ORG/1111/Company1Provider',
+                to: '/providers/CS:ORG:1111:Company1Provider',
               }, {
                 id: 'providers:CS:ORG:1112:Company2Provider',
                 name: 'Company 2',
-                to: '/providers/CS/ORG/1112/Company2Provider',
+                to: '/providers/CS:ORG:1112:Company2Provider',
               }, {
                 id: 'providers:CS:ORG:1113:Company3Provider',
                 name: 'Company 3',
-                to: '/providers/CS/ORG/1113/Company3Provider',
+                to: '/providers/CS:ORG:1113:Company3Provider',
               }
             ]
           }, {
@@ -86,15 +86,15 @@
               {
                 id: 'clients:CS:ORG:1111:Company1Provider',
                 name: 'Company 1',
-                to: '/clients/CS/ORG/1111/Company1Provider',
+                to: '/clients/CS:ORG:1111:Company1Provider',
               }, {
                 id: 'clients:CS:ORG:1114:Company4Provider',
                 name: 'Company 4',
-                to: '/clients/CS/ORG/1114/Company4Provider',
+                to: '/clients/CS:ORG:1114:Company4Provider',
               }, {
                 id: 'clients:CS:ORG:1115:Company5Provider',
                 name: 'Company 5',
-                to: '/clients/CS/ORG/1115/Company4Provider',
+                to: '/clients/CS:ORG:1115:Company5Provider',
               }
             ]
           }
