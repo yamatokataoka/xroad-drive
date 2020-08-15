@@ -1,7 +1,6 @@
 <template>
   <div>
     <toolbar
-      :title="typeToTile(type)"
       :selectedFile="selectedFile"
     ></toolbar>
     <file-list
@@ -44,15 +43,7 @@
       ...mapState('selectedFile', ['selectedFile'])
     },
     methods: {
-      ...mapActions('selectedFile', ['updateSelectedFile']),
-      // TODO: move to filters
-      typeToTile(type) {
-        let splitedStr = type.replace(/([A-Z])/g, ' $1').trim();
-        if (type == 'OurFiles') {
-          return splitedStr;
-        }
-        return splitedStr.charAt(0).toUpperCase() + splitedStr.slice(1).toLowerCase();
-      }
+      ...mapActions('selectedFile', ['updateSelectedFile'])
     },
     beforeRouteLeave(to, from, next) {
       this.updateSelectedFile(null);

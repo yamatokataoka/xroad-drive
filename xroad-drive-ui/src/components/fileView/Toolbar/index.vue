@@ -2,7 +2,7 @@
   <v-toolbar
     dense
   >
-    <v-breadcrumbs :items="items">
+    <v-breadcrumbs :items="breadcrumbs">
       <template v-slot:divider>
         <v-icon size="20">mdi-chevron-right</v-icon>
       </template>
@@ -53,26 +53,28 @@
       UploadButton
     },
     props: {
-      title: {
-        type: String,
-        required: true
-      },
       selectedFile: {
         required: true
       }
     },
-    data() {
-      return {
-        items: [
-          {
-            text: 'Shared with us',
-            to: '/providers'
-          },
-          {
-            text: 'Company 1',
-            to: '/providers/CS:ORG:1111:Company1Provider'
-          }
-        ]
+    computed: {
+      breadcrumbs() {
+        let pathArray = this.$route.path.split("/")
+
+        // not need the first item as it's empty
+        pathArray.shift()
+
+        let breadcrumbs = pathArray.reduce((breadcrumbArray, path, i) => {
+          breadcrumbArray.push({
+            // TODO: get title name from path
+            text: path,
+            to: breadcrumbArray[i - 1]
+            ? "/" + pathArray[i - 1] + "/" + path
+            : "/" + path,
+          });
+          return breadcrumbArray;
+        }, [])
+        return breadcrumbs;
       }
     },
     methods: {
