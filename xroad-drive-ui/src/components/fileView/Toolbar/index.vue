@@ -2,7 +2,21 @@
   <v-toolbar
     dense
   >
-    <v-toolbar-title>{{ title }}</v-toolbar-title>
+    <v-breadcrumbs :items="items">
+      <template v-slot:divider>
+        <v-icon size="20">mdi-chevron-right</v-icon>
+      </template>
+      <template v-slot:item="{ item }">
+        <v-btn
+          text
+          class="subtitle-1 breadcrumbs-btn--active"
+          :to="item.to"
+          exact
+        >
+          {{ item.text }}
+        </v-btn>
+      </template>
+    </v-breadcrumbs>
     <v-spacer />
     <template v-if="selectedFile">
       <v-btn
@@ -45,6 +59,20 @@
       },
       selectedFile: {
         required: true
+      }
+    },
+    data() {
+      return {
+        items: [
+          {
+            text: 'Shared with us',
+            to: '/providers'
+          },
+          {
+            text: 'Company 1',
+            to: '/providers/CS:ORG:1111:Company1Provider'
+          }
+        ]
       }
     },
     methods: {
@@ -116,4 +144,21 @@
 </script>
 
 <style scoped>
+.v-btn {
+  text-transform: none !important;
+}
+ul.v-breadcrumbs {
+  padding-left: 0;
+}
+.v-breadcrumbs >>> li:nth-child(even) {
+  padding: 0;
+}
+.breadcrumbs-btn--active::before {
+  background-color: transparent;
+  opacity: 0.08;
+}
+.breadcrumbs-btn--active:hover::before {
+  background-color: currentColor;
+  opacity: 0.08;
+}
 </style>
