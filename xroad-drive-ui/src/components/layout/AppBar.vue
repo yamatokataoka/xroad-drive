@@ -110,6 +110,11 @@
             newActive[0] = oldActive[0];
           }
         }, deep: true
+      },
+      $route (to, from){
+        if (to.path === from.path) return;
+        let id = this.getIdByPath(to.path);
+        this.active = [id];
       }
     },
     methods: {
@@ -130,6 +135,10 @@
           }
         }
         return null;
+      },
+      getIdByPath(path) {
+        let id = path.substring(1).replace( '/', ':' );
+        return id;
       }
     }
   };
