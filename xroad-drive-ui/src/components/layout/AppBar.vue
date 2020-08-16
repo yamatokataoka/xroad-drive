@@ -16,6 +16,7 @@
         hoverable
         @update:active="selected"
         class="body-2"
+        :active.sync="active"
       >
         <template v-slot:prepend="{ item }">
           <v-icon v-if="item.icon" dense>{{ item.icon }}</v-icon>
@@ -51,6 +52,7 @@
       return {
         drawer: null,
         appTitle: 'X-Road Drive',
+        active: [],
         nav_items: [
           {
             id: 'our-files',
@@ -99,6 +101,15 @@
             ]
           }
         ],
+      }
+    },
+    watch: {
+      active: {
+        handler(newActive, oldActive) {
+          if (oldActive.length && !newActive.length) {
+            newActive[0] = oldActive[0];
+          }
+        }, deep: true
       }
     },
     methods: {
