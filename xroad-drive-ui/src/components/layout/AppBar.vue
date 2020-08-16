@@ -121,12 +121,12 @@
         }
       },
       findObjectById(object, id) {
-        if (typeof object !== 'object' || object === null) { return null; }
-        if (object.id === id) { return object; }
+        if (typeof object !== 'object' || object === null) return null;
+        if (object.id === id) return object;
         for(let i in object) {
           if (Object.prototype.hasOwnProperty.call(object, i)){
             let foundObject = this.findObjectById(object[i], id);
-            if (foundObject) { return foundObject; }
+            if (foundObject) return foundObject;
           }
         }
         return null;
