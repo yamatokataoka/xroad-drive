@@ -114,8 +114,9 @@
     },
     methods: {
       selected(event) {
+        if (!event[0] || !this.active[0] || event[0] === this.active[0]) return;
         let item = this.findObjectById(this.nav_items, event[0]);
-        if (item !== null) {
+        if (item) {
           this.$router.push(item.to);
         }
       },
