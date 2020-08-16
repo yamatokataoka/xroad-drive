@@ -104,9 +104,10 @@
       }
     },
     watch: {
+      // Keep active state, Even if the item clicks again.
       active: {
         handler(newActive, oldActive) {
-          if (oldActive.length && !newActive.length) {
+          if (!newActive.length && oldActive.length) {
             newActive[0] = oldActive[0];
           }
         }, deep: true
