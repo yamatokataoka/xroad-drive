@@ -112,10 +112,15 @@
           }
         }, deep: true
       },
-      $route (to, from){
-        if (to.path === from.path) return;
-        let id = this.getIdByPath(to.path);
-        this.active = [id];
+      $route: {
+        handler(to, from) {
+          if (typeof to === 'undefined') return;
+          // When from === 'undefined', it's just after reload.
+          if (typeof from === 'undefined' || to.path !== from.path) {
+            let id = this.getIdByPath(to.path);
+            this.active = [id];
+          }
+        }, immediate: true
       }
     },
     methods: {
