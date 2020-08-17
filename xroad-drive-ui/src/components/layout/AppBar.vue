@@ -60,41 +60,41 @@
             icon: 'mdi-file-multiple-outline',
             to: '/our-files'
           }, {
-            id: 'providers',
+            id: 'provider',
             name: 'Shared with us',
             icon: 'mdi-account-multiple-outline',
             to: '/providers',
             children: [
               {
-                id: 'providers:CS:ORG:1111:Company1Provider',
+                id: 'provider:CS:ORG:1111:Company1Provider',
                 name: 'Company 1',
                 to: '/providers/CS:ORG:1111:Company1Provider',
               }, {
-                id: 'providers:CS:ORG:1112:Company2Provider',
+                id: 'provider:CS:ORG:1112:Company2Provider',
                 name: 'Company 2',
                 to: '/providers/CS:ORG:1112:Company2Provider',
               }, {
-                id: 'providers:CS:ORG:1113:Company3Provider',
+                id: 'provider:CS:ORG:1113:Company3Provider',
                 name: 'Company 3',
                 to: '/providers/CS:ORG:1113:Company3Provider',
               }
             ]
           }, {
-            id: 'clients',
+            id: 'client',
             name: 'Shared with others',
             icon: 'mdi-office-building',
             to: '/clients',
             children: [
               {
-                id: 'clients:CS:ORG:1111:Company1Provider',
+                id: 'client:CS:ORG:1111:Company1Provider',
                 name: 'Company 1',
                 to: '/clients/CS:ORG:1111:Company1Provider',
               }, {
-                id: 'clients:CS:ORG:1114:Company4Provider',
+                id: 'client:CS:ORG:1114:Company4Provider',
                 name: 'Company 4',
                 to: '/clients/CS:ORG:1114:Company4Provider',
               }, {
-                id: 'clients:CS:ORG:1115:Company5Provider',
+                id: 'client:CS:ORG:1115:Company5Provider',
                 name: 'Company 5',
                 to: '/clients/CS:ORG:1115:Company5Provider',
               }
@@ -114,10 +114,11 @@
       },
       $route: {
         handler(to, from) {
-          if (typeof to === 'undefined') return;
+          let id = to.meta.dynamic ? to.meta.id(to) : to.meta.id;
+          if (!id) return;
+
           // When from === 'undefined', it's just after reload.
           if (typeof from === 'undefined' || to.path !== from.path) {
-            let id = this.getIdByPath(to.path);
             this.active = [id];
           }
         }, immediate: true
@@ -141,10 +142,6 @@
           }
         }
         return null;
-      },
-      getIdByPath(path) {
-        let id = path.substring(1).replace( '/', ':' );
-        return id;
       }
     }
   };

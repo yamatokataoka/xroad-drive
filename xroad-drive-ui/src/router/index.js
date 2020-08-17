@@ -13,13 +13,24 @@ const routes = [
     redirect: '/our-files'
   }, {
     path: '/our-files',
-    component: createFileListView('OurFiles')
+    component: createFileListView('OurFiles'),
+    meta: {
+      id: 'our-files'
+    }
   }, {
     path: `/providers/:id(${idRegex})?`,
-    component: createFileListView('SharedWithUs')
+    component: createFileListView('SharedWithUs'),
+    meta: {
+      id: route => route.params.id ? 'provider' + ':' + route.params.id : 'provider',
+      dynamic: true
+    }
   }, {
     path: `/clients/:id(${idRegex})?`,
-    component: createFileListView('SharedWithOthers')
+    component: createFileListView('SharedWithOthers'),
+    meta: {
+      id: route => route.params.id ? 'client' + ':' + route.params.id : 'client',
+      dynamic: true
+    }
   }
 ]
 
