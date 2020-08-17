@@ -18,14 +18,14 @@ const routes = [
       id: 'our-files'
     }
   }, {
-    path: `/providers/:id(${idRegex})?`,
+    path: `/shared-with-us/:id(${idRegex})?`,
     component: createFileListView('SharedWithUs'),
     meta: {
       id: route => route.params.id ? 'provider' + ':' + route.params.id : 'provider',
       dynamic: true
     }
   }, {
-    path: `/clients/:id(${idRegex})?`,
+    path: `/shared-with-others/:id(${idRegex})?`,
     component: createFileListView('SharedWithOthers'),
     meta: {
       id: route => route.params.id ? 'client' + ':' + route.params.id : 'client',

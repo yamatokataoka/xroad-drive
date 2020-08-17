@@ -63,40 +63,40 @@
             id: 'provider',
             name: 'Shared with us',
             icon: 'mdi-account-multiple-outline',
-            to: '/providers',
+            to: '/shared-with-us',
             children: [
               {
                 id: 'provider:CS:ORG:1111:Company1Provider',
                 name: 'Company 1',
-                to: '/providers/CS:ORG:1111:Company1Provider',
+                to: '/shared-with-us/CS:ORG:1111:Company1Provider',
               }, {
                 id: 'provider:CS:ORG:1112:Company2Provider',
                 name: 'Company 2',
-                to: '/providers/CS:ORG:1112:Company2Provider',
+                to: '/shared-with-us/CS:ORG:1112:Company2Provider',
               }, {
                 id: 'provider:CS:ORG:1113:Company3Provider',
                 name: 'Company 3',
-                to: '/providers/CS:ORG:1113:Company3Provider',
+                to: '/shared-with-us/CS:ORG:1113:Company3Provider',
               }
             ]
           }, {
             id: 'client',
             name: 'Shared with others',
             icon: 'mdi-office-building',
-            to: '/clients',
+            to: '/shared-with-others',
             children: [
               {
                 id: 'client:CS:ORG:1111:Company1Provider',
                 name: 'Company 1',
-                to: '/clients/CS:ORG:1111:Company1Provider',
+                to: '/shared-with-others/CS:ORG:1111:Company1Provider',
               }, {
                 id: 'client:CS:ORG:1114:Company4Provider',
                 name: 'Company 4',
-                to: '/clients/CS:ORG:1114:Company4Provider',
+                to: '/shared-with-others/CS:ORG:1114:Company4Provider',
               }, {
                 id: 'client:CS:ORG:1115:Company5Provider',
                 name: 'Company 5',
-                to: '/clients/CS:ORG:1115:Company5Provider',
+                to: '/shared-with-others/CS:ORG:1115:Company5Provider',
               }
             ]
           }
