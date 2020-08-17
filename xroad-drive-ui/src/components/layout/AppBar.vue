@@ -8,7 +8,7 @@
       mobile-break-point="960"
     >
       <v-treeview
-        :items="nav_items"
+        :items="navItems"
         activatable
         shaped
         dense
@@ -53,7 +53,7 @@
         drawer: null,
         appTitle: 'X-Road Drive',
         active: [],
-        nav_items: [
+        navItems: [
           {
             id: 'our-files',
             name: 'Our Files',
@@ -126,7 +126,7 @@
     methods: {
       selected(event) {
         if (!event[0] || !this.active[0] || event[0] === this.active[0]) return;
-        let item = this.findObjectById(this.nav_items, event[0]);
+        let item = this.findObjectById(this.navItems, event[0]);
         if (item) {
           this.$router.push(item.to);
         }
