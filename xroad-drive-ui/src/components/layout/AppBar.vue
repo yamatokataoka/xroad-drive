@@ -17,6 +17,7 @@
         @update:active="selected"
         class="body-2"
         :active.sync="active"
+        :open.sync="open"
       >
         <template v-slot:prepend="{ item }">
           <v-icon v-if="item.icon" dense>{{ item.icon }}</v-icon>
@@ -53,6 +54,7 @@
         drawer: null,
         appTitle: 'X-Road Drive',
         active: [],
+        open: [],
         navItems: [
           {
             id: 'our-files',
@@ -68,14 +70,17 @@
               {
                 id: 'provider:CS:ORG:1111:Company1Provider',
                 name: 'Company 1',
+                type: 'provider',
                 to: '/shared-with-us/CS:ORG:1111:Company1Provider',
               }, {
                 id: 'provider:CS:ORG:1112:Company2Provider',
                 name: 'Company 2',
+                type: 'provider',
                 to: '/shared-with-us/CS:ORG:1112:Company2Provider',
               }, {
                 id: 'provider:CS:ORG:1113:Company3Provider',
                 name: 'Company 3',
+                type: 'provider',
                 to: '/shared-with-us/CS:ORG:1113:Company3Provider',
               }
             ]
@@ -88,14 +93,17 @@
               {
                 id: 'client:CS:ORG:1111:Company1Provider',
                 name: 'Company 1',
+                type: 'client',
                 to: '/shared-with-others/CS:ORG:1111:Company1Provider',
               }, {
                 id: 'client:CS:ORG:1114:Company4Provider',
                 name: 'Company 4',
+                type: 'client',
                 to: '/shared-with-others/CS:ORG:1114:Company4Provider',
               }, {
                 id: 'client:CS:ORG:1115:Company5Provider',
                 name: 'Company 5',
+                type: 'client',
                 to: '/shared-with-others/CS:ORG:1115:Company5Provider',
               }
             ]
@@ -120,6 +128,7 @@
           // When from === 'undefined', it's just after reload.
           if (typeof from === 'undefined' || to.path !== from.path) {
             this.active = [id];
+            this.openParent(id);
           }
         }, immediate: true
       }
@@ -142,6 +151,14 @@
           }
         }
         return null;
+      },
+      openParent(id) {
+        let item = this.findObjectById(this.navItems, id);
+        if (item === null) return;
+
+        if (!this.open.length && item.type) {
+          this.open = [item.type];
+        }
       }
     }
   };
