@@ -47,6 +47,8 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
+
   export default {
     name: 'AppBar',
     data() {
@@ -54,8 +56,13 @@
         drawer: null,
         appTitle: 'X-Road Drive',
         active: [],
-        open: [],
-        navItems: [
+        open: []
+      }
+    },
+    computed: {
+      ...mapState('xroadMetadata', ['providers', 'clients']),
+      navItems() {
+        return [
           {
             id: 'our-files',
             name: 'Our Files',
@@ -66,49 +73,15 @@
             name: 'Shared with us',
             icon: 'mdi-account-multiple-outline',
             to: '/shared-with-us',
-            children: [
-              {
-                id: 'provider:CS:ORG:1111:Company1Provider',
-                name: 'Company 1',
-                type: 'provider',
-                to: '/shared-with-us/CS:ORG:1111:Company1Provider',
-              }, {
-                id: 'provider:CS:ORG:1112:Company2Provider',
-                name: 'Company 2',
-                type: 'provider',
-                to: '/shared-with-us/CS:ORG:1112:Company2Provider',
-              }, {
-                id: 'provider:CS:ORG:1113:Company3Provider',
-                name: 'Company 3',
-                type: 'provider',
-                to: '/shared-with-us/CS:ORG:1113:Company3Provider',
-              }
-            ]
+            children: this.providers
           }, {
             id: 'client',
             name: 'Shared with others',
             icon: 'mdi-office-building',
             to: '/shared-with-others',
-            children: [
-              {
-                id: 'client:CS:ORG:1111:Company1Provider',
-                name: 'Company 1',
-                type: 'client',
-                to: '/shared-with-others/CS:ORG:1111:Company1Provider',
-              }, {
-                id: 'client:CS:ORG:1114:Company4Provider',
-                name: 'Company 4',
-                type: 'client',
-                to: '/shared-with-others/CS:ORG:1114:Company4Provider',
-              }, {
-                id: 'client:CS:ORG:1115:Company5Provider',
-                name: 'Company 5',
-                type: 'client',
-                to: '/shared-with-others/CS:ORG:1115:Company5Provider',
-              }
-            ]
+            children: this.clients
           }
-        ],
+        ];
       }
     },
     watch: {
