@@ -95,7 +95,7 @@
       },
       $route: {
         handler(to, from) {
-          let id = to.meta.dynamic ? to.meta.id(to) : to.meta.id;
+          const id = to.meta.dynamic ? to.meta.id(to) : to.meta.id;
           if (!id) return;
 
           // When from === 'undefined', it's just after reload.
@@ -109,7 +109,7 @@
     methods: {
       selected(event) {
         if (!event[0] || !this.active[0] || event[0] === this.active[0]) return;
-        let item = this.findObjectById(this.navItems, event[0]);
+        const item = this.findObjectById(this.navItems, event[0]);
         if (item) {
           this.$router.push(item.to);
         }
@@ -119,14 +119,14 @@
         if (object.id === id) return object;
         for(let i in object) {
           if (Object.prototype.hasOwnProperty.call(object, i)){
-            let foundObject = this.findObjectById(object[i], id);
+            const foundObject = this.findObjectById(object[i], id);
             if (foundObject) return foundObject;
           }
         }
         return null;
       },
       openParent(id) {
-        let item = this.findObjectById(this.navItems, id);
+        const item = this.findObjectById(this.navItems, id);
         if (item === null) return;
 
         if (!this.open.length && item.type) {
