@@ -127,7 +127,7 @@
       },
       openParent(id) {
         const item = this.findObjectById(this.navItems, id);
-        if (item === null) return;
+        if (!item) return;
 
         if (!this.open.length && item.type) {
           this.open = [item.type];
