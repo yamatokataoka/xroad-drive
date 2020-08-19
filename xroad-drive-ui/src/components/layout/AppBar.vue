@@ -117,9 +117,9 @@
       findObjectById(object, id) {
         if (typeof object !== 'object' || object === null) return null;
         if (object.id === id) return object;
-        for(let i in object) {
-          if (Object.prototype.hasOwnProperty.call(object, i)){
-            const foundObject = this.findObjectById(object[i], id);
+        for(let key in object) {
+          if (Object.prototype.hasOwnProperty.call(object, key)){
+            const foundObject = this.findObjectById(object[key], id);
             if (foundObject) return foundObject;
           }
         }
