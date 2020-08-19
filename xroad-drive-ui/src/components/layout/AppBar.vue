@@ -47,7 +47,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapGetters } from 'vuex';
 
   export default {
     name: 'AppBar',
@@ -56,13 +56,8 @@
         drawer: null,
         appTitle: 'X-Road Drive',
         active: [],
-        open: []
-      }
-    },
-    computed: {
-      ...mapState('xroadMetadata', ['providers', 'clients']),
-      navItems() {
-        return [
+        open: [],
+        rootNavItems: [
           {
             id: 'our-files',
             name: 'Our Files',
@@ -73,15 +68,32 @@
             name: 'Shared with us',
             icon: 'mdi-account-multiple-outline',
             to: '/shared-with-us',
-            children: this.providers
+            children: []
           }, {
             id: 'shared-with-others',
             name: 'Shared with others',
             icon: 'mdi-office-building',
             to: '/shared-with-others',
-            children: this.clients
+            children: []
           }
-        ];
+        ]
+      }
+    },
+    computed: {
+      ...mapGetters('xroadMetadata', ['providersForNav', 'clientsForNav']),
+      navItems() {
+        let navItems = [];
+        for (let i = 0; i < this.rootNavItems.length; i++) {
+          navItems[i] = {...this.rootNavItems[i]};
+          if (this.rootNavItems[i].children) {
+            if (this.rootNavItems[i].id === 'shared-with-us') {
+              navItems[i].children = this.providersForNav(this.rootNavItems[i].id);
+            } else if (this.rootNavItems[i].id === 'shared-with-others') {
+              navItems[i].children = this.clientsForNav(this.rootNavItems[i].id);
+            }
+          }
+        }
+        return navItems;
       }
     },
     watch: {
@@ -129,8 +141,8 @@
         const item = this.findObjectById(this.navItems, id);
         if (!item) return;
 
-        if (!this.open.length && item.type) {
-          this.open = [item.type];
+        if (!this.open.length && item.parent) {
+          this.open = [item.parent];
         }
       }
     }

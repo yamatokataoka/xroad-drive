@@ -4,40 +4,54 @@ export default {
     return {
       providers: [
         {
-          id: 'shared-with-us:CS:ORG:1111:Company1Provider',
-          name: 'Company 1',
-          type: 'provider',
-          to: '/shared-with-us/CS:ORG:1111:Company1Provider',
+          id: 'CS:ORG:1111:Company1Provider',
+          name: 'Company 1'
         }, {
-          id: 'shared-with-us:CS:ORG:1112:Company2Provider',
-          name: 'Company 2',
-          type: 'provider',
-          to: '/shared-with-us/CS:ORG:1112:Company2Provider',
+          id: 'CS:ORG:1112:Company2Provider',
+          name: 'Company 2'
         }, {
-          id: 'shared-with-us:CS:ORG:1113:Company3Provider',
-          name: 'Company 3',
-          type: 'provider',
-          to: '/shared-with-us/CS:ORG:1113:Company3Provider',
+          id: 'CS:ORG:1113:Company3Provider',
+          name: 'Company 3'
         }
       ],
       clients: [
         {
-          id: 'shared-with-others:CS:ORG:1111:Company1Provider',
-          name: 'Company 1',
-          type: 'client',
-          to: '/shared-with-others/CS:ORG:1111:Company1Provider',
+          id: 'CS:ORG:1111:Company1Provider',
+          name: 'Company 1'
         }, {
-          id: 'shared-with-others:CS:ORG:1114:Company4Provider',
-          name: 'Company 4',
-          type: 'client',
-          to: '/shared-with-others/CS:ORG:1114:Company4Provider',
+          id: 'CS:ORG:1114:Company4Provider',
+          name: 'Company 4'
         }, {
-          id: 'shared-with-others:CS:ORG:1115:Company5Provider',
-          name: 'Company 5',
-          type: 'client',
-          to: '/shared-with-others/CS:ORG:1115:Company5Provider',
+          id: 'CS:ORG:1115:Company5Provider',
+          name: 'Company 5'
         }
       ]
     };
+  },
+  getters: {
+    providersForNav(state) {
+      return parentName => {
+        let providersForNav = [];
+        for (let i = 0; i < state.providers.length; i++) {
+          providersForNav[i] = {...state.providers[i]};
+          providersForNav[i].id = 'shared-with-us' + ':' + state.providers[i].id;
+          providersForNav[i].to = { name: parentName, params: { id: state.providers[i].id }};
+          providersForNav[i].parent = parentName;
+        }
+        return providersForNav;
+      }
+    },
+    clientsForNav(state) {
+      return parentName => {
+        let clientsForNav = [];
+        for (let i = 0; i < state.clients.length; i++) {
+          clientsForNav[i] = {...state.clients[i]};
+          clientsForNav[i].id = 'shared-with-others' + ':' + state.providers[i].id;
+          clientsForNav[i].to = { name: parentName, params: { id: state.providers[i].id }};
+          clientsForNav[i].parent = parentName;
+        }
+        return clientsForNav;
+      }
+    }
   }
 };
