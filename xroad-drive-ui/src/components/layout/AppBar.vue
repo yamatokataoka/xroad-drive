@@ -69,13 +69,13 @@
             icon: 'mdi-file-multiple-outline',
             to: '/our-files'
           }, {
-            id: 'provider',
+            id: 'shared-with-us',
             name: 'Shared with us',
             icon: 'mdi-account-multiple-outline',
             to: '/shared-with-us',
             children: this.providers
           }, {
-            id: 'client',
+            id: 'shared-with-others',
             name: 'Shared with others',
             icon: 'mdi-office-building',
             to: '/shared-with-others',
@@ -95,7 +95,7 @@
       },
       $route: {
         handler(to, from) {
-          const id = to.meta.dynamic ? to.meta.id(to) : to.meta.id;
+          const id = to.params.id ? to.name + ':' + to.params.id : to.name;
           if (!id) return;
 
           // When from === 'undefined', it's just after reload.
