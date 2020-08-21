@@ -38,7 +38,7 @@ func serve() {
 
   server := &http.Server{
     Handler: router,
-    Addr:    "127.0.0.1:8083",
+    Addr:    "0.0.0.0:8083", // TODO: Add conf file to determine server setting
   }
 
   log.WithFields(log.Fields{
