@@ -47,7 +47,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     name: 'AppBar',
@@ -119,6 +119,7 @@
       }
     },
     methods: {
+      ...mapActions('xroadMetadata', ['fetchProviders', 'fetchClients']),
       selected(event) {
         if (!event[0] || !this.active[0] || event[0] === this.active[0]) return;
         const item = this.findObjectById(this.navItems, event[0]);
@@ -144,7 +145,22 @@
         if (!this.open.length && item.parent) {
           this.open = [item.parent];
         }
+      },
+      pollNavitems() {
+        this.fetchProviders();
+        this.fetchClients();
+
+        this.polling = setInterval(() => {
+          this.fetchProviders();
+          this.fetchClients();
+        }, 3000)
       }
+    },
+    created() {
+      this.pollNavitems();
+    },
+    beforeDestroy() {
+      clearInterval(this.polling)
     }
   };
 </script>

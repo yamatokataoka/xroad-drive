@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
   namespaced: true,
   state() {
@@ -51,6 +53,32 @@ export default {
           clientsForNav[i].parent = parentName;
         }
         return clientsForNav;
+      }
+    }
+  },
+  mutations: {
+    updateProviders(state, providers) {
+      state.providers = providers;
+    },
+    updateClients(state, clients) {
+      state.clients = clients;
+    }
+  },
+  actions: {
+    async fetchProviders({ commit }) {
+      try {
+        const response = await axios.get('/xroad-metadata-proxy/service-providers');
+        commit('updateProviders', response.data);
+      } catch (error) {
+        console.log('Failed to fetch X-Road metadata: ' + error);
+      }
+    },
+    async fetchClients({ commit }) {
+      try {
+        const response = await axios.get('/xroad-metadata-proxy/service-clients');
+        commit('updateClients', response.data);
+      } catch (error) {
+        console.log('Failed to fetch X-Road metadata: ' + error);
       }
     }
   }
