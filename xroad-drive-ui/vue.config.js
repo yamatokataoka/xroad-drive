@@ -7,7 +7,11 @@ module.exports = {
     https: false,
     proxy: {
       '^/api': {
-        target: process.env.VUE_APP_API_URL || 'http://localhost:8082'
+        target: process.env.XROAD_DRIVE_API_URL || 'http://localhost:8082'
+      },
+      '^/xroad-metadata-proxy': {
+        target: process.env.XROAD_METADATA_PROXY_URL || 'http://localhost:8083',
+        pathRewrite: { '^/xroad-metadata-proxy': '/' }
       }
     }
   }
