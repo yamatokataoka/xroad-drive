@@ -64,7 +64,7 @@ func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
 func getXRoadMembers(client *redis.Client, match string) ([]*XRoadMember, error) {
   var (
     cursor uint64
-    xRoadMembers []*XRoadMember
+    xRoadMembers = make([]*XRoadMember, 0)
   )
   for {
     var keys []string
