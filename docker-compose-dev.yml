@@ -3,7 +3,7 @@ services:
   xroad-drive-api:
     container_name: xroad-drive-api
     user: ${LOCAL_UID}:${LOCAL_GID}
-    build: 
+    build:
       context: ./xroad-drive-api
       dockerfile: docker/Dockerfile
       target: develop
@@ -37,10 +37,12 @@ services:
   xroad-metadata-proxy:
     container_name: xroad-metadata-proxy
     user: ${LOCAL_UID}:${LOCAL_GID}
-    build: 
+    build:
       context: ./xroad-metadata-proxy
       dockerfile: docker/Dockerfile
       target: develop
+    depends_on:
+      - redis
     ports:
       - 8083:8083
     volumes:
