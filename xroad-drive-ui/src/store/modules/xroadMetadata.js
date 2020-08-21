@@ -46,8 +46,8 @@ export default {
         let clientsForNav = [];
         for (let i = 0; i < state.clients.length; i++) {
           clientsForNav[i] = {...state.clients[i]};
-          clientsForNav[i].id = 'shared-with-others' + ':' + state.providers[i].id;
-          clientsForNav[i].to = { name: parentName, params: { id: state.providers[i].id }};
+          clientsForNav[i].id = 'shared-with-others' + ':' + state.clients[i].id;
+          clientsForNav[i].to = { name: parentName, params: { id: state.clients[i].id }};
           clientsForNav[i].parent = parentName;
         }
         return clientsForNav;
