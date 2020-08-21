@@ -64,7 +64,7 @@
         // not need the first item as it's empty
         pathArray.shift()
 
-        let breadcrumbs = pathArray.reduce((breadcrumbArray, path, i) => {
+        const breadcrumbs = pathArray.reduce((breadcrumbArray, path, i) => {
           breadcrumbArray.push({
             // TODO: get title name from path
             text: path,
