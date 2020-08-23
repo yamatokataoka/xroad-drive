@@ -44,10 +44,6 @@
     },
     methods: {
       ...mapActions('selectedFile', ['updateSelectedFile'])
-    },
-    beforeRouteLeave(to, from, next) {
-      this.updateSelectedFile(null);
-      next();
     }
   };
 </script>

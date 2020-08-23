@@ -86,8 +86,9 @@
     created() {
       this.pollFileList()
     },
-    beforeRouteLeave() {
-      clearInterval(this.polling)
+    beforeDestroy() {
+      clearInterval(this.polling);
+      this.updateSelectedFile(null);
     }
   };
 </script>
