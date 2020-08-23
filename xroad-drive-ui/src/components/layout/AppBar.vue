@@ -104,18 +104,6 @@
             newActive[0] = oldActive[0];
           }
         }, deep: true
-      },
-      $route: {
-        handler(to, from) {
-          const id = to.params.id ? to.name + ':' + to.params.id : to.name;
-          if (!id) return;
-
-          // When from === 'undefined', it's just after reload.
-          if (typeof from === 'undefined' || to.path !== from.path) {
-            this.active = [id];
-            this.openParent(id);
-          }
-        }, immediate: true
       }
     },
     methods: {
@@ -124,6 +112,8 @@
         if (!event[0] || !this.active[0] || event[0] === this.active[0]) return;
         const item = this.findObjectById(this.navItems, event[0]);
         if (item) {
+          this.active = [item.id];
+          this.openParent(item.id);
           this.$router.push(item.to);
         }
       },
@@ -146,9 +136,9 @@
           this.open = [item.parent];
         }
       },
-      pollNavitems() {
-        this.fetchProviders();
-        this.fetchClients();
+      async pollNavitems() {
+        await this.fetchProviders();
+        await this.fetchClients();
 
         this.polling = setInterval(() => {
           this.fetchProviders();
@@ -156,8 +146,17 @@
         }, 3000)
       }
     },
-    created() {
-      this.pollNavitems();
+    async created() {
+      await this.pollNavitems();
+
+      const currentRoute = this.$router.currentRoute;
+      const id = currentRoute.params.id
+        ? currentRoute.name + ':' + currentRoute.params.id
+        : currentRoute.name;
+      if (!id) return;
+
+      this.active = [id];
+      this.openParent(id);
     },
     beforeDestroy() {
       clearInterval(this.polling)
