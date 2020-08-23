@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
 
   export default {
     name: 'FileListSharedWithUs',
@@ -48,41 +48,12 @@
           { text: 'Shared At', value: 'sharedDateTime' },
           { text: 'Owner', value: 'owner' },
           { text: 'Size', value: 'filesize' }
-        ],
-        fileList: [
-          {
-            id: 1,
-            filename: 'file.txt',
-            filesize: 333333,
-            owner: 'Company A',
-            sharedDateTime: '2020-05-18T00:50:47.222Z'
-          },
-          {
-            id: 2,
-            filename: 'sample.txt',
-            filesize: 3333330,
-            owner: 'Company B',
-            sharedDateTime: '2020-05-18T00:50:48.222Z'
-          },
-          {
-            id: 3,
-            filename: 'details.docx',
-            filesize: 400000,
-            owner: 'Company B',
-            sharedDateTime: '2020-05-10T00:50:47.222Z'
-          },
-          {
-            id: 4,
-            filename: 'company-a-file.txt',
-            filesize: 333333,
-            owner: 'Company A',
-            sharedDateTime: '2020-05-20T00:50:47.222Z'
-          }
         ]
       }
     },
     computed: {
-      // ...mapState('fileList', ['fileList']),
+      ...mapState('fileList', ['fileList']),
+      ...mapState('selectedXRoadMember', ['selectedXRoadMember']),
       fileListWithDateGroupIndex: function() {
         return this.fileList.map(item => ({
           ...item, DateGroupIndex: this.$options.filters.getDateGroupIndex(item.sharedDateTime)
@@ -91,7 +62,7 @@
     },
     methods: {
       ...mapActions('selectedFile', ['updateSelectedFile']),
-      // ...mapActions('fileList', ['fetchFileList']),
+      ...mapActions('fileList', ['fetchFileList']),
       clickRow(item, row) {
         if (this.selectedFile && row.isSelected) {
           row.select(false);
@@ -102,10 +73,15 @@
         }
       },
       pollFileList() {
-        this.fetchFileList();
+        if (this.selectedXRoadMember) {
+          const serviceId = this.selectedXRoadMember + ':' + 'XRoadDrive';
+          this.fetchFileList(serviceId);
+        }
 
         this.polling = setInterval(() => {
-          this.fetchFileList();
+          if (!this.selectedXRoadMember) return;
+          const serviceId = this.selectedXRoadMember + ':' + 'XRoadDrive';
+          this.fetchFileList(serviceId);
         }, 3000)
       },
       isToday(dateString) {
@@ -115,10 +91,10 @@
       }
     },
     created() {
-      // this.pollFileList()
+      this.pollFileList()
     },
     beforeDestroy() {
-      // clearInterval(this.polling);
+      clearInterval(this.polling);
       this.updateSelectedFile(null);
     }
   };

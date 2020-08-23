@@ -108,12 +108,21 @@
     },
     methods: {
       ...mapActions('xroadMetadata', ['fetchProviders', 'fetchClients']),
-      selected(event) {
+      ...mapActions('selectedXRoadMember', ['updateSelectedXRoadMember']),
+      async selected(event) {
         if (!event[0] || !this.active[0] || event[0] === this.active[0]) return;
         const item = this.findObjectById(this.navItems, event[0]);
         if (item) {
           this.active = [item.id];
           this.openParent(item.id);
+
+          const xRoadMemberId = item.id.split(/:(.+)/)[1];
+          if (xRoadMemberId) {
+            await this.updateSelectedXRoadMember(xRoadMemberId);
+          } else {
+            await this.updateSelectedXRoadMember(null);
+          }
+
           this.$router.push(item.to);
         }
       },
@@ -157,6 +166,9 @@
 
       this.active = [id];
       this.openParent(id);
+
+      if (!currentRoute.params.id) return;
+      this.updateSelectedXRoadMember(currentRoute.params.id);
     },
     beforeDestroy() {
       clearInterval(this.polling)
