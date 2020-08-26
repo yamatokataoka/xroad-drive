@@ -12,6 +12,7 @@ require (
 	github.com/onsi/ginkgo v1.14.0 // indirect
 	github.com/sirupsen/logrus v1.6.0
 	github.com/spf13/cobra v0.0.5
+	github.com/spf13/viper v1.3.2
 	github.com/stretchr/testify v1.5.1
 	github.com/yuin/gopher-lua v0.0.0-20200603152657-dc2b0ca8b37e // indirect
 )

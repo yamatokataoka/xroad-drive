@@ -5,6 +5,8 @@ import (
 
   log "github.com/sirupsen/logrus"
   "github.com/spf13/cobra"
+
+  proxy "github.com/yamatokataoka/xroad-metadata-proxy"
 )
 
 var RootCmd = &cobra.Command{
@@ -18,4 +20,8 @@ func Execute() {
     log.Fatal(err)
     os.Exit(1)
   }
+}
+
+func init() {
+  cobra.OnInitialize(proxy.InitConfig)
 }

@@ -5,7 +5,9 @@ import (
 
   log "github.com/sirupsen/logrus"
   "github.com/spf13/cobra"
+  "github.com/spf13/viper"
   "github.com/gorilla/mux"
+
   proxy "github.com/yamatokataoka/xroad-metadata-proxy"
 )
 
@@ -22,8 +24,17 @@ var serveCmd = &cobra.Command{
 }
 
 func serve() {
+  var config proxy.Config
+
+  err := viper.Unmarshal(&config)
+  if err != nil {
+    log.
+      WithError(err).
+      Error("Failed to unmarshal config file")
+  }
+
   router := mux.NewRouter().StrictSlash(true)
-  client := proxy.NewClient()
+  client := proxy.NewClient(config.Database)
   defer client.Close()
 
   providerRepository := proxy.NewProviderRepository(client)
@@ -38,7 +49,7 @@ func serve() {
 
   server := &http.Server{
     Handler: router,
-    Addr:    "0.0.0.0:8083", // TODO: Add conf file to determine server setting
+    Addr:    config.Server.Addr,
   }
 
   log.WithFields(log.Fields{

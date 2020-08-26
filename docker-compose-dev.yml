@@ -26,7 +26,7 @@ services:
   xroad-drive-ui:
     container_name: xroad-drive-ui
     user: ${LOCAL_UID}:${LOCAL_GID}
-    build: 
+    build:
       context: ./xroad-drive-ui
       dockerfile: docker/Dockerfile
       target: develop
@@ -49,6 +49,8 @@ services:
       - 8083:8083
     volumes:
       - ./xroad-metadata-proxy:/xroad-metadata-proxy
+    environment:
+      - XROAD_METADATA_PROXY_DATABASE_ADDR='redis:6379'
     command: ["make", "serve"]
   redis:
     container_name: redis

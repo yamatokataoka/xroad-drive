@@ -7,9 +7,9 @@ import (
   log "github.com/sirupsen/logrus"
 )
 
-func NewClient() *redis.Client {
+func NewClient(config DatabaseConfig) *redis.Client {
   client := redis.NewClient(&redis.Options{
-    Addr:     "redis:6379", // TODO: Add conf file to determine db setting
+    Addr:     config.Addr,
     Password: "",
     DB:       0,
   })
