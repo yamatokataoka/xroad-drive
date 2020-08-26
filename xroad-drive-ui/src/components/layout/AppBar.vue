@@ -116,9 +116,9 @@
           this.active = [item.id];
           this.openParent(item.id);
 
-          const xRoadMemberId = item.id.split(/:(.+)/)[1];
-          if (xRoadMemberId) {
-            await this.updateSelectedXRoadMember(xRoadMemberId);
+          const xroadMemberId = item.id.split(/:(.+)/)[1];
+          if (xroadMemberId) {
+            await this.updateSelectedXRoadMember(xroadMemberId);
           } else {
             await this.updateSelectedXRoadMember(null);
           }
