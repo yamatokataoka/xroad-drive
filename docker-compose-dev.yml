@@ -13,6 +13,8 @@ services:
       - 8082:8082
     volumes:
       - ./xroad-drive-api:/xroad-drive-api
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongodb
     command: ["./gradlew", "bootRun"]
   mongodb:
     container_name: mongodb
