@@ -7,9 +7,9 @@ COPY . /xroad-metadata-proxy
 WORKDIR /xroad-metadata-proxy
 
 FROM develop AS build
-RUN go build -o ./xroad-metadata-proxy ./cmd/xroad-metadata-proxy
+RUN make build
 
 FROM alpine:3.9
-COPY --from=build /xroad-metadata-proxy ./
+COPY --from=build /xroad-metadata-proxy/bin/xroad-metadata-proxy_linux_amd64 ./xroad-metadata-proxy
 EXPOSE 8083
 CMD ["./xroad-metadata-proxy", "serve"]
