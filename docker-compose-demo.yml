@@ -1,0 +1,69 @@
+version: '3.7'
+services:
+  client-xroad-drive-api:
+    container_name: client-xroad-drive-api
+    image: yamatokataoka/xroad-drive-api:develop
+    ports:
+      - 8082:8082
+    volumes:
+      - ./demo-volumes/client-files:/etc/xroad-drive/xroad-drive-api/files
+    environment:
+      - SPRING_DATA_MONGODB_HOST=client-mongodb
+    depends_on:
+      - mongodb
+  client-mongodb:
+    container_name: client-mongodb
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ./demo-volumes/client-mongodb:/data/db
+  client-xroad-drive-ui:
+    container_name: xroad-drive-ui
+    image: yamatokataoka/xroad-drive-ui:develop
+    ports:
+      - 8080:80
+  client-xroad-metadata-proxy:
+    container_name: client-xroad-metadata-proxy
+    image: yamatokataoka/xroad-metadata-proxy:develop
+    ports:
+      - 8083:8083
+    volumes:
+      - ./xroad-metadata-proxy:/xroad-metadata-proxy
+    environment:
+      - XROAD_METADATA_PROXY_DATABASE_ADDR='redis:6379'
+    depends_on:
+      - redis
+  client-redis:
+    container_name: client-redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ./demo-volumes/client-redis:/data
+  provider-xroad-drive-api:
+    container_name: provider-xroad-drive-api
+    image: yamatokataoka/xroad-drive-api:develop
+    ports:
+      - 8092:8082
+    volumes:
+      - ./demo-volumes/provider-files:/etc/xroad-drive/xroad-drive-api/files
+    environment:
+      - SPRING_DATA_MONGODB_HOST=provider-mongodb
+    depends_on:
+      - mongodb
+  provider-mongodb:
+    container_name: provider-mongodb
+    image: mongo:latest
+    ports:
+      - 27027:27017
+    volumes:
+      - ./demo-volumes/provider-mongodb:/data/db
+  xroad-security-server-standalone:
+    container_name: xroad-security-server-standalone
+    image: niis/xroad-security-server-standalone:bionic-6.23.0
+    environment:
+      - XROAD_TOKEN_PIN=secret
+    ports:
+      - 8080:4000
+      - 8081:80

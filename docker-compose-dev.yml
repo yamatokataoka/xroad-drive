@@ -50,7 +50,7 @@ services:
     volumes:
       - ./xroad-metadata-proxy:/xroad-metadata-proxy
     environment:
-      - XROAD_METADATA_PROXY_DATABASE_ADDR='redis:6379'
+      - XROAD_METADATA_PROXY_DATABASE_ADDR=redis:6379
     command: ["make", "serve"]
   redis:
     container_name: redis
