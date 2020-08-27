@@ -8,8 +8,6 @@ import java.nio.file.Path;
 
 public interface StorageService {
 
-	void init();
-
 	void store(InputStream inputStream, String id);
 
 	Path resolve(String id);
