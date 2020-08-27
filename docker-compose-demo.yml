@@ -62,8 +62,6 @@ services:
   xroad-security-server-standalone:
     container_name: xroad-security-server-standalone
     image: niis/xroad-security-server-standalone:bionic-6.23.0
-    environment:
-      - XROAD_TOKEN_PIN=secret
     ports:
-      - 8080:4000
-      - 8081:80
+      - 8084:4000
+      - 8085:80
