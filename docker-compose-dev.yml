@@ -35,6 +35,11 @@ services:
     volumes:
       - ./xroad-drive-ui:/xroad-drive-ui
       - /xroad-drive-ui/node_modules
+    environment:
+      - VUE_APP_API_URL=http://xroad-drive-api:8082
+      - VUE_APP_METADATA_PROXY_URL=http://xroad-metadata-proxy:8083
+      - VUE_APP_SECURITY_SERVER_URL=http://xroad-security-server-standalone
+      - VUE_APP_XROAD_MEMBER_ID=CS/ORG/1111/TestClient
     command: ["yarn", "run", "serve"]
   xroad-metadata-proxy:
     container_name: xroad-metadata-proxy
