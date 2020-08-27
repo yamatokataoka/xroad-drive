@@ -21,7 +21,7 @@
       const { file } = this;
       const id = file.id;
 
-      if (!file || !id) return;
+      if (!file) return;
       console.log(`Start to upload file: ${file.name}`)
       try {
         await this.upload(file);
