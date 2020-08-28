@@ -5,6 +5,7 @@ import uploadFiles from './modules/uploadFiles';
 import fileList from './modules/fileList';
 import xroadMetadata from './modules/xroadMetadata';
 import selectedXRoadMember from './modules/selectedXRoadMember';
+import search from './modules/search';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     uploadFiles,
     fileList,
     xroadMetadata,
-    selectedXRoadMember
+    selectedXRoadMember,
+    search
   }
 });

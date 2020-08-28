@@ -40,6 +40,8 @@
         hide-details
         prepend-inner-icon="mdi-magnify"
         label="Search"
+        :value="search"
+        @input="updateSearch"
       />
       <v-spacer />
     </v-app-bar>
@@ -47,7 +49,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex';
+  import { mapState, mapGetters, mapActions } from 'vuex';
 
   export default {
     name: 'AppBar',
@@ -81,6 +83,7 @@
     },
     computed: {
       ...mapGetters('xroadMetadata', ['providersForNav', 'clientsForNav']),
+      ...mapState('search', ['search']),
       navItems() {
         let navItems = [];
         for (let i = 0; i < this.rootNavItems.length; i++) {
@@ -109,6 +112,7 @@
     methods: {
       ...mapActions('xroadMetadata', ['fetchProviders', 'fetchClients']),
       ...mapActions('selectedXRoadMember', ['updateSelectedXRoadMember']),
+      ...mapActions('search', ['updateSearch']),
       async selected(event) {
         if (!event[0] || !this.active[0] || event[0] === this.active[0]) return;
         const item = this.findObjectById(this.navItems, event[0]);

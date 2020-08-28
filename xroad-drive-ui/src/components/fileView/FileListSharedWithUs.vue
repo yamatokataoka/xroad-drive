@@ -54,6 +54,7 @@
     computed: {
       ...mapState('fileList', ['fileList']),
       ...mapState('selectedXRoadMember', ['selectedXRoadMember']),
+      ...mapState('search', ['search']),
       fileListWithDateGroupIndex: function() {
         return this.fileList.map(item => ({
           ...item, DateGroupIndex: this.$options.filters.getDateGroupIndex(item.sharedDateTime)
@@ -63,6 +64,7 @@
     methods: {
       ...mapActions('selectedFile', ['updateSelectedFile']),
       ...mapActions('fileList', ['fetchFileList']),
+      ...mapActions('search', ['updateSearch']),
       clickRow(item, row) {
         if (this.selectedFile && row.isSelected) {
           row.select(false);
@@ -96,6 +98,7 @@
     beforeDestroy() {
       clearInterval(this.polling);
       this.updateSelectedFile(null);
+      this.updateSearch('');
     }
   };
 </script>

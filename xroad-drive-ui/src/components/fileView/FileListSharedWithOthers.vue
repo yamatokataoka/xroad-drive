@@ -9,6 +9,7 @@
     @click:row="clickRow"
     height="calc(100vh - 96px - 58px)"
     item-key="id"
+    :search="search"
   >
     <template v-slot:no-data>No Files</template>
     <template v-slot:item.filename="{ item }">
@@ -51,6 +52,7 @@
     },
     computed: {
       ...mapState('fileList', ['fileList']),
+      ...mapState('search', ['search']),
       fileListWithDateGroupIndex: function() {
         return this.fileList.map(item => ({
           ...item, DateGroupIndex: this.$options.filters.getDateGroupIndex(item.createdDateTime)
@@ -60,6 +62,7 @@
     methods: {
       ...mapActions('selectedFile', ['updateSelectedFile']),
       ...mapActions('fileList', ['fetchFileList']),
+      ...mapActions('search', ['updateSearch']),
       clickRow(item, row) {
         if (this.selectedFile && row.isSelected) {
           row.select(false);
@@ -88,6 +91,7 @@
     beforeDestroy() {
       clearInterval(this.polling);
       this.updateSelectedFile(null);
+      this.updateSearch('');
     }
   };
 </script>
