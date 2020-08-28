@@ -67,7 +67,7 @@
         const breadcrumbs = pathArray.reduce((breadcrumbArray, path, i) => {
           breadcrumbArray.push({
             // TODO: get title name from path
-            text: path,
+            text: this.strToTile(path),
             to: breadcrumbArray[i - 1]
             ? "/" + pathArray[i - 1] + "/" + path
             : "/" + path,
@@ -77,6 +77,7 @@
         return breadcrumbs;
       },
       ...mapState('selectedXRoadMember', ['selectedXRoadMember']),
+      ...mapState('xroadMetadata', ['providers', 'clients']),
     },
     methods: {
       ...mapActions('uploadFiles', ['updateUploadFiles', 'updateUploading']),
@@ -85,6 +86,27 @@
         this.updateUploadFiles(refInput.files);
         this.updateUploading(true);
         refInput.value = '';
+      },
+      strToTile(str) {
+        let splitedArray = str.split('-');
+        let outArray = [];
+        const searchArray = this.providers.concat(this.clients);
+
+        const matchedMember = searchArray.find(xroadMember => xroadMember && xroadMember.id === str);
+
+        if (matchedMember) {
+          return matchedMember.name;
+        }
+        for(var x = 0; x < splitedArray.length; x++){
+          outArray.push(splitedArray[x].charAt(0).toUpperCase() + splitedArray[x].slice(1));
+        }
+
+        let outStr = outArray.join(' ');
+
+        if (str == 'our-files') {
+          return outStr
+        }
+        return outStr.charAt(0) + outStr.slice(1).toLowerCase();
       },
       async clickDownload() {
         if (selectedFile === null) {
