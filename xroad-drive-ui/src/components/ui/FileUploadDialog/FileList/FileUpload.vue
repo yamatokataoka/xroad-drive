@@ -1,5 +1,5 @@
 <script>
-  import { mapActions } from "vuex";
+  import { mapState, mapActions } from "vuex";
 
   export default {
     name: 'FileUpload',
@@ -8,6 +8,9 @@
         type: Object,
         required: true
       }
+    },
+    computed: {
+      ...mapState('selectedXRoadMember', ['selectedXRoadMember'])
     },
     methods: {
       ...mapActions('uploadFiles', [
@@ -21,10 +24,15 @@
       const { file } = this;
       const id = file.id;
 
+      let serviceId;
+      if (this.selectedXRoadMember) {
+        serviceId = this.selectedXRoadMember + ':' + 'XRoadDrive';
+      }
+
       if (!file) return;
       console.log(`Start to upload file: ${file.name}`)
       try {
-        await this.upload(file);
+        await this.upload({uploadFile: file, serviceId});
         this.updateIsDoneById({ id, isDone: true });
         this.updateProgressById({ id, progress: 100 });
         console.log(`Succeeded to upload file: ${file.name}`);
@@ -33,6 +41,7 @@
         this.updateProgressById({ id, progress: 100 });
         this.updateIndeterminateById({ id, indeterminate: false });
         console.log(`Failed to upload file: ${file.name}`);
+        console.log(error);
       }
     },
     render: () => null,

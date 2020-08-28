@@ -57,15 +57,32 @@ export default {
       }
       commit('updateUploadFiles', uploadFiles);
     },
-    async upload({ dispatch }, uploadFile) {
+    async upload({ dispatch }, { uploadFile, serviceId=null }) {
       const formData = new FormData();
       formData.append('file', uploadFile.file);
 
+      const xroadMemberId = process.env.VUE_APP_XROAD_MEMBER_ID;
+      let path = '/api/upload';
+      let headers = {};
+
+      if (serviceId) {
+        const servicePath = serviceId.replace(/:/g, '/');
+        if (!xroadMemberId) {
+          console.log('Failed to set config for axios: xroadMemberId: ' + xroadMemberId);
+          return;
+        }
+        // TODO: URL join helper is needed.
+        path = '/security-server/r1/' + servicePath + path;
+        headers['X-Road-Client'] = xroadMemberId;
+      }
+
+      headers['Content-Type'] = 'multipart/form-data';
+
       await axios({
-        url: '/api/upload',
+        url: path,
         method: 'post',
         data: formData,
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: headers,
         onUploadProgress: (progressEvent) => {
           const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
           if (totalLength !== null) {
