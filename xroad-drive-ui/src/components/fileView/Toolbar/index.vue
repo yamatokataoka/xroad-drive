@@ -137,6 +137,7 @@
           setTimeout(function() {
             window.URL.revokeObjectURL(url);
           }, 1000);
+          console.log('Succeeded to download file');
         } catch (error) {
           console.log('Failed to download file');
           console.log(error);
@@ -151,10 +152,31 @@
         const { selectedFile } = this;
         const id = selectedFile.id;
 
+        let serviceId = null;
+        if (this.selectedXRoadMember) {
+          serviceId = this.selectedXRoadMember + ':' + 'XRoadDrive';
+        }
+
+        const xroadMemberId = process.env.VUE_APP_XROAD_MEMBER_ID;
+        let path = `/api/delete/${encodeURIComponent(id)}`;
+        let headers = {};
+
+        if (serviceId) {
+          const servicePath = serviceId.replace(/:/g, '/');
+          if (!xroadMemberId) {
+            console.log('Failed to set config for axios: xroadMemberId: ' + xroadMemberId);
+            return;
+          }
+          // TODO: URL join helper is needed.
+          path = '/security-server/r1/' + servicePath + path;
+          headers['X-Road-Client'] = xroadMemberId;
+        }
+
         try {
           await axios({
-            url: `/api/delete/${encodeURIComponent(id)}`,
-            method: 'delete'
+            url: path,
+            method: 'delete',
+            headers: headers
           });
           this.updateSelectedFile(null);
           console.log('Succeeded to delete file');
