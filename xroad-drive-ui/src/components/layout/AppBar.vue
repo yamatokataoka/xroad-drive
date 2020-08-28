@@ -18,6 +18,7 @@
         class="body-2"
         :active.sync="active"
         :open.sync="open"
+        open-on-click
       >
         <template v-slot:prepend="{ item }">
           <v-icon v-if="item.icon" dense>{{ item.icon }}</v-icon>
