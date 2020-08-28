@@ -64,7 +64,7 @@ services:
       - ./demo-volumes/provider-mongodb:/data/db
   xroad-security-server-standalone:
     container_name: xroad-security-server-standalone
-    image: yamatokataoka/demo-xroad-security-server-standalone:bionic-6.23.0
+    image: yamatokataoka/xroad-drive-security-server-standalone-demo:bionic-6.23.0
     ports:
       - 8084:4000
       - 8085:80

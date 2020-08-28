@@ -66,7 +66,7 @@ services:
       - ./dev-volumes/redis:/data
   xroad-security-server-standalone:
     container_name: xroad-security-server-standalone
-    image: niis/xroad-security-server-standalone:bionic-6.23.0
+    image: yamatokataoka/xroad-drive-security-server-standalone-dev:bionic-6.23.0
     ports:
       - 8084:4000
       - 8085:80
