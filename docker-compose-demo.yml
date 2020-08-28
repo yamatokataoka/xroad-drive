@@ -10,7 +10,7 @@ services:
     environment:
       - SPRING_DATA_MONGODB_HOST=client-mongodb
     depends_on:
-      - mongodb
+      - client-mongodb
   client-mongodb:
     container_name: client-mongodb
     image: mongo:latest
@@ -19,21 +19,17 @@ services:
     volumes:
       - ./demo-volumes/client-mongodb:/data/db
   client-xroad-drive-ui:
-    container_name: xroad-drive-ui
+    container_name: client-xroad-drive-ui
     image: yamatokataoka/xroad-drive-ui:develop
-    ports:
-      - 8080:80
   client-xroad-metadata-proxy:
     container_name: client-xroad-metadata-proxy
     image: yamatokataoka/xroad-metadata-proxy:develop
     ports:
       - 8083:8083
-    volumes:
-      - ./xroad-metadata-proxy:/xroad-metadata-proxy
     environment:
-      - XROAD_METADATA_PROXY_DATABASE_ADDR='redis:6379'
+      - XROAD_METADATA_PROXY_DATABASE_ADDR=client-redis:6379
     depends_on:
-      - redis
+      - client-redis
   client-redis:
     container_name: client-redis
     image: redis:latest
@@ -41,6 +37,13 @@ services:
       - 6379:6379
     volumes:
       - ./demo-volumes/client-redis:/data
+  client-reverse-proxy:
+    container_name: client-reverse-proxy
+    image: nginx:latest
+    volumes:
+      - ./demo-volumes/client-reverse-proxy/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8080:80
   provider-xroad-drive-api:
     container_name: provider-xroad-drive-api
     image: yamatokataoka/xroad-drive-api:develop
@@ -51,7 +54,7 @@ services:
     environment:
       - SPRING_DATA_MONGODB_HOST=provider-mongodb
     depends_on:
-      - mongodb
+      - provider-mongodb
   provider-mongodb:
     container_name: provider-mongodb
     image: mongo:latest
@@ -61,7 +64,7 @@ services:
       - ./demo-volumes/provider-mongodb:/data/db
   xroad-security-server-standalone:
     container_name: xroad-security-server-standalone
-    image: niis/xroad-security-server-standalone:bionic-6.23.0
+    image: yamatokataoka/demo-xroad-security-server-standalone:bionic-6.23.0
     ports:
       - 8084:4000
       - 8085:80
