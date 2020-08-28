@@ -4,11 +4,10 @@
     :headers="headers"
     :items="fileListWithDateGroupIndex"
     group-by="DateGroupIndex"
-    hide-default-footer
     fixed-header
     single-select
     @click:row="clickRow"
-    height="calc(100vh - 96px)"
+    height="calc(100vh - 96px - 58px)"
     item-key="id"
   >
     <template v-slot:no-data>No Files</template>

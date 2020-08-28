@@ -3,11 +3,10 @@
   <v-data-table
     :headers="headers"
     :items="fileList"
-    hide-default-footer
     fixed-header
     single-select
     @click:row="clickRow"
-    height="calc(100vh - 96px)"
+    height="calc(100vh - 96px - 58px)"
   >
     <template v-slot:no-data>No Files</template>
     <template v-slot:item.filename="{ item }">
