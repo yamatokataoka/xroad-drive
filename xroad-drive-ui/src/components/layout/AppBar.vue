@@ -42,7 +42,6 @@
         label="Search"
       />
       <v-spacer />
-      <v-btn outlined class="hidden-sm-and-down">SIGN IN</v-btn>
     </v-app-bar>
   </div>
 </template>

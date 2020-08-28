@@ -9,6 +9,7 @@
     @click:row="clickRow"
     height="calc(100vh - 96px - 58px)"
     item-key="id"
+    :search="search"
   >
     <template v-slot:no-data>No Files</template>
     <template v-slot:item.filename="{ item }">
