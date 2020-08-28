@@ -43,7 +43,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
   import UploadButton from '@/components/fileView/Toolbar/UploadButton';
   import axios from 'axios';
 
@@ -75,7 +75,8 @@
           return breadcrumbArray;
         }, [])
         return breadcrumbs;
-      }
+      },
+      ...mapState('selectedXRoadMember', ['selectedXRoadMember']),
     },
     methods: {
       ...mapActions('uploadFiles', ['updateUploadFiles', 'updateUploading']),
@@ -93,10 +94,31 @@
         const { selectedFile } = this;
         const id = selectedFile.id;
 
+        let serviceId = null;
+        if (this.selectedXRoadMember) {
+          serviceId = this.selectedXRoadMember + ':' + 'XRoadDrive';
+        }
+
+        const xroadMemberId = process.env.VUE_APP_XROAD_MEMBER_ID;
+        let path = `/api/download/${encodeURIComponent(id)}`;
+        let headers = {};
+
+        if (serviceId) {
+          const servicePath = serviceId.replace(/:/g, '/');
+          if (!xroadMemberId) {
+            console.log('Failed to set config for axios: xroadMemberId: ' + xroadMemberId);
+            return;
+          }
+          // TODO: URL join helper is needed.
+          path = '/security-server/r1/' + servicePath + path;
+          headers['X-Road-Client'] = xroadMemberId;
+        }
+
         try {
           const response = await axios({
-            url: `/api/download/${encodeURIComponent(id)}`,
+            url: path,
             method: 'get',
+            headers: headers,
             responseType: 'blob'
           });
           const regexp = /filename="(.*)"/;
