@@ -38,7 +38,7 @@ services:
       - 6379:6379
     volumes:
       - ./demo-setup/client-redis:/docker-entrypoint-initdb.d
-    command: /bin/bash -c "/docker-entrypoint-initdb.d/entrypoint.sh & redis-server"
+    command: /bin/bash -c "/docker-entrypoint-initdb.d/init.sh & docker-entrypoint.sh redis-server"
   client-reverse-proxy:
     container_name: client-reverse-proxy
     image: nginx:latest
