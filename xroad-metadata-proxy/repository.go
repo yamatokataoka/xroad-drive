@@ -102,8 +102,10 @@ func getXRoadMembers(client *redis.Client, match string) ([]*XRoadMember, error)
         if err != nil {
           log.
             WithError(err).
-            WithField("input", mapXRoadMember).
-            WithField("output", xRoadMember).
+            WithFields(log.Fields{
+              "input":     mapXRoadMember,
+              "output":       xRoadMember,
+            }).
             Error("Failed to decode")
           return nil, err
         }

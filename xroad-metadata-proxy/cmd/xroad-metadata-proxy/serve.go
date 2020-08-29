@@ -24,6 +24,10 @@ var serveCmd = &cobra.Command{
 }
 
 func serve() {
+  log.
+    WithField("version", version).
+    Info("xroad-metadata-proxy")
+
   var config proxy.Config
 
   err := viper.Unmarshal(&config)
@@ -52,9 +56,9 @@ func serve() {
     Addr:    config.Server.Addr,
   }
 
-  log.WithFields(log.Fields{
-    "address": server.Addr,
-  }).Info("start listening")
+  log.
+    WithField("address", server.Addr).
+    Info("Start listening")
 
   log.Fatal(server.ListenAndServe())
 }

@@ -19,10 +19,13 @@ func NewClient(config DatabaseConfig) *redis.Client {
     _, err = client.Ping().Result()
     if err != nil {
       log.
-      WithError(err).
-      Error("Failed to connect redis")
+        WithError(err).
+        WithField("address", config.Addr).
+        Error("Failed to connect redis")
     } else {
-      log.Info("Connected to redis")
+      log.
+        WithField("address", config.Addr).
+        Info("Connected to redis")
     }
     return err
   })

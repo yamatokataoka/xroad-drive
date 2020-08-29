@@ -73,9 +73,7 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
   response, _ := json.Marshal(payload)
 
   log.
-    WithFields(log.Fields{
-      "status_code": code,
-    }).
+    WithField("status_code", code).
     Info("Return response")
 
   w.Header().Set("Content-Type", "application/json")
