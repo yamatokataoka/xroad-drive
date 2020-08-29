@@ -42,7 +42,7 @@ services:
     container_name: client-reverse-proxy
     image: nginx:latest
     volumes:
-      - ./demo-volumes/client-reverse-proxy/nginx.conf:/etc/nginx/nginx.conf
+      - ./demo-setup/client-reverse-proxy/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 8080:80
   provider-xroad-drive-api:
