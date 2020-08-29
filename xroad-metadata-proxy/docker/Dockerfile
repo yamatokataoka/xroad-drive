@@ -2,7 +2,7 @@ FROM golang:1.14-alpine AS develop
 # clear GOPATH
 ENV GOPATH= \
     GOCACHE=/tmp/.cache
-RUN apk add --no-cache git make
+RUN apk add --no-cache git make build-base
 COPY . /xroad-metadata-proxy
 WORKDIR /xroad-metadata-proxy
 
