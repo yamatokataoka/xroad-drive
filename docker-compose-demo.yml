@@ -6,7 +6,7 @@ services:
     ports:
       - 8082:8082
     volumes:
-      - ./demo-volumes/client-files:/etc/xroad-drive/xroad-drive-api/files
+      - ./demo-setup/client-files:/etc/xroad-drive/xroad-drive-api/files
     environment:
       - SPRING_DATA_MONGODB_HOST=client-mongodb
     depends_on:
@@ -17,7 +17,8 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./demo-volumes/client-mongodb:/data/db
+      - ./demo-setup/client-mongodb:/docker-entrypoint-initdb.d
+    command: /bin/bash -c "/docker-entrypoint-initdb.d/init.sh & docker-entrypoint.sh mongod"
   client-xroad-drive-ui:
     container_name: client-xroad-drive-ui
     image: yamatokataoka/xroad-drive-ui:develop
