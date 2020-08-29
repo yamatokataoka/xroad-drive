@@ -52,7 +52,7 @@ services:
     ports:
       - 8092:8082
     volumes:
-      - ./demo-volumes/provider-files:/etc/xroad-drive/xroad-drive-api/files
+      - ./demo-setup/provider-files:/etc/xroad-drive/xroad-drive-api/files
     environment:
       - SPRING_DATA_MONGODB_HOST=provider-mongodb
     depends_on:
@@ -63,7 +63,8 @@ services:
     ports:
       - 27027:27017
     volumes:
-      - ./demo-volumes/provider-mongodb:/data/db
+      - ./demo-setup/provider-mongodb:/docker-entrypoint-initdb.d
+    command: /bin/bash -c "/docker-entrypoint-initdb.d/init.sh & docker-entrypoint.sh mongod"
   xroad-security-server-standalone:
     container_name: xroad-security-server-standalone
     image: yamatokataoka/xroad-drive-security-server-standalone-demo:bionic-6.23.0
