@@ -1,0 +1,4 @@
+HMSET providers:CS:ORG:1111:TestService ID CS:ORG:1111:TestService Name "Provider Company 1"
+HMSET clients:CS:ORG:1111:Company1Client ID CS:ORG:1111:Company1Client Name "Company 1"
+HMSET clients:CS:ORG:1114:Company4Client ID CS:ORG:1114:Company4Client Name "Company 2"
+HMSET clients:CS:ORG:1115:Company5Client ID CS:ORG:1115:Company5Client Name "Company 3"
