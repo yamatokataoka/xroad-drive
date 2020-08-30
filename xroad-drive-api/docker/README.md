@@ -1,5 +1,5 @@
 # Quick reference
-* **the X-Road Drive Github Repository**: [xroad-drive](https://github.com/yamatokataoka/file-service/tree/develop)
+* **the X-Road Drive Github Repository**: [xroad-drive](https://github.com/yamatokataoka/xroad-drive)
 
 ## Tags
 * develop
