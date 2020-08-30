@@ -21,25 +21,17 @@ import java.nio.file.Paths;
 public class FileSystemStorageService implements StorageService {
 
   private static final Logger log = LoggerFactory.getLogger(FileSystemStorageService.class);
-	private final Path location;
+	private final Path rootLocation;
 
 	public FileSystemStorageService(StorageProperties properties) {
-		location = Paths.get(properties.getLocation());
-	}
-
-	@Override
-	public void init() {
-		try {
-      log.info("Initialize file location");
-			Files.createDirectories(location);
-		} catch (IOException e) {
-      log.error("Failed to initialize file location", e);
-		}
+		rootLocation = Paths.get(properties.getLocation());
 	}
 
 	@Override
 	public void store(InputStream inputStream, String id) {
-    try(FileOutputStream fileOutputStream = new FileOutputStream(this.location.resolve(id).toFile())) {
+    mkdir(id);
+
+    try(FileOutputStream fileOutputStream = new FileOutputStream(this.rootLocation.resolve(id).toFile())) {
       log.info("Store file: {}", id);
       inputStream.transferTo(fileOutputStream);
 		} catch (IOException e) {
@@ -51,7 +43,7 @@ public class FileSystemStorageService implements StorageService {
 
 	@Override
 	public Path resolve(String id) {
-		return location.resolve(id);
+		return this.rootLocation.resolve(id);
 	}
 
 	@Override
@@ -75,7 +67,7 @@ public class FileSystemStorageService implements StorageService {
 	@Override
 	public void delete(String id) {
     log.info("Delete file: {}", id);
-		
+
     try {
       Files.deleteIfExists(resolve(id));
     } catch (Exception e) {
@@ -83,5 +75,14 @@ public class FileSystemStorageService implements StorageService {
 
       throw new FileException("Failed to delete file", e);
     }
+	}
+
+  private void mkdir(String id) {
+		try {
+      log.debug("Create directories for file: " + id);
+			Files.createDirectories(rootLocation.resolve(id).getParent());
+		} catch (IOException e) {
+      log.error("Failed to create directories for file: " + id, e);
+		}
 	}
 }

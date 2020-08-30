@@ -1,0 +1,73 @@
+version: '3.7'
+services:
+  client-xroad-drive-api:
+    container_name: client-xroad-drive-api
+    image: yamatokataoka/xroad-drive-api:develop
+    ports:
+      - 8082:8082
+    volumes:
+      - ./demo-setup/client-files:/etc/xroad-drive/xroad-drive-api/files
+    environment:
+      - SPRING_DATA_MONGODB_HOST=client-mongodb
+    depends_on:
+      - client-mongodb
+  client-mongodb:
+    container_name: client-mongodb
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ./demo-setup/client-mongodb:/docker-entrypoint-initdb.d
+    command: /bin/bash -c "/docker-entrypoint-initdb.d/init.sh & docker-entrypoint.sh mongod"
+  client-xroad-drive-ui:
+    container_name: client-xroad-drive-ui
+    image: yamatokataoka/xroad-drive-ui:develop
+  client-xroad-metadata-proxy:
+    container_name: client-xroad-metadata-proxy
+    image: yamatokataoka/xroad-metadata-proxy:develop
+    ports:
+      - 8083:8083
+    environment:
+      - XROAD_METADATA_PROXY_DATABASE_ADDR=client-redis:6379
+    depends_on:
+      - client-redis
+  client-redis:
+    container_name: client-redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ./demo-setup/client-redis:/docker-entrypoint-initdb.d
+    command: /bin/bash -c "/docker-entrypoint-initdb.d/init.sh & docker-entrypoint.sh redis-server"
+  client-reverse-proxy:
+    container_name: client-reverse-proxy
+    image: nginx:latest
+    volumes:
+      - ./demo-setup/client-reverse-proxy/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8080:80
+  provider-xroad-drive-api:
+    container_name: provider-xroad-drive-api
+    image: yamatokataoka/xroad-drive-api:develop
+    ports:
+      - 8092:8082
+    volumes:
+      - ./demo-setup/provider-files:/etc/xroad-drive/xroad-drive-api/files
+    environment:
+      - SPRING_DATA_MONGODB_HOST=provider-mongodb
+    depends_on:
+      - provider-mongodb
+  provider-mongodb:
+    container_name: provider-mongodb
+    image: mongo:latest
+    ports:
+      - 27027:27017
+    volumes:
+      - ./demo-setup/provider-mongodb:/docker-entrypoint-initdb.d
+    command: /bin/bash -c "/docker-entrypoint-initdb.d/init.sh & docker-entrypoint.sh mongod"
+  xroad-security-server-standalone:
+    container_name: xroad-security-server-standalone
+    image: yamatokataoka/xroad-drive-security-server-standalone-demo:bionic-6.23.0
+    ports:
+      - 8084:4000
+      - 8085:80

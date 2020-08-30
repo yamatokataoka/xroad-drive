@@ -12,7 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class MetadataControllerTest {
   @MockBean
   private MetadataService metadataService;
 
-  private Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, LocalDateTime.of(2020, 2, 25, 0, 0));
+  private Metadata metadata = buildMetadata("507f1f77bcf86cd799439011", "originalName.txt", 1000L, Instant.parse("2019-10-01T08:25:24.00Z"));
 
   @Test
   void testGetMetadataList() throws Exception {

@@ -3,14 +3,18 @@ services:
   xroad-drive-api:
     container_name: xroad-drive-api
     user: ${LOCAL_UID}:${LOCAL_GID}
-    build: 
+    build:
       context: ./xroad-drive-api
       dockerfile: docker/Dockerfile
       target: develop
+    depends_on:
+      - mongodb
     ports:
       - 8082:8082
     volumes:
       - ./xroad-drive-api:/xroad-drive-api
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongodb
     command: ["./gradlew", "bootRun"]
   mongodb:
     container_name: mongodb
@@ -18,11 +22,11 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - mongodb-dev:/data/db
+      - ./dev-volumes/mongodb:/data/db
   xroad-drive-ui:
     container_name: xroad-drive-ui
     user: ${LOCAL_UID}:${LOCAL_GID}
-    build: 
+    build:
       context: ./xroad-drive-ui
       dockerfile: docker/Dockerfile
       target: develop
@@ -30,7 +34,39 @@ services:
       - 8080:8080
     volumes:
       - ./xroad-drive-ui:/xroad-drive-ui
+      - /xroad-drive-ui/node_modules
+    environment:
+      - VUE_APP_API_URL=http://xroad-drive-api:8082
+      - VUE_APP_METADATA_PROXY_URL=http://xroad-metadata-proxy:8083
+      - VUE_APP_SECURITY_SERVER_URL=http://xroad-security-server-standalone
+      - VUE_APP_XROAD_MEMBER_ID=CS/ORG/1111/TestClient
     command: ["yarn", "run", "serve"]
-
-volumes:
-  mongodb-dev:
+  xroad-metadata-proxy:
+    container_name: xroad-metadata-proxy
+    user: ${LOCAL_UID}:${LOCAL_GID}
+    build:
+      context: ./xroad-metadata-proxy
+      dockerfile: docker/Dockerfile
+      target: develop
+    depends_on:
+      - redis
+    ports:
+      - 8083:8083
+    volumes:
+      - ./xroad-metadata-proxy:/xroad-metadata-proxy
+    environment:
+      - XROAD_METADATA_PROXY_DATABASE_ADDR=redis:6379
+    command: ["make", "serve"]
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ./dev-volumes/redis:/data
+  xroad-security-server-standalone:
+    container_name: xroad-security-server-standalone
+    image: yamatokataoka/xroad-drive-security-server-standalone-dev:bionic-6.23.0
+    ports:
+      - 8084:4000
+      - 8085:80

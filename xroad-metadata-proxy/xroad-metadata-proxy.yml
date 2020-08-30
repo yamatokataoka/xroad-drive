@@ -1,0 +1,6 @@
+# Default setting
+# server:
+#   addr: 0.0.0.0:8083
+#
+# database:
+#   addr: localhost:6379

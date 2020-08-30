@@ -1,29 +1,26 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-import MyFiles from '../views/MyFiles.vue'
-import SharedWithUs from '../views/SharedWithUs.vue'
-import SharedWithCompanies from '../views/SharedWithCompanies.vue'
+import createFileListView from '@/views/CreateFileListView.js';
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
-    name: 'Home',
-    redirect: '/my-files'
+    redirect: '/our-files'
   }, {
-    path: '/my-files',
-    name: 'MyFiles',
-    component: MyFiles
+    path: '/our-files',
+    name: 'our-files',
+    component: createFileListView('OurFiles')
   }, {
-    path: '/shared-with-us',
-    name: 'SharedWithUs',
-    component: SharedWithUs
+    path: '/shared-with-us/:id(\\w+:\\w+:\\d+:.+)?',
+    name: 'shared-with-us',
+    component: createFileListView('SharedWithUs')
   }, {
-    path: '/shared-with-companies',
-    name: 'SharedWithCompanies',
-    component: SharedWithCompanies
+    path: '/shared-with-others/:id(\\w+:\\w+:\\d+:.+)?',
+    name: 'shared-with-others',
+    component: createFileListView('SharedWithOthers')
   }
 ]
 
