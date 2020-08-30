@@ -22,6 +22,7 @@ type DatabaseConfig struct {
 
 func InitConfig() {
   viper.SetDefault("server.addr", "0.0.0.0:8083")
+  viper.SetDefault("database.addr", "localhost:6379")
 
   viper.SetConfigName("xroad-metadata-proxy")
   viper.AddConfigPath(".")
