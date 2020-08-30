@@ -36,7 +36,7 @@ In the `docker-compose-demo.yml` and `docker-compose-dev.yml`, the pre-configure
 
 ## Development
 
-The docker compose creates development environment.
+The docker compose creates the development environment.
 
 On the project directory,
 

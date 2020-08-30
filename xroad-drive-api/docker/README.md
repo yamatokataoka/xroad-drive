@@ -1,13 +1,14 @@
 # Quick reference
-* **the X-Road Drive Github Repository**: [xroad-drive](https://github.com/yamatokataoka/xroad-drive)
+* **Github Repository**: [xroad-drive](https://github.com/yamatokataoka/xroad-drive)
 
 ## Tags
 * develop
 * latest
-* 1.0.0
+* 0.0.1
+* 0.1.0
 
 ## Environment Variables
-You can use Spring boot common application properties as environment veriables to configure the mongodb connection setting.
+You can use [Spring boot Common Application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#data-properties) as environment variables to configure the MongoDB connection setting.
 
 For example,
 ```
@@ -18,17 +19,15 @@ services:
       - SPRING_DATA_MONGODB_HOST=mongodb
 ```
 
-You can find more properties, [here](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#data-properties).
-
 # What is xroad-drive-api?
 The xroad-drive-api is a REST api to manage and share files over X-Road.
 
-about [X-Road Data Exchange Layer](https://github.com/nordic-institute/X-Road)
+See [X-Road Data Exchange Layer](https://github.com/nordic-institute/X-Road)
 
 # Usage
-The xroad-drive-api docker container requires a mongodb.
+The xroad-drive-api docker container requires MongoDB.
 
-Use following docker-compose file as a example
+Use the following docker-compose file as an example
 ```
 services:
   xroad-drive-api:
@@ -49,9 +48,9 @@ You can find the full demo docker compose file, [docker-compose-demo.yml](https:
 
 # Where to Store Files
 
-**Important note**: There are several ways to store files uploaded by users.
+**Important note**: There are several ways to store data used by applications that run in Docker containers.
 
-Write docker-compose file like
+Write docker compose file like
 ```
 services:
   xroad-drive-api:
