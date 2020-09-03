@@ -2,8 +2,8 @@
   <!-- todo: hard-coded height -->
   <v-data-table
     :headers="headers"
-    :items="fileListWithDateGroupIndex"
-    group-by="DateGroupIndex"
+    :items="fileListWithDateGroup"
+    group-by="dateGroup"
     fixed-header
     single-select
     @click:row="clickRow"
@@ -25,7 +25,7 @@
     </template>
     <template v-slot:group.header="{ group, headers }">
       <th :colspan="headers.length">
-        {{ group | getDateGroupByIndex }}
+        {{ group }}
       </th>
     </template>
   </v-data-table>
@@ -53,9 +53,9 @@
     computed: {
       ...mapState('fileList', ['fileList']),
       ...mapState('search', ['search']),
-      fileListWithDateGroupIndex: function() {
+      fileListWithDateGroup: function() {
         return this.fileList.map(item => ({
-          ...item, DateGroupIndex: this.$options.filters.getDateGroupIndex(item.createdDateTime)
+          ...item, dateGroup: this.$options.filters.dateGroup(item.createdDateTime)
         }));
       }
     },

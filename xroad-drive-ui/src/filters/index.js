@@ -45,10 +45,11 @@ export function formatBytes (bytes) {
   return number + ' ' + UNITS[exponent];
 }
 
-// Get date group index.
-export function getDateGroupIndex (dateString) {
+// Return date group from date string
+export function dateGroup (dateString) {
 
   const date = new Date(dateString);
+  const dateGroups = ['Today', 'Yesterday', 'Earlier This Week', 'Last Week', 'Earlier This Month', 'Last Month', 'Earlier This Year', 'Older'];
 
   const today = new Date();
   today.setHours(0,0,0,0);
@@ -72,41 +73,34 @@ export function getDateGroupIndex (dateString) {
   const thisYear = new Date(today.getFullYear(), 0, 1);
 
   if (date > today) {
-    return 0;
+    return dateGroups[0];
   }
 
   else if (date > yesterday) {
-    return 1;
+    return dateGroups[1];
   }
 
   else if (date > thisWeek) {
-    return 2;
+    return dateGroups[2];
   }
 
   else if (date > lastWeek) {
-    return 3;
+    return dateGroups[3];
   }
 
   else if (date > thisMonth) {
-    return 4;
+    return dateGroups[4];
   }
 
   else if (date > lastMonth) {
-    return 5;
+    return dateGroups[5];
   }
 
   else if (date > thisYear) {
-    return 6;
+    return dateGroups[6];
   }
 
   else {
-    return 7;
+    return dateGroups[7];
   }
-}
-
-// Get date group.
-export function getDateGroupByIndex (index) {
-
-  const DateGroups = ['Today', 'Yesterday', 'Earlier This Week', 'Last Week', 'Earlier This Month', 'Last Month', 'Earlier This Year', 'Older'];
-  return DateGroups[index];
 }
