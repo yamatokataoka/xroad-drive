@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import createFileListView from '@/views/CreateFileListView.js';
+import OurFiles from '@/views/OurFiles';
+import SharedWithUs from '@/views/SharedWithUs';
+import SharedWithOthers from '@/views/SharedWithOthers';
 
 Vue.use(VueRouter)
 
@@ -12,15 +14,15 @@ const routes = [
   }, {
     path: '/our-files',
     name: 'our-files',
-    component: createFileListView('OurFiles')
+    component: OurFiles
   }, {
     path: '/shared-with-us/:id(\\w+:\\w+:\\d+:.+)?',
     name: 'shared-with-us',
-    component: createFileListView('SharedWithUs')
+    component: SharedWithUs
   }, {
     path: '/shared-with-others/:id(\\w+:\\w+:\\d+:.+)?',
     name: 'shared-with-others',
-    component: createFileListView('SharedWithOthers')
+    component: SharedWithOthers
   }
 ]
 
