@@ -26,6 +26,7 @@
 
 <script>
   import { mapState, mapActions } from 'vuex';
+  import { isToday } from '@/utils';
 
   export default {
     name: 'FileList',
@@ -67,11 +68,7 @@
           this.fetchFileList();
         }, 3000)
       },
-      isToday(dateString) {
-        const inputDate = this.$options.filters.formatDate(dateString);
-        const today = new Date().toDateString();
-        return (today == inputDate);
-      }
+      isToday
     },
     created() {
       this.pollFileList()
