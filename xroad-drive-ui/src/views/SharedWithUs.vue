@@ -4,17 +4,10 @@
       :selectedFile="selectedFile"
     ></toolbar>
     <file-list
-      v-if="type === 'OurFiles'"
       :selectedFile="selectedFile"
+      :headers="headers"
+      :group-by="group"
     ></file-list>
-    <file-list-shared-with-us
-      v-else-if="type === 'SharedWithUs'"
-      :selectedFile="selectedFile"
-    ></file-list-shared-with-us>
-    <file-list-shared-with-others
-      v-else
-      :selectedFile="selectedFile"
-    ></file-list-shared-with-others>
     <file-upload-dialog />
   </div>
 </template>
@@ -24,20 +17,24 @@
   import FileList from '@/components/fileView/FileList';
   import Toolbar from '@/components/fileView/Toolbar';
   import FileUploadDialog from '@/components/ui/FileUploadDialog';
-  import FileListSharedWithUs from '@/components/fileView/FileListSharedWithUs';
-  import FileListSharedWithOthers from '@/components/fileView/FileListSharedWithOthers';
 
   export default {
-    name: 'FileListView',
+    name: 'SharedWithUs',
     components: {
       FileList,
       Toolbar,
-      FileUploadDialog,
-      FileListSharedWithUs,
-      FileListSharedWithOthers
+      FileUploadDialog
     },
-    props: {
-      type: String
+    data() {
+      return {
+        headers: [
+          { text: 'Name', value: 'filename' },
+          { text: 'Shared At', value: 'sharedDateTime' },
+          { text: 'Owner', value: 'owner' },
+          { text: 'Size', value: 'filesize' }
+        ],
+        group: 'sharedDateTime'
+      }
     },
     computed: {
       ...mapState('selectedFile', ['selectedFile'])
