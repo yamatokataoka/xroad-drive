@@ -121,7 +121,7 @@
           this.openParent(item.id);
 
           const xroadMemberId = item.id.split(/:(.+)/)[1];
-          if (xroadMemberId) {
+          if (xroadMemberId && item.parent === 'shared-with-us') {
             await this.updateSelectedXRoadMember(xroadMemberId);
           } else {
             await this.updateSelectedXRoadMember(null);
@@ -171,7 +171,7 @@
       this.active = [id];
       this.openParent(id);
 
-      if (!currentRoute.params.id) return;
+      if (!currentRoute.params.id || currentRoute.name === 'shared-with-others') return;
       this.updateSelectedXRoadMember(currentRoute.params.id);
     },
     beforeDestroy() {
