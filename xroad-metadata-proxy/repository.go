@@ -42,7 +42,7 @@ func NewClientRepository(c *redis.Client) ClientRepository {
 func (pr *providerRepository) GetAll() ([]*XRoadMember, error) {
   match := providerKey + ":*"
 
-  providers, err := getXRoadMembers(pr.client, match)
+  providers, err := getXRoadMembersByMatch(pr.client, match)
   if err != nil {
     return nil, errors.New("Failed to get X-Road member information")
   }
@@ -53,7 +53,7 @@ func (pr *providerRepository) GetAll() ([]*XRoadMember, error) {
 func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
   match := clientKey + ":*"
 
-  clients, err := getXRoadMembers(pr.client, match)
+  clients, err := getXRoadMembersByMatch(pr.client, match)
   if err != nil {
     return nil, errors.New("Failed to get X-Road member information")
   }
@@ -61,7 +61,7 @@ func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
   return clients, nil
 }
 
-func getXRoadMembers(client *redis.Client, match string) ([]*XRoadMember, error) {
+func getXRoadMembersByMatch(client *redis.Client, match string) ([]*XRoadMember, error) {
   var (
     cursor uint64
     xRoadMembers = make([]*XRoadMember, 0)
