@@ -16,7 +16,8 @@ func TestProviderRepository_GetAll(t *testing.T) {
     {"ID": "CS:ORG:1113:Company3Provider", "Name": "Company 3"},
   }
 
-  expectedProviders := HMSetAll(t, mapProviders, mockClient, providerKey)
+  HMSetAll(t, mapProviders, mockClient, providerKey)
+  expectedProviders := decodeXRoadMembers(t, mapProviders)
 
   providerRepository := NewProviderRepository(mockClient)
   actualProviders, err := providerRepository.GetAll()
@@ -36,7 +37,8 @@ func TestClientRepository_GetAll(t *testing.T) {
     {"ID": "CS:ORG:1112:Company2Provider", "Name": "Company 2"},
   }
 
-  expectedClients := HMSetAll(t, mapClients, mockClient, clientKey)
+  HMSetAll(t, mapClients, mockClient, clientKey)
+  expectedClients := decodeXRoadMembers(t, mapClients)
 
   clientRepository := NewClientRepository(mockClient)
   actualClients, err := clientRepository.GetAll()

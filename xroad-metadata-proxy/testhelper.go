@@ -25,7 +25,19 @@ func NewRedisMock(t *testing.T) (*redis.Client, *miniredis.Miniredis) {
   return client, miniredis
 }
 
-func HMSetAll(t *testing.T, mapXRoadMembers []map[string]interface{}, client *redis.Client, key string) []*XRoadMember {
+// Make it private function
+func HMSetAll(t *testing.T, mapXRoadMembers []map[string]interface{}, client *redis.Client, key string) {
+  t.Helper()
+
+  for _, mapXRoadMember := range mapXRoadMembers {
+    err := client.HMSet(key + ":" + mapXRoadMember["ID"].(string), mapXRoadMember).Err()
+    if err != nil {
+      t.Fatalf("Failed to set test data '%#v'", err)
+    }
+  }
+}
+
+func decodeXRoadMembers(t *testing.T, mapXRoadMembers []map[string]interface{}) []*XRoadMember {
   t.Helper()
 
   var expectedXRoadMembers []*XRoadMember
@@ -33,12 +45,7 @@ func HMSetAll(t *testing.T, mapXRoadMembers []map[string]interface{}, client *re
   for _, mapXRoadMember := range mapXRoadMembers {
     var xRoadMember XRoadMember
 
-    err := client.HMSet(key + ":" + mapXRoadMember["ID"].(string), mapXRoadMember).Err()
-    if err != nil {
-      t.Fatalf("Failed to set test data '%#v'", err)
-    }
-
-    err = mapstructure.Decode(mapXRoadMember, &xRoadMember)
+    err := mapstructure.Decode(mapXRoadMember, &xRoadMember)
     if err != nil {
       t.Fatalf("Failed to decode '%#v'", err)
     }
