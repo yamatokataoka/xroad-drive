@@ -52,12 +52,12 @@ func (pr *providerRepository) GetAll() ([]*XRoadMember, error) {
 }
 
 func (pr *providerRepository) Set(xRoadMembers []*XRoadMember) error {
-  for _, xRoadMember := range xRoadMembers {
-    mapXRoadMember, err := decodeStruct(xRoadMember)
-    if err != nil {
-      return errors.New("Failed to decode mapXRoadMember")
-    }
+  mapXRoadMembers, err := decodeStructs(xRoadMembers)
+  if err != nil {
+    return err
+  }
 
+  for _, mapXRoadMember := range mapXRoadMembers {
     err = hMSetXRoadMember(pr.client, mapXRoadMember, providerKey)
     if err != nil {
       return errors.New("Failed to set X-Road member metadata")
@@ -80,12 +80,12 @@ func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
 }
 
 func (cr *clientRepository) Set(xRoadMembers []*XRoadMember) error {
-  for _, xRoadMember := range xRoadMembers {
-    mapXRoadMember, err := decodeStruct(xRoadMember)
-    if err != nil {
-      return errors.New("Failed to decode mapXRoadMember")
-    }
+  mapXRoadMembers, err := decodeStructs(xRoadMembers)
+  if err != nil {
+    return err
+  }
 
+  for _, mapXRoadMember := range mapXRoadMembers {
     err = hMSetXRoadMember(cr.client, mapXRoadMember, clientKey)
     if err != nil {
       return errors.New("Failed to set X-Road member metadata")
@@ -198,20 +198,26 @@ func hMSetXRoadMember(client *redis.Client, mapXRoadMember map[string]interface{
   return nil
 }
 
-func decodeStruct(xRoadMember *XRoadMember) (map[string]interface{}, error) {
-  var mapXRoadMember map[string]interface{}
+func decodeStructs(xRoadMembers []*XRoadMember) ([]map[string]interface{}, error) {
+  var mapXRoadMembers []map[string]interface{}
 
-  err := mapstructure.Decode(xRoadMember, &mapXRoadMember)
-  if err != nil {
-    log.
-      WithError(err).
-      WithFields(log.Fields{
-        "input":  xRoadMember,
-        "output": mapXRoadMember,
-      }).
-      Error("Failed to decode")
-    return nil, err
+  for _, xRoadMember := range xRoadMembers {
+    var mapXRoadMember map[string]interface{}
+
+    err := mapstructure.Decode(xRoadMember, &mapXRoadMember)
+    if err != nil {
+      log.
+        WithError(err).
+        WithFields(log.Fields{
+          "input":  xRoadMember,
+          "output": mapXRoadMember,
+        }).
+        Error("Failed to decode")
+      return nil, err
+    }
+
+    mapXRoadMembers = append(mapXRoadMembers, mapXRoadMember)
   }
 
-  return mapXRoadMember, nil
+  return mapXRoadMembers, nil
 }
