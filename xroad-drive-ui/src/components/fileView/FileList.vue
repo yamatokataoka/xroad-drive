@@ -38,6 +38,7 @@
 <script>
   import { mapState, mapActions } from 'vuex';
   import { isToday } from '@/utils';
+  import { dateGroup } from '@/filters';
 
   export default {
     name: 'FileList',
@@ -58,9 +59,8 @@
       ...mapState('search', ['search']),
       filteredFileList: function() {
         if (this.groupBy) {
-          // import filter with import { dateGroup } from ...
           return this.fileList.map(item => ({
-            ...item, dateGroup: this.$options.filters.dateGroup(item[this.groupBy])
+            ...item, dateGroup: dateGroup(item[this.groupBy])
           }));
         } else {
           return this.fileList;
