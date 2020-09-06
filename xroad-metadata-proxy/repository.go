@@ -65,11 +65,10 @@ func (pr *providerRepository) Set(xRoadMembers []*XRoadMember) error {
   return nil
 }
 
-// TODO: Fix typo renaming pr to cr
-func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
+func (cr *clientRepository) GetAll() ([]*XRoadMember, error) {
   match := clientKey + ":*"
 
-  clients, err := getXRoadMembersByMatch(pr.client, match)
+  clients, err := getXRoadMembersByMatch(cr.client, match)
   if err != nil {
     return nil, errors.New("Failed to get X-Road member information")
   }
