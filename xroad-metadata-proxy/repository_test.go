@@ -22,11 +22,9 @@ func TestProviderRepository_GetAll(t *testing.T) {
   mockClient, miniredis := NewRedisMock(t)
   defer miniredis.Close()
 
-  for _, expectedMapXRoadMember := range expectedMapXRoadMembers {
-    err := hMSetXRoadMember(mockClient, expectedMapXRoadMember, providerKey)
-    if err != nil {
-      t.Errorf("Failed to set test data '%#v'", err)
-    }
+  err := hMSetXRoadMembers(mockClient, expectedMapXRoadMembers, providerKey)
+  if err != nil {
+    t.Errorf("Failed to set test data '%#v'", err)
   }
 
   providerRepository := NewProviderRepository(mockClient)
@@ -59,11 +57,9 @@ func TestClientRepository_GetAll(t *testing.T) {
   mockClient, miniredis := NewRedisMock(t)
   defer miniredis.Close()
 
-  for _, expectedMapXRoadMember := range expectedMapXRoadMembers {
-    err := hMSetXRoadMember(mockClient, expectedMapXRoadMember, clientKey)
-    if err != nil {
-      t.Errorf("Failed to set test data '%#v'", err)
-    }
+  err := hMSetXRoadMembers(mockClient, expectedMapXRoadMembers, clientKey)
+  if err != nil {
+    t.Errorf("Failed to set test data '%#v'", err)
   }
 
   clientRepository := NewClientRepository(mockClient)

@@ -57,11 +57,9 @@ func (pr *providerRepository) Set(xRoadMembers []*XRoadMember) error {
     return err
   }
 
-  for _, mapXRoadMember := range mapXRoadMembers {
-    err = hMSetXRoadMember(pr.client, mapXRoadMember, providerKey)
-    if err != nil {
-      return errors.New("Failed to set X-Road member metadata")
-    }
+  err = hMSetXRoadMembers(pr.client, mapXRoadMembers, providerKey)
+  if err != nil {
+    return err
   }
 
   return nil
@@ -85,11 +83,9 @@ func (cr *clientRepository) Set(xRoadMembers []*XRoadMember) error {
     return err
   }
 
-  for _, mapXRoadMember := range mapXRoadMembers {
-    err = hMSetXRoadMember(cr.client, mapXRoadMember, clientKey)
-    if err != nil {
-      return errors.New("Failed to set X-Road member metadata")
-    }
+  err = hMSetXRoadMembers(cr.client, mapXRoadMembers, clientKey)
+  if err != nil {
+    return err
   }
 
   return nil
@@ -180,19 +176,21 @@ func decodeMap(mapXRoadMember map[string]string) (*XRoadMember, error) {
   return &xRoadMember, nil
 }
 
-func hMSetXRoadMember(client *redis.Client, mapXRoadMember map[string]interface{}, key string) error {
-  key = key + ":" + mapXRoadMember["ID"].(string)
+func hMSetXRoadMembers(client *redis.Client, mapXRoadMembers []map[string]interface{}, key string) error {
+  for _, mapXRoadMember := range mapXRoadMembers {
+    key = key + ":" + mapXRoadMember["ID"].(string)
 
-  err := client.HMSet(key, mapXRoadMember).Err()
-  if err != nil {
-    log.
-      WithError(err).
-      WithFields(log.Fields{
-        "key":  key,
-        "values": mapXRoadMember,
-      }).
-      Error("Failed to set data")
-    return err
+    err := client.HMSet(key, mapXRoadMember).Err()
+    if err != nil {
+      log.
+        WithError(err).
+        WithFields(log.Fields{
+          "key":  key,
+          "values": mapXRoadMember,
+        }).
+        Error("Failed to set data")
+      return err
+    }
   }
 
   return nil
