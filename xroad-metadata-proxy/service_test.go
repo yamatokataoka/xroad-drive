@@ -1,6 +1,7 @@
 package proxy
 
 import (
+  "errors"
   "testing"
 
   "github.com/stretchr/testify/mock"
@@ -20,9 +21,16 @@ func (m *MockProviderRepository) GetAll() ([]*XRoadMember, error) {
   return args.Get(0).([]*XRoadMember), args.Error(1)
 }
 
+func (m *MockProviderRepository) Set([]*XRoadMember) error {
+  return errors.New("Not Implemented")
+}
+
 func (m *MockClientRepository) GetAll() ([]*XRoadMember, error) {
   args := m.Called()
   return args.Get(0).([]*XRoadMember), args.Error(1)
+}
+func (m *MockClientRepository) Set([]*XRoadMember) error {
+  return errors.New("Not Implemented")
 }
 
 func TestProviderService_GetAll(t *testing.T) {

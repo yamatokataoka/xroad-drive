@@ -13,6 +13,7 @@ var clientKey = "clients"
 
 type XRoadMemberRepository interface {
   GetAll() ([]*XRoadMember, error)
+  Set(xRoadMembers []*XRoadMember) error
 }
 
 type ProviderRepository interface {
@@ -50,6 +51,11 @@ func (pr *providerRepository) GetAll() ([]*XRoadMember, error) {
   return providers, nil
 }
 
+func (pr *providerRepository) Set(xRoadMembers []*XRoadMember) error {
+  return errors.New("Not Implemented")
+}
+
+// TODO: Fix typo renaming pr to cr
 func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
   match := clientKey + ":*"
 
@@ -59,6 +65,10 @@ func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
   }
 
   return clients, nil
+}
+
+func (cr *clientRepository) Set(xRoadMembers []*XRoadMember) error {
+  return errors.New("Not Implemented")
 }
 
 func getXRoadMembersByMatch(client *redis.Client, match string) ([]*XRoadMember, error) {
