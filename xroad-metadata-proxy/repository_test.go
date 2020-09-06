@@ -6,18 +6,28 @@ import (
   "github.com/stretchr/testify/assert"
 )
 
-var mapXRoadMembers = []map[string]interface{}{
+var expectedMapXRoadMembers = []map[string]interface{}{
   {"ID": "CS:ORG:1111:Company1Subsystem", "Name": "Company 1"},
   {"ID": "CS:ORG:1112:Company2Subsystem", "Name": "Company 2"},
   {"ID": "CS:ORG:1113:Company3Subsystem", "Name": "Company 3"},
+}
+
+var expectedXRoadMembers = []*XRoadMember{
+  {ID: "CS:ORG:1111:Company1Subsystem", Name: "Company 1"},
+  {ID: "CS:ORG:1112:Company2Subsystem", Name: "Company 2"},
+  {ID: "CS:ORG:1113:Company3Subsystem", Name: "Company 3"},
 }
 
 func TestProviderRepository_GetAll(t *testing.T) {
   mockClient, miniredis := NewRedisMock(t)
   defer miniredis.Close()
 
-  HMSetAll(t, mapXRoadMembers, mockClient, providerKey)
-  expectedXRoadMembers := decodeXRoadMembers(t, mapXRoadMembers)
+  for _, expectedMapXRoadMember := range expectedMapXRoadMembers {
+    err := hMSetXRoadMember(mockClient, expectedMapXRoadMember, providerKey)
+    if err != nil {
+      t.Errorf("Failed to set test data '%#v'", err)
+    }
+  }
 
   providerRepository := NewProviderRepository(mockClient)
   actualXRoadMembers, err := providerRepository.GetAll()
@@ -33,11 +43,8 @@ func TestProviderRepository_Set(t *testing.T) {
   mockClient, miniredis := NewRedisMock(t)
   defer miniredis.Close()
 
-  xRoadMembers := decodeXRoadMembers(t, mapXRoadMembers)
-  expectedXRoadMembers := xRoadMembers
-
   providerRepository := NewProviderRepository(mockClient)
-  err := providerRepository.Set(xRoadMembers)
+  err := providerRepository.Set(expectedXRoadMembers)
   assert.NoError(t, err)
 
   actualXRoadMembers, err := getXRoadMembersByMatch(mockClient, providerKey + ":*")
@@ -52,8 +59,12 @@ func TestClientRepository_GetAll(t *testing.T) {
   mockClient, miniredis := NewRedisMock(t)
   defer miniredis.Close()
 
-  HMSetAll(t, mapXRoadMembers, mockClient, clientKey)
-  expectedXRoadMembers := decodeXRoadMembers(t, mapXRoadMembers)
+  for _, expectedMapXRoadMember := range expectedMapXRoadMembers {
+    err := hMSetXRoadMember(mockClient, expectedMapXRoadMember, clientKey)
+    if err != nil {
+      t.Errorf("Failed to set test data '%#v'", err)
+    }
+  }
 
   clientRepository := NewClientRepository(mockClient)
   actualXRoadMembers, err := clientRepository.GetAll()
@@ -69,11 +80,8 @@ func TestClientRepository_Set(t *testing.T) {
   mockClient, miniredis := NewRedisMock(t)
   defer miniredis.Close()
 
-  xRoadMembers := decodeXRoadMembers(t, mapXRoadMembers)
-  expectedXRoadMembers := xRoadMembers
-
   clientRepository := NewClientRepository(mockClient)
-  err := clientRepository.Set(xRoadMembers)
+  err := clientRepository.Set(expectedXRoadMembers)
   assert.NoError(t, err)
 
   actualXRoadMembers, err := getXRoadMembersByMatch(mockClient, clientKey + ":*")
