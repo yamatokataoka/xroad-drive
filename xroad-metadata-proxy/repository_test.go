@@ -29,10 +29,7 @@ func TestProviderRepository_GetAll(t *testing.T) {
 
   providerRepository := NewProviderRepository(mockClient)
   actualXRoadMembers, err := providerRepository.GetAll()
-  // TODO: Replace error handling to assert.NoError(t, err)
-  if err != nil {
-    t.Errorf("Failed to call GetAll '%#v'", err)
-  }
+  assert.NoError(t, err)
 
   assert.Equal(t, expectedXRoadMembers, actualXRoadMembers)
 }
@@ -64,10 +61,7 @@ func TestClientRepository_GetAll(t *testing.T) {
 
   clientRepository := NewClientRepository(mockClient)
   actualXRoadMembers, err := clientRepository.GetAll()
-  // TODO: Replace error handling to assert.NoError(t, err)
-  if err != nil {
-    t.Errorf("Failed to call GetAll '%#v'", err)
-  }
+  assert.NoError(t, err)
 
   assert.Equal(t, expectedXRoadMembers, actualXRoadMembers)
 }
