@@ -52,7 +52,19 @@ func (pr *providerRepository) GetAll() ([]*XRoadMember, error) {
 }
 
 func (pr *providerRepository) Set(xRoadMembers []*XRoadMember) error {
-  return errors.New("Not Implemented")
+  for _, xRoadMember := range xRoadMembers {
+    mapXRoadMember, err := decodeStruct(xRoadMember)
+    if err != nil {
+      return errors.New("Failed to decode mapXRoadMember")
+    }
+
+    err = hMSetXRoadMember(pr.client, mapXRoadMember, providerKey)
+    if err != nil {
+      return errors.New("Failed to set X-Road member metadata")
+    }
+  }
+
+  return nil
 }
 
 // TODO: Fix typo renaming pr to cr
@@ -68,7 +80,19 @@ func (pr *clientRepository) GetAll() ([]*XRoadMember, error) {
 }
 
 func (cr *clientRepository) Set(xRoadMembers []*XRoadMember) error {
-  return errors.New("Not Implemented")
+  for _, xRoadMember := range xRoadMembers {
+    mapXRoadMember, err := decodeStruct(xRoadMember)
+    if err != nil {
+      return errors.New("Failed to decode mapXRoadMember")
+    }
+
+    err = hMSetXRoadMember(cr.client, mapXRoadMember, clientKey)
+    if err != nil {
+      return errors.New("Failed to set X-Road member metadata")
+    }
+  }
+
+  return nil
 }
 
 func getXRoadMembersByMatch(client *redis.Client, match string) ([]*XRoadMember, error) {
@@ -127,4 +151,40 @@ func getXRoadMembersByMatch(client *redis.Client, match string) ([]*XRoadMember,
     }
   }
   return xRoadMembers, nil
+}
+
+func hMSetXRoadMember(client *redis.Client, mapXRoadMember map[string]interface{}, key string) error {
+  key = key + ":" + mapXRoadMember["ID"].(string)
+
+  err := client.HMSet(key, mapXRoadMember).Err()
+  if err != nil {
+    log.
+      WithError(err).
+      WithFields(log.Fields{
+        "key":  key,
+        "values": mapXRoadMember,
+      }).
+      Error("Failed to set data")
+    return err
+  }
+
+  return nil
+}
+
+func decodeStruct(xRoadMember *XRoadMember) (map[string]interface{}, error) {
+  var mapXRoadMember map[string]interface{}
+
+  err := mapstructure.Decode(xRoadMember, &mapXRoadMember)
+  if err != nil {
+    log.
+      WithError(err).
+      WithFields(log.Fields{
+        "input":  xRoadMember,
+        "output": mapXRoadMember,
+      }).
+      Error("Failed to decode")
+    return nil, err
+  }
+
+  return mapXRoadMember, nil
 }
