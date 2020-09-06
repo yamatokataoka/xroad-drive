@@ -66,7 +66,6 @@
 
         const breadcrumbs = pathArray.reduce((breadcrumbArray, path, i) => {
           breadcrumbArray.push({
-            // TODO: get title name from path
             text: this.strToTile(path),
             to: breadcrumbArray[i - 1]
             ? "/" + pathArray[i - 1] + "/" + path
