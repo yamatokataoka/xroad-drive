@@ -96,14 +96,55 @@ func (cr *clientRepository) Set(xRoadMembers []*XRoadMember) error {
 }
 
 func getXRoadMembersByMatch(client *redis.Client, match string) ([]*XRoadMember, error) {
+  xRoadMembers := make([]*XRoadMember, 0)
+
+  keys, err := scanKeysByMatch(client, match)
+  if err != nil {
+    return nil, err
+  }
+
+  for _, key := range keys {
+    keyType, err := client.Type(key).Result()
+    if err != nil {
+      log.
+        WithError(err).
+        WithField("key", key).
+        Error("Failed to get type")
+      return nil, err
+    }
+
+    if keyType == "hash" {
+      mapXRoadMember, err := client.HGetAll(key).Result()
+      if err != nil {
+        log.
+          WithError(err).
+          WithField("key", key).
+          Error("Failed to get all fields")
+        return nil, err
+      }
+
+      xRoadMember, err := decodeMap(mapXRoadMember)
+      if err != nil {
+        return nil, err
+      }
+
+      xRoadMembers = append(xRoadMembers, xRoadMember)
+    }
+  }
+
+  return xRoadMembers, nil
+}
+
+func scanKeysByMatch(client *redis.Client, match string) ([]string, error) {
   var (
     cursor uint64
-    xRoadMembers = make([]*XRoadMember, 0)
+    keys = make([]string, 0)
   )
+
   for {
-    var keys []string
+    var localKeys []string
     var err error
-    keys, cursor, err = client.Scan(cursor, match, 10).Result()
+    localKeys, cursor, err = client.Scan(cursor, match, 10).Result()
     if err != nil {
       log.
         WithError(err).
@@ -111,46 +152,32 @@ func getXRoadMembersByMatch(client *redis.Client, match string) ([]*XRoadMember,
         Error("Failed to scan keys")
       return nil, err
     }
-    for _, key := range keys {
-      keyType, err := client.Type(key).Result()
-      if err != nil {
-        log.
-          WithError(err).
-          WithField("key", key).
-          Error("Failed to check type")
-        return nil, err
-      }
-      if keyType == "hash" {
-        var xRoadMember XRoadMember
 
-        mapXRoadMember, err := client.HGetAll(key).Result()
-        if err != nil {
-          log.
-            WithError(err).
-            WithField("key", key).
-            Error("Failed to get all fields")
-          return nil, err
-        }
+    keys = append(keys, localKeys...)
 
-        err = mapstructure.Decode(mapXRoadMember, &xRoadMember)
-        if err != nil {
-          log.
-            WithError(err).
-            WithFields(log.Fields{
-              "input":     mapXRoadMember,
-              "output":       xRoadMember,
-            }).
-            Error("Failed to decode")
-          return nil, err
-        }
-        xRoadMembers = append(xRoadMembers, &xRoadMember)
-      }
-    }
     if cursor == 0 {
       break
     }
   }
-  return xRoadMembers, nil
+  return keys, nil
+}
+
+func decodeMap(mapXRoadMember map[string]string) (*XRoadMember, error) {
+  var xRoadMember XRoadMember
+
+  err := mapstructure.Decode(mapXRoadMember, &xRoadMember)
+  if err != nil {
+    log.
+      WithError(err).
+      WithFields(log.Fields{
+        "input":  mapXRoadMember,
+        "output": xRoadMember,
+      }).
+      Error("Failed to decode")
+    return nil, err
+  }
+
+  return &xRoadMember, nil
 }
 
 func hMSetXRoadMember(client *redis.Client, mapXRoadMember map[string]interface{}, key string) error {
