@@ -15,13 +15,11 @@
       <span>{{ item.filename }}</span>
     </template>
     <template v-slot:item.sharedDateTime="{ item }">
-      <!-- TODO: delete today string -->
-      <span v-if="isToday(item.sharedDateTime)">today {{ item.sharedDateTime | formatHoursMins }}</span>
+      <span v-if="isToday(item.sharedDateTime)">{{ item.sharedDateTime | formatHoursMins }}</span>
       <span v-else>{{ item.sharedDateTime | formatDate }}</span>
     </template>
     <template v-slot:item.createdDateTime="{ item }">
-      <!-- TODO: delete today string -->
-      <span v-if="isToday(item.createdDateTime)">today {{ item.createdDateTime | formatHoursMins }}</span>
+      <span v-if="isToday(item.createdDateTime)">{{ item.createdDateTime | formatHoursMins }}</span>
       <span v-else>{{ item.createdDateTime | formatDate }}</span>
     </template>
     <template v-slot:item.filesize="{ item }">
