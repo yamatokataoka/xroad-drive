@@ -3,43 +3,60 @@ package proxy
 import (
   "net/http"
   "encoding/json"
+  "strings"
 
   log "github.com/sirupsen/logrus"
+  "github.com/gorilla/mux"
 )
 
-type ProviderHandler interface {
+// For unit test, service interfaces
+type ServiceProviderService interface {
+	FindServiceProviders(serviceClientID string, serviceCode string) ([]*XRoadMember, error)
+}
+
+type ServiceClientService interface {
+	GetServiceClientsByService(serviceID string) ([]*XRoadMember, error)
+}
+
+type ServiceProviderHandler interface {
   GetServiceProviders(w http.ResponseWriter, r *http.Request)
 }
 
-type ClientHandler interface {
-  GetServiceClients(w http.ResponseWriter, r *http.Request)
+type ServiceHandler interface {
+  GetServiceServiceClients(w http.ResponseWriter, r *http.Request)
 }
 
-type providerHandler struct {
-  ps ProviderService
+type serviceProviderHandler struct {
+  sps ServiceProviderService
 }
 
-type clientHandler struct {
-  cs ClientService
+type serviceHandler struct {
+  scs ServiceClientService
 }
 
-func NewProviderHandler(ps ProviderService) ProviderHandler {
-  return &providerHandler{ps}
+func NewServiceProviderHandler(sps ServiceProviderService) ServiceProviderHandler {
+  return &serviceProviderHandler{sps}
 }
 
-func NewClientHandler(cs ClientService) ClientHandler {
-  return &clientHandler{cs}
+func NewServiceHandler(scs ServiceClientService) ServiceHandler {
+  return &serviceHandler{scs}
 }
 
-func (ph *providerHandler) GetServiceProviders(w http.ResponseWriter, r *http.Request) {
+func (sph *serviceProviderHandler) GetServiceProviders(w http.ResponseWriter, r *http.Request) {
   log.
     WithFields(log.Fields{
-      "method":     r.Method,
-      "path":       r.URL,
+      "method": r.Method,
+      "path":   r.URL,
     }).
     Info("Receive request")
 
-  providers, err := ph.ps.GetAll()
+  queries := r.URL.Query()
+  serviceCode := queries.Get("service-code")
+
+  clientPathID := r.Header.Get("X-Road-Client")
+  clientID := strings.ReplaceAll(clientPathID, "/", ":")
+
+  providers, err := sph.sps.FindServiceProviders(clientID, serviceCode)
   if err != nil {
     respondWithError(w, http.StatusInternalServerError, err.Error())
     return
@@ -48,15 +65,18 @@ func (ph *providerHandler) GetServiceProviders(w http.ResponseWriter, r *http.Re
  respondWithJSON(w, http.StatusOK, providers)
 }
 
-func (ch *clientHandler) GetServiceClients(w http.ResponseWriter, r *http.Request) {
+func (sh *serviceHandler) GetServiceServiceClients(w http.ResponseWriter, r *http.Request) {
   log.
     WithFields(log.Fields{
-      "method":     r.Method,
-      "path":       r.URL,
+      "method": r.Method,
+      "path":   r.URL,
     }).
     Info("Receive request")
 
-  clients, err := ch.cs.GetAll()
+  params := mux.Vars(r)
+  serviceID := params["service-id"]
+
+  clients, err := sh.scs.GetServiceClientsByService(serviceID)
   if err != nil {
     respondWithError(w, http.StatusInternalServerError, err.Error())
     return
