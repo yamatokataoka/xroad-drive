@@ -38,18 +38,26 @@ func serve() {
   }
 
   router := mux.NewRouter().StrictSlash(true)
-  client := proxy.NewClient(config.Database)
-  defer client.Close()
 
-  providerRepository := proxy.NewProviderRepository(client)
-  clientRepository := proxy.NewClientRepository(client)
-  providerService := proxy.NewProviderService(providerRepository)
-  clientService := proxy.NewClientService(clientRepository)
-  providerHandler := proxy.NewProviderHandler(providerService)
-  clientHandler := proxy.NewClientHandler(clientService)
+  metaClient := proxy.NewMetadataServiceClient(config.SecurityServer)
+  adminClient := proxy.NewAdminAPIClient(config.SecurityServer)
 
-  router.HandleFunc("/service-providers", providerHandler.GetServiceProviders).Methods("GET")
-  router.HandleFunc("/service-clients", clientHandler.GetServiceClients).Methods("GET")
+  srp := proxy.NewServiceProviderRepository(metaClient)
+  sr := proxy.NewServiceRepository(metaClient)
+  scr := proxy.NewServiceClientRepository(adminClient)
+
+  sps := proxy.NewServiceProviderService(srp, sr)
+  scs := proxy.NewServiceClientService(scr)
+
+  sph := proxy.NewServiceProviderHandler(sps)
+  sh := proxy.NewServiceHandler(scs)
+
+  router.
+    HandleFunc("/service-providers", sph.GetServiceProviders).
+    Methods("GET")
+  router.
+    HandleFunc("/services/{service-id}/service-clients", sh.GetServiceServiceClients).
+    Methods("GET")
 
   server := &http.Server{
     Handler: router,

@@ -4,3 +4,8 @@
 #
 # database:
 #   addr: localhost:6379
+#
+# securityserver:
+#   url: http://localhost
+#   adminurl: https://localhost:4000/api/v1
+#   apikey: ""

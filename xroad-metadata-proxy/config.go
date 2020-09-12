@@ -8,21 +8,30 @@ import (
 )
 
 type Config struct {
-  Server       ServerConfig
-  Database     DatabaseConfig
+  Server          ServerConfig
+  Database        DatabaseConfig
+  SecurityServer  SSConfig
 }
 
 type ServerConfig struct {
-	Addr string
+  Addr string
 }
 
 type DatabaseConfig struct {
-	Addr string
+  Addr string
+}
+
+type SSConfig struct {
+  URL      string
+  AdminURL string
+  APIKey   string
 }
 
 func InitConfig() {
   viper.SetDefault("server.addr", "0.0.0.0:8083")
   viper.SetDefault("database.addr", "localhost:6379")
+  viper.SetDefault("securityserver.url", "http://localhost")
+  viper.SetDefault("securityserver.adminurl", "https://localhost:4000/api/v1")
 
   viper.SetConfigName("xroad-metadata-proxy")
   viper.AddConfigPath(".")
@@ -41,4 +50,7 @@ func InitConfig() {
   // Workaround because viper does not treat env vars the same as other config
   viper.BindEnv("database.addr")
   viper.BindEnv("server.addr")
+  viper.BindEnv("securityserver.url")
+  viper.BindEnv("securityserver.adminurl")
+  viper.BindEnv("securityserver.apikey")
 }
