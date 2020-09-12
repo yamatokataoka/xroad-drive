@@ -45,6 +45,15 @@ func (sph *serviceProviderHandler) GetServiceProviders(w http.ResponseWriter, r 
   serviceCode := queries.Get("service-code")
 
   clientPathID := r.Header.Get("X-Road-Client")
+
+  if len(clientPathID) == 0 {
+    log.
+      WithField("X-Road-Client", clientPathID).
+      Error("Invalid X-Road-Client")
+
+    respondWithError(w, http.StatusBadRequest, "Invalid X-Road-Client " + clientPathID)
+    return
+  }
   clientID := strings.ReplaceAll(clientPathID, "/", ":")
 
   providers, err := sph.sps.FindServiceProviders(clientID, serviceCode)
