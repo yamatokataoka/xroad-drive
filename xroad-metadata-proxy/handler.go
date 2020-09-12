@@ -9,15 +9,6 @@ import (
   "github.com/gorilla/mux"
 )
 
-// For unit test, service interfaces
-type ServiceProviderService interface {
-	FindServiceProviders(serviceClientID string, serviceCode string) ([]*XRoadMember, error)
-}
-
-type ServiceClientService interface {
-	GetServiceClientsByService(serviceID string) ([]*XRoadMember, error)
-}
-
 type ServiceProviderHandler interface {
   GetServiceProviders(w http.ResponseWriter, r *http.Request)
 }
