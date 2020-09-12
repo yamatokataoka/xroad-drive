@@ -1,45 +1,67 @@
 package proxy
 
-type XRoadMemberService interface {
-  GetAll() ([]*XRoadMember, error)
+import "strings"
+
+type ServiceProviderService interface {
+  FindServiceProviders(serviceClientID string, serviceCode string) ([]*XRoadMember, error)
 }
 
-type ProviderService interface {
-	XRoadMemberService
+type ServiceClientService interface {
+  GetServiceClientsByService(serviceID string) ([]*XRoadMember, error)
 }
 
-type ClientService interface {
-	XRoadMemberService
+type serviceProviderService struct {
+  spr ServiceProviderRepository
+  sr  ServiceRepository
 }
 
-type providerService struct {
-	pr ProviderRepository
+type serviceClientService struct {
+  scr ServiceClientRepository
 }
 
-type clientService struct {
-	cr ClientRepository
+func NewServiceProviderService(spr ServiceProviderRepository, sr  ServiceRepository) ServiceProviderService {
+  return &serviceProviderService{spr, sr}
 }
 
-func NewProviderService(pr ProviderRepository) ProviderService {
-  return &providerService{pr}
+func NewServiceClientService(scr ServiceClientRepository) ServiceClientService {
+  return &serviceClientService{scr}
 }
 
-func NewClientService(cr ClientRepository) ClientService {
-  return &clientService{cr}
-}
-
-func (ps *providerService) GetAll() ([]*XRoadMember, error) {
-  providers, err := ps.pr.GetAll()
+func (sps *serviceProviderService) FindServiceProviders(serviceClientID string, serviceCode string) ([]*XRoadMember, error) {
+  allProviders, err := sps.spr.GetAllServiceProviders()
   if err != nil {
     return nil, err
   }
-  return providers, nil
+
+  if len(serviceCode) == 0 {
+    return allProviders, nil
+  }
+
+  allowedProviders := make([]*XRoadMember, 0)
+
+  for _, provider := range allProviders {
+    allowedServices, err := sps.sr.GetAllowedServices(serviceClientID, provider)
+    if err != nil {
+      continue
+    }
+
+    for _, allowedService := range allowedServices {
+      allowedServiceCode := allowedService.ID[strings.LastIndex(allowedService.ID, ":")+1:]
+
+      if allowedServiceCode == serviceCode {
+        allowedProviders = append(allowedProviders, provider)
+      }
+    }
+  }
+
+  return allowedProviders, nil
 }
 
-func (cs *clientService) GetAll() ([]*XRoadMember, error) {
-  clients, err := cs.cr.GetAll()
+func (scs *serviceClientService) GetServiceClientsByService(serviceID string) ([]*XRoadMember, error) {
+  serviceClients, err := scs.scr.GetServiceClientsByService(serviceID)
   if err != nil {
     return nil, err
   }
-  return clients, nil
+
+  return serviceClients, nil
 }
