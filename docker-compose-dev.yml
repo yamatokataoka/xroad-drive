@@ -38,7 +38,7 @@ services:
     environment:
       - VUE_APP_API_URL=http://xroad-drive-api:8082
       - VUE_APP_METADATA_PROXY_URL=http://xroad-metadata-proxy:8083
-      - VUE_APP_SECURITY_SERVER_URL=http://xroad-security-server-standalone
+      - VUE_APP_SECURITY_SERVER_URL=http://xroad-drive-security-server-standalone-dev
       - VUE_APP_XROAD_MEMBER_ID=CS/ORG/1111/TestClient
     command: ["yarn", "run", "serve"]
   xroad-metadata-proxy:
@@ -64,9 +64,9 @@ services:
       - 6379:6379
     volumes:
       - ./dev-volumes/redis:/data
-  xroad-security-server-standalone:
-    container_name: xroad-security-server-standalone
-    image: yamatokataoka/xroad-drive-security-server-standalone-dev:bionic-6.23.0
+  xroad-drive-security-server-standalone-dev:
+    container_name: xroad-drive-security-server-standalone-dev
+    image: yamatokataoka/xroad-drive-security-server-standalone-dev:bionic-6.24.1
     ports:
-      - 8084:4000
-      - 8085:80
+      - 4000:4000
+      - 4001:80
