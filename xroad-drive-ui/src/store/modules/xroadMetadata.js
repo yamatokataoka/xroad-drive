@@ -43,17 +43,24 @@ export default {
     }
   },
   actions: {
-    async fetchProviders({ commit }) {
+    async fetchProviders({ commit }, { serviceCode, xroadMemberId }) {
+      const config = {};
+
+      config.params = { 'service-code': serviceCode };
+      config.headers = { 'X-Road-Client': xroadMemberId };
+
       try {
-        const response = await axios.get('/xroad-metadata-proxy/service-providers');
+        const response = await axios.get('/xroad-metadata-proxy/service-providers', config);
         commit('updateProviders', response.data);
       } catch (error) {
         console.log('Failed to fetch X-Road metadata: ' + error);
       }
     },
-    async fetchClients({ commit }) {
+    async fetchClients({ commit }, serviceId) {
+      const url = '/xroad-metadata-proxy/services' + '/' + serviceId + '/service-clients';
+
       try {
-        const response = await axios.get('/xroad-metadata-proxy/service-clients');
+        const response = await axios.get(url);
         commit('updateClients', response.data);
       } catch (error) {
         console.log('Failed to fetch X-Road metadata: ' + error);

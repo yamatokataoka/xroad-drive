@@ -84,6 +84,7 @@
     computed: {
       ...mapGetters('xroadMetadata', ['providersForNav', 'clientsForNav']),
       ...mapState('search', ['search']),
+      ...mapState('config', ['xroadMemberId', 'commonServiceCode']),
       navItems() {
         let navItems = [];
         for (let i = 0; i < this.rootNavItems.length; i++) {
@@ -150,12 +151,18 @@
         }
       },
       async pollNavitems() {
-        await this.fetchProviders();
-        await this.fetchClients();
+        const { commonServiceCode, xroadMemberId } = this;
+        const serviceId = xroadMemberId + ':' + commonServiceCode;
+
+        await this.fetchProviders({ serviceCode: commonServiceCode, xroadMemberId });
+        await this.fetchClients(serviceId);
 
         this.polling = setInterval(() => {
-          this.fetchProviders();
-          this.fetchClients();
+          const { commonServiceCode, xroadMemberId } = this;
+          const serviceId = xroadMemberId + ':' + commonServiceCode;
+
+          this.fetchProviders({ serviceCode: commonServiceCode, xroadMemberId });
+          this.fetchClients(serviceId);
         }, 3000)
       }
     },

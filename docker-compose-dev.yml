@@ -15,6 +15,7 @@ services:
       - ./xroad-drive-api:/xroad-drive-api
     environment:
       - SPRING_DATA_MONGODB_HOST=mongodb
+      - XROADDRIVE_XROAD_MEMBERID=CS:ORG:1111:TestClient
     command: ["./gradlew", "bootRun"]
   mongodb:
     container_name: mongodb
@@ -38,8 +39,7 @@ services:
     environment:
       - VUE_APP_API_URL=http://xroad-drive-api:8082
       - VUE_APP_METADATA_PROXY_URL=http://xroad-metadata-proxy:8083
-      - VUE_APP_SECURITY_SERVER_URL=http://xroad-security-server-standalone
-      - VUE_APP_XROAD_MEMBER_ID=CS/ORG/1111/TestClient
+      - VUE_APP_SECURITY_SERVER_URL=http://xroad-drive-security-server-standalone-dev
     command: ["yarn", "run", "serve"]
   xroad-metadata-proxy:
     container_name: xroad-metadata-proxy
@@ -56,6 +56,9 @@ services:
       - ./xroad-metadata-proxy:/xroad-metadata-proxy
     environment:
       - XROAD_METADATA_PROXY_DATABASE_ADDR=redis:6379
+      - XROAD_METADATA_PROXY_SECURITYSERVER_URL=http://xroad-drive-security-server-standalone-dev
+      - XROAD_METADATA_PROXY_SECURITYSERVER_ADMINURL=https://xroad-drive-security-server-standalone-dev:4000/api/v1
+      - XROAD_METADATA_PROXY_SECURITYSERVER_APIKEY=ddc856fb-c870-48e8-8ccb-97583285f6ab
     command: ["make", "serve"]
   redis:
     container_name: redis
@@ -64,9 +67,9 @@ services:
       - 6379:6379
     volumes:
       - ./dev-volumes/redis:/data
-  xroad-security-server-standalone:
-    container_name: xroad-security-server-standalone
-    image: yamatokataoka/xroad-drive-security-server-standalone-dev:bionic-6.23.0
+  xroad-drive-security-server-standalone-dev:
+    container_name: xroad-drive-security-server-standalone-dev
+    image: yamatokataoka/xroad-drive-security-server-standalone-dev:bionic-6.24.1
     ports:
-      - 8084:4000
-      - 8085:80
+      - 4000:4000
+      - 4001:80
