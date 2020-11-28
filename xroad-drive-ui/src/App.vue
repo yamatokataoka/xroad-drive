@@ -11,10 +11,18 @@
 
 <script>
 import AppBar from '@/components/layout/AppBar';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   components: { AppBar },
+  methods: {
+    ...mapActions('config', ['fetchConfig'])
+  },
+  async created() {
+    console.log('Fetch config');
+    await this.fetchConfig();
+  }
 };
 </script>
 

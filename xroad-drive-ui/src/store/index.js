@@ -6,6 +6,7 @@ import fileList from './modules/fileList';
 import xroadMetadata from './modules/xroadMetadata';
 import selectedXRoadMember from './modules/selectedXRoadMember';
 import search from './modules/search';
+import config from './modules/config';
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     fileList,
     xroadMetadata,
     selectedXRoadMember,
-    search
+    search,
+    config
   }
 });

@@ -2,6 +2,7 @@ export default {
   namespaced: true,
   state() {
     return {
+      // TODO: Add comment to discribe what is content
       selectedFile: null
     };
   },

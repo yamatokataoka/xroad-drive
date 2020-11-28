@@ -75,8 +75,10 @@
         }, [])
         return breadcrumbs;
       },
+      // TODO: Move to top
       ...mapState('selectedXRoadMember', ['selectedXRoadMember']),
       ...mapState('xroadMetadata', ['providers', 'clients']),
+      ...mapState('config', ['xroadMemberId', 'commonServiceCode']),
     },
     methods: {
       ...mapActions('uploadFiles', ['updateUploadFiles', 'updateUploading']),
@@ -120,7 +122,7 @@
           serviceId = this.selectedXRoadMember + ':' + 'XRoadDrive';
         }
 
-        const xroadMemberId = process.env.VUE_APP_XROAD_MEMBER_ID;
+        const xroadMemberId = this.xroadMemberId;
         let path = `/api/download/${encodeURIComponent(id)}`;
         let headers = {};
 
@@ -178,7 +180,7 @@
           serviceId = this.selectedXRoadMember + ':' + 'XRoadDrive';
         }
 
-        const xroadMemberId = process.env.VUE_APP_XROAD_MEMBER_ID;
+        const xroadMemberId = this.xroadMemberId;
         let path = `/api/delete/${encodeURIComponent(id)}`;
         let headers = {};
 

@@ -57,11 +57,11 @@ export default {
       }
       commit('updateUploadFiles', uploadFiles);
     },
-    async upload({ dispatch }, { uploadFile, serviceId=null }) {
+    async upload({ dispatch, rootState }, { uploadFile, serviceId=null }) {
       const formData = new FormData();
       formData.append('file', uploadFile.file);
 
-      const xroadMemberId = process.env.VUE_APP_XROAD_MEMBER_ID;
+      const xroadMemberId = rootState.config.xroadMemberId;
       let path = '/api/upload';
       let headers = {};
 
@@ -84,6 +84,7 @@ export default {
         data: formData,
         headers: headers,
         onUploadProgress: (progressEvent) => {
+          // TODO: Split this function
           const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
           if (totalLength !== null) {
             dispatch('updateIndeterminateById', { id: uploadFile.id, indeterminate: false });

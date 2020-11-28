@@ -13,8 +13,8 @@ export default {
     }
   },
   actions: {
-    async fetchFileList({ commit }, serviceId=null) {
-      const xroadMemberId = process.env.VUE_APP_XROAD_MEMBER_ID;
+    async fetchFileList({ commit, rootState }, serviceId=null) {
+      const xroadMemberId = rootState.config.xroadMemberId;
       let config = {};
       let path = '/api/metadata';
 
@@ -24,9 +24,11 @@ export default {
           console.log('Failed to set config for axios: xroadMemberId: ' + xroadMemberId);
           return;
         }
+
+        const xroadMemberPath = xroadMemberId.replace(/:/g, '/');
         // TODO: URL join helper is needed.
         path = '/security-server/r1/' + servicePath + path;
-        config.headers = { 'X-Road-Client': xroadMemberId};
+        config.headers = { 'X-Road-Client': xroadMemberPath };
       }
 
       try {
