@@ -20,12 +20,13 @@ export default {
 
       if (serviceId) {
         const servicePath = serviceId.replace(/:/g, '/');
+        const xroadMemberPath = xroadMemberId.replace(/:/g, '/');
+
         if (!xroadMemberId) {
           console.log('Failed to set config for axios: xroadMemberId: ' + xroadMemberId);
           return;
         }
 
-        const xroadMemberPath = xroadMemberId.replace(/:/g, '/');
         // TODO: URL join helper is needed.
         path = '/security-server/r1/' + servicePath + path;
         config.headers = { 'X-Road-Client': xroadMemberPath };

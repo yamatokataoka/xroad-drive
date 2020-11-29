@@ -45,9 +45,10 @@ export default {
   actions: {
     async fetchProviders({ commit }, { serviceCode, xroadMemberId }) {
       const config = {};
+      const xroadMemberPath = xroadMemberId.replace(/:/g, '/');
 
       config.params = { 'service-code': serviceCode };
-      config.headers = { 'X-Road-Client': xroadMemberId };
+      config.headers = { 'X-Road-Client': xroadMemberPath };
 
       try {
         const response = await axios.get('/xroad-metadata-proxy/service-providers', config);

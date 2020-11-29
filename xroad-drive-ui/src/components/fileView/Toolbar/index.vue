@@ -128,13 +128,16 @@
 
         if (serviceId) {
           const servicePath = serviceId.replace(/:/g, '/');
+          const xroadMemberPath = xroadMemberId.replace(/:/g, '/');
+
           if (!xroadMemberId) {
             console.log('Failed to set config for axios: xroadMemberId: ' + xroadMemberId);
             return;
           }
+
           // TODO: URL join helper is needed.
           path = '/security-server/r1/' + servicePath + path;
-          headers['X-Road-Client'] = xroadMemberId;
+          headers['X-Road-Client'] = xroadMemberPath;
         }
 
         try {
@@ -186,13 +189,15 @@
 
         if (serviceId) {
           const servicePath = serviceId.replace(/:/g, '/');
+          const xroadMemberPath = xroadMemberId.replace(/:/g, '/');
+
           if (!xroadMemberId) {
             console.log('Failed to set config for axios: xroadMemberId: ' + xroadMemberId);
             return;
           }
           // TODO: URL join helper is needed.
           path = '/security-server/r1/' + servicePath + path;
-          headers['X-Road-Client'] = xroadMemberId;
+          headers['X-Road-Client'] = xroadMemberPath;
         }
 
         try {
