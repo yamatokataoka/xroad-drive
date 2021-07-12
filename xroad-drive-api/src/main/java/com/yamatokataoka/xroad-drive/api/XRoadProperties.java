@@ -25,7 +25,7 @@ import javax.validation.constraints.NotBlank;
 public class XRoadProperties {
 
   @NotBlank
-	private String memberId;
+  private String memberId;
   @NotBlank
   private String commonServiceCode;
 

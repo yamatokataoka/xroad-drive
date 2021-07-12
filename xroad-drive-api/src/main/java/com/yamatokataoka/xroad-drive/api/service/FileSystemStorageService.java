@@ -21,51 +21,51 @@ import java.nio.file.Paths;
 public class FileSystemStorageService implements StorageService {
 
   private static final Logger log = LoggerFactory.getLogger(FileSystemStorageService.class);
-	private final Path rootLocation;
+  private final Path rootLocation;
 
-	public FileSystemStorageService(StorageProperties properties) {
-		rootLocation = Paths.get(properties.getLocation());
-	}
+  public FileSystemStorageService(StorageProperties properties) {
+    rootLocation = Paths.get(properties.getLocation());
+  }
 
-	@Override
-	public void store(InputStream inputStream, String id) {
+  @Override
+  public void store(InputStream inputStream, String id) {
     mkdir(id);
 
     try(FileOutputStream fileOutputStream = new FileOutputStream(this.rootLocation.resolve(id).toFile())) {
       log.info("Store file: {}", id);
       inputStream.transferTo(fileOutputStream);
-		} catch (IOException e) {
+    } catch (IOException e) {
       log.error("Failed to store file", e);
 
       throw new FileException(e);
-		}
-	}
+    }
+  }
 
-	@Override
-	public Path resolve(String id) {
-		return this.rootLocation.resolve(id);
-	}
+  @Override
+  public Path resolve(String id) {
+    return this.rootLocation.resolve(id);
+  }
 
-	@Override
-	public Resource load(String id) {
+  @Override
+  public Resource load(String id) {
     log.info("Load file: {}", id);
 
     try {
-			Path file = resolve(id);
-			Resource resource = new UrlResource(file.toUri());
-			if (!resource.exists() || !resource.isReadable()) {
+      Path file = resolve(id);
+      Resource resource = new UrlResource(file.toUri());
+      if (!resource.exists() || !resource.isReadable()) {
         log.error("Failed to load file or does not exist");
-			}
+      }
       return resource;
-		} catch (MalformedURLException e) {
+    } catch (MalformedURLException e) {
       log.error("Failed to load file", e);
 
       throw new FileException("Failed to load file", e);
-		}
-	}
+    }
+  }
 
-	@Override
-	public void delete(String id) {
+  @Override
+  public void delete(String id) {
     log.info("Delete file: {}", id);
 
     try {
@@ -75,14 +75,14 @@ public class FileSystemStorageService implements StorageService {
 
       throw new FileException("Failed to delete file", e);
     }
-	}
+  }
 
   private void mkdir(String id) {
-		try {
+    try {
       log.debug("Create directories for file: " + id);
-			Files.createDirectories(rootLocation.resolve(id).getParent());
-		} catch (IOException e) {
+      Files.createDirectories(rootLocation.resolve(id).getParent());
+    } catch (IOException e) {
       log.error("Failed to create directories for file: " + id, e);
-		}
-	}
+    }
+  }
 }

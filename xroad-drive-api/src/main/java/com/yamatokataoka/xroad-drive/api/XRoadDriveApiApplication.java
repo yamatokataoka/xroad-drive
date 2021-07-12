@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(StorageProperties.class)
 public class XRoadDriveApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(XRoadDriveApiApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(XRoadDriveApiApplication.class, args);
+  }
 }

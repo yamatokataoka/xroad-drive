@@ -8,12 +8,12 @@ import java.nio.file.Path;
 
 public interface StorageService {
 
-	void store(InputStream inputStream, String id);
+  void store(InputStream inputStream, String id);
 
-	Path resolve(String id);
+  Path resolve(String id);
 
-	Resource load(String id);
+  Resource load(String id);
 
-	void delete(String id);
+  void delete(String id);
 
 }

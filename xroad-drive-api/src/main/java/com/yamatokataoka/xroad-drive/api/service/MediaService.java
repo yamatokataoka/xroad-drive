@@ -28,7 +28,7 @@ public class MediaService {
 
   @Transactional
   public Metadata store(MultipartFile multipartFile) {
-		String originalFilename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+    String originalFilename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
     Long fileSize = multipartFile.getSize();
 
     Metadata metadata = new Metadata();
@@ -41,7 +41,7 @@ public class MediaService {
       return metadata;
     } catch (Exception e) {
       throw new FileException("Failed to store file", e);
-		}
+    }
   }
 
   @Transactional
@@ -50,7 +50,7 @@ public class MediaService {
       return storageService.load(id);
     } catch (FileException e) {
       throw new FileException("Failed to load file", e);
-		}
+    }
   }
 
   @Transactional
